@@ -1,8 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React, { Suspense } from "react";
 import { usePreloadedQuery } from "react-relay";
-import withQueryLoaderWrapper from "../../HOCs/WithQueryLoader";
-import WithQueryLoaderWrapper from "../../HOCs/WithQueryLoader";
+import withQueryLoader from "../../HOCs/withQueryLoader";
 import HomePageContainer from "./HomePageContainer";
 import HomePageQuery from "./__generated__/HomePageQuery.graphql";
 
@@ -35,4 +34,4 @@ const HomePage = ({ queryRef }) => {
   );
 };
 
-export default withQueryLoaderWrapper(HomePage, HomePageQuery);
+export default withQueryLoader(HomePage, HomePageQuery);

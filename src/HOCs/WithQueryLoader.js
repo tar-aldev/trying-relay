@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useQueryLoader } from "react-relay";
 
-const withQueryLoaderWrapper = (Component, query) => {
+const withQueryLoader = (Component, query) => {
   return (props) => {
     const [queryRef, loadQuery] = useQueryLoader(query);
     useMemo(() => {
@@ -12,4 +12,4 @@ const withQueryLoaderWrapper = (Component, query) => {
   };
 };
 
-export default withQueryLoaderWrapper;
+export default withQueryLoader;
