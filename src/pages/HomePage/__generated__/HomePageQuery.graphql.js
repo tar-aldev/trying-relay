@@ -8,10 +8,10 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-type HomePageContainer_repository$ref = any;
+type HomePageContainer_viewer$ref = any;
 export type HomePageQueryVariables = {||};
 export type HomePageQueryResponse = {|
-  +$fragmentRefs: HomePageContainer_repository$ref
+  +$fragmentRefs: HomePageContainer_viewer$ref
 |};
 export type HomePageQuery = {|
   variables: HomePageQueryVariables,
@@ -22,12 +22,14 @@ export type HomePageQuery = {|
 
 /*
 query HomePageQuery {
-  ...HomePageContainer_repository
+  ...HomePageContainer_viewer
 }
 
-fragment HomePageContainer_repository on Query {
-  repository(owner: "facebook", name: "relay") {
-    name
+fragment HomePageContainer_viewer on Query {
+  viewer {
+    avatarUrl
+    url
+    email
     id
   }
 }
@@ -43,7 +45,7 @@ const node/*: ConcreteRequest*/ = {
       {
         "args": null,
         "kind": "FragmentSpread",
-        "name": "HomePageContainer_repository"
+        "name": "HomePageContainer_viewer"
       }
     ],
     "type": "Query",
@@ -57,28 +59,31 @@ const node/*: ConcreteRequest*/ = {
     "selections": [
       {
         "alias": null,
-        "args": [
-          {
-            "kind": "Literal",
-            "name": "name",
-            "value": "relay"
-          },
-          {
-            "kind": "Literal",
-            "name": "owner",
-            "value": "facebook"
-          }
-        ],
-        "concreteType": "Repository",
+        "args": null,
+        "concreteType": "User",
         "kind": "LinkedField",
-        "name": "repository",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "name",
+            "name": "avatarUrl",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "url",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "email",
             "storageKey": null
           },
           {
@@ -89,20 +94,20 @@ const node/*: ConcreteRequest*/ = {
             "storageKey": null
           }
         ],
-        "storageKey": "repository(name:\"relay\",owner:\"facebook\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "3b13edff5439f56edfc030920fdce868",
+    "cacheID": "a2ac2250758df1088e5bc7f9aad404e8",
     "id": null,
     "metadata": {},
     "name": "HomePageQuery",
     "operationKind": "query",
-    "text": "query HomePageQuery {\n  ...HomePageContainer_repository\n}\n\nfragment HomePageContainer_repository on Query {\n  repository(owner: \"facebook\", name: \"relay\") {\n    name\n    id\n  }\n}\n"
+    "text": "query HomePageQuery {\n  ...HomePageContainer_viewer\n}\n\nfragment HomePageContainer_viewer on Query {\n  viewer {\n    avatarUrl\n    url\n    email\n    id\n  }\n}\n"
   }
 };
 // prettier-ignore
-(node/*: any*/).hash = 'c29c9497138e3e6827fecc945bb909ef';
+(node/*: any*/).hash = '9486b8777899b1007c9deedbb64f6124';
 
 module.exports = node;
