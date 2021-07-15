@@ -1,33 +1,27 @@
-import { RelayEnvironmentProvider } from "react-relay";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { createBrowserRouter, makeRouteConfig, Route } from "found";
+import { loadQuery } from "react-relay";
 import "./App.css";
-import Header from "./core/Header";
-import HomePage from "./pages/HomePage/HomePage";
-import RepositoriesPage from "./pages/RepositoriesPage/RespositoriesPage";
-import RepositoryPage from "./pages/RepositoryPage/RepositoryPage";
-import relayEnvironment from "./relay/Environment";
+import MainLayout from "./core/layouts/MainLayout";
+import HomePage, { HomePageQuery } from "./pages/HomePage/HomePage";
+import RepositoriesPage, {
+  RepositoriesPageQuery,
+} from "./pages/RepositoriesPage/RepositoriesPage";
+import Environment from "./relay/Environment";
 
-const App = () => {
-  return (
-    <RelayEnvironmentProvider environment={relayEnvironment}>
-      <Router>
-        <Header />
-        <Switch>
-          <Route path="/" exact>
-            <HomePage />
-          </Route>
+const Router = createBrowserRouter({
+  routeConfig: makeRouteConfig(
+    <Route path="/" Component={MainLayout}>
+      <Route
+        Component={HomePage}
+        getData={() => loadQuery(Environment, HomePageQuery)}
+      />
+      <Route
+        path="repositories"
+        Component={RepositoriesPage}
+        getData={() => loadQuery(Environment, RepositoriesPageQuery)}
+      />
+    </Route>
+  ),
+});
 
-          <Route path="/repositories" exact>
-            <RepositoriesPage />
-          </Route>
-
-          <Route path="/repositories/:repoId">
-            <RepositoryPage />
-          </Route>
-        </Switch>
-      </Router>
-    </RelayEnvironmentProvider>
-  );
-};
-
-export default App;
+export default Router;

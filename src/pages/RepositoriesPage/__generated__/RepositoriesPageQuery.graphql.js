@@ -8,70 +8,94 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-type RepositoriesContainer_repositories$ref = any;
-export type RespositoriesPageQueryVariables = {||};
-export type RespositoriesPageQueryResponse = {|
-  +$fragmentRefs: RepositoriesContainer_repositories$ref
+type RepositoriesList_repositories$ref = any;
+export type RepositoriesPageQueryVariables = {||};
+export type RepositoriesPageQueryResponse = {|
+  +viewer: {|
+    +repositories: {|
+      +$fragmentRefs: RepositoriesList_repositories$ref
+    |}
+  |}
 |};
-export type RespositoriesPageQuery = {|
-  variables: RespositoriesPageQueryVariables,
-  response: RespositoriesPageQueryResponse,
+export type RepositoriesPageQuery = {|
+  variables: RepositoriesPageQueryVariables,
+  response: RepositoriesPageQueryResponse,
 |};
 */
 
 
 /*
-query RespositoriesPageQuery {
-  ...RepositoriesContainer_repositories
-}
-
-fragment RepositoriesContainer_repositories on Query {
+query RepositoriesPageQuery {
   viewer {
     repositories(first: 100, orderBy: {field: NAME, direction: ASC}) {
-      edges {
-        node {
-          id
-          name
-          url
-          collaborators {
-            edges {
-              node {
-                login
-                id
-              }
-            }
-          }
-          owner {
-            __typename
-            id
-            login
-            url
-            avatarUrl
-          }
-        }
-      }
+      ...RepositoriesList_repositories
     }
     id
+  }
+}
+
+fragment RepositoriesListItem_repository on Repository {
+  id
+  name
+  url
+  collaborators {
+    edges {
+      node {
+        login
+        id
+      }
+    }
+  }
+  owner {
+    __typename
+    id
+    login
+    url
+    avatarUrl
+  }
+}
+
+fragment RepositoriesList_repositories on RepositoryConnection {
+  edges {
+    node {
+      ...RepositoriesListItem_repository
+      id
+    }
   }
 }
 */
 
 const node/*: ConcreteRequest*/ = (function(){
-var v0 = {
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 100
+  },
+  {
+    "kind": "Literal",
+    "name": "orderBy",
+    "value": {
+      "direction": "ASC",
+      "field": "NAME"
+    }
+  }
+],
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -83,22 +107,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "RespositoriesPageQuery",
-    "selections": [
-      {
-        "args": null,
-        "kind": "FragmentSpread",
-        "name": "RepositoriesContainer_repositories"
-      }
-    ],
-    "type": "Query",
-    "abstractKey": null
-  },
-  "kind": "Request",
-  "operation": {
-    "argumentDefinitions": [],
-    "kind": "Operation",
-    "name": "RespositoriesPageQuery",
+    "name": "RepositoriesPageQuery",
     "selections": [
       {
         "alias": null,
@@ -110,21 +119,44 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": [
+            "args": (v0/*: any*/),
+            "concreteType": "RepositoryConnection",
+            "kind": "LinkedField",
+            "name": "repositories",
+            "plural": false,
+            "selections": [
               {
-                "kind": "Literal",
-                "name": "first",
-                "value": 100
-              },
-              {
-                "kind": "Literal",
-                "name": "orderBy",
-                "value": {
-                  "direction": "ASC",
-                  "field": "NAME"
-                }
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "RepositoriesList_repositories"
               }
             ],
+            "storageKey": "repositories(first:100,orderBy:{\"direction\":\"ASC\",\"field\":\"NAME\"})"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
+    "type": "Query",
+    "abstractKey": null
+  },
+  "kind": "Request",
+  "operation": {
+    "argumentDefinitions": [],
+    "kind": "Operation",
+    "name": "RepositoriesPageQuery",
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "User",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v0/*: any*/),
             "concreteType": "RepositoryConnection",
             "kind": "LinkedField",
             "name": "repositories",
@@ -146,7 +178,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v0/*: any*/),
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -154,7 +186,7 @@ return {
                         "name": "name",
                         "storageKey": null
                       },
-                      (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -179,8 +211,8 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v2/*: any*/),
-                                  (v0/*: any*/)
+                                  (v3/*: any*/),
+                                  (v1/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -205,9 +237,9 @@ return {
                             "name": "__typename",
                             "storageKey": null
                           },
-                          (v0/*: any*/),
-                          (v2/*: any*/),
                           (v1/*: any*/),
+                          (v3/*: any*/),
+                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -227,23 +259,23 @@ return {
             ],
             "storageKey": "repositories(first:100,orderBy:{\"direction\":\"ASC\",\"field\":\"NAME\"})"
           },
-          (v0/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "3750efe931b3c272636f83d241eb5bcb",
+    "cacheID": "34006c7ac80d7425f0f2e6d0f163705c",
     "id": null,
     "metadata": {},
-    "name": "RespositoriesPageQuery",
+    "name": "RepositoriesPageQuery",
     "operationKind": "query",
-    "text": "query RespositoriesPageQuery {\n  ...RepositoriesContainer_repositories\n}\n\nfragment RepositoriesContainer_repositories on Query {\n  viewer {\n    repositories(first: 100, orderBy: {field: NAME, direction: ASC}) {\n      edges {\n        node {\n          id\n          name\n          url\n          collaborators {\n            edges {\n              node {\n                login\n                id\n              }\n            }\n          }\n          owner {\n            __typename\n            id\n            login\n            url\n            avatarUrl\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query RepositoriesPageQuery {\n  viewer {\n    repositories(first: 100, orderBy: {field: NAME, direction: ASC}) {\n      ...RepositoriesList_repositories\n    }\n    id\n  }\n}\n\nfragment RepositoriesListItem_repository on Repository {\n  id\n  name\n  url\n  collaborators {\n    edges {\n      node {\n        login\n        id\n      }\n    }\n  }\n  owner {\n    __typename\n    id\n    login\n    url\n    avatarUrl\n  }\n}\n\nfragment RepositoriesList_repositories on RepositoryConnection {\n  edges {\n    node {\n      ...RepositoriesListItem_repository\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '0e87a017f6f3840c776c0ce652bdc28b';
+(node/*: any*/).hash = 'a11457caa9a4f464f856f8beb9d4525f';
 
 module.exports = node;

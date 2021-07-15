@@ -1,56 +1,40 @@
-import React from "react";
-import { Card, Image } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import graphql from "babel-plugin-relay/macro";
+import { useRouter } from "found";
+import React, { useCallback } from "react";
+import { useFragment } from "react-relay";
+import RepositoryListItem from "./RepositoriesListItem";
 
-const RepositoriesList = ({ repositories }) => {
-  const history = useHistory();
+export const RespositoriesListFragment = graphql`
+  fragment RepositoriesList_repositories on RepositoryConnection {
+    edges {
+      node {
+        ...RepositoriesListItem_repository
+      }
+    }
+  }
+`;
 
-  const onNavigateToRepositoryDetails = (repoId) => () => {
-    history.push(`/repositories/${repoId}`);
-  };
+const RepositoriesList = ({ fragmentRef }) => {
+  const { match, router } = useRouter();
+  const { edges } = useFragment(RespositoriesListFragment, fragmentRef);
+  // const history = useHistory();
+
+  const onNavigateToRepositoryDetails = useCallback(
+    (repoId) => {
+      router.push(`/repositories/${repoId}`);
+      // history.push(`/repositories/${repoId}`);
+    },
+    [router]
+  );
 
   return (
     <div>
-      {repositories.map(({ node: repository }) => {
+      {edges.map((edge) => {
         return (
-          <Card
-            key={repository.id}
-            className="mb-2"
-            onClick={onNavigateToRepositoryDetails(repository.id)}
-          >
-            <Card.Body>
-              <Card.Title
-                as="div"
-                className="d-flex align-items-center justify-content-between"
-              >
-                <h5>{repository.name}</h5>
-                <a
-                  href={repository.owner.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Image
-                    src={repository.owner.avatarUrl}
-                    alt="repo owner avatar"
-                    width={50}
-                    height={50}
-                    roundedCircle
-                  />
-                </a>
-              </Card.Title>
-              <Card.Text as="div">
-                <a
-                  href={repository.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Link to repo
-                </a>
-
-                <p>Owner: {repository.owner.login}</p>
-              </Card.Text>
-            </Card.Body>
-          </Card>
+          <RepositoryListItem
+            fragmentRef={edge.node}
+            handleListItemClick={onNavigateToRepositoryDetails}
+          />
         );
       })}
     </div>

@@ -3,50 +3,17 @@ import { useFragment } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import RepositoriesList from "./RepositoriesList";
 
-const REPOSITORIES_FRAGMENT = graphql`
+const RepositoriesFragment = graphql`
   # By convention it should be <ComponentName></ComponentName>
-  fragment RepositoriesContainer_repositories on Query {
-    viewer {
-      repositories(first: 100, orderBy: { field: NAME, direction: ASC }) {
-        edges {
-          node {
-            id
-            name
-            url
-            collaborators {
-              edges {
-                node {
-                  login
-                }
-              }
-            }
-            owner {
-              id
-              login
-              url
-              avatarUrl
-            }
-          }
-        }
-      }
-    }
+  fragment RepositoriesContainer_repositories on RepositoryConnection {
+    ...RepositoriesList_repositories
   }
 `;
 
 const RepositoriesContainer = ({ fragmentRef }) => {
-  const {
-    viewer: { repositories },
-  } = useFragment(REPOSITORIES_FRAGMENT, fragmentRef);
+  const data = useFragment(RepositoriesFragment, fragmentRef);
 
-  return (
-    <div>
-      {repositories?.edges && repositories.edges.length > 0 ? (
-        <RepositoriesList repositories={repositories.edges} />
-      ) : (
-        <p>No repositories yet...</p>
-      )}
-    </div>
-  );
+  return <RepositoriesList fragmentRef={data} />;
 };
 
 export default RepositoriesContainer;
