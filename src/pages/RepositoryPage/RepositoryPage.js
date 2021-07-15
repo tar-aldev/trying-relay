@@ -1,17 +1,31 @@
-import React from "react";
-import { Button, Container } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { Link } from "found";
+import React, { Suspense } from "react";
+import { Button } from "react-bootstrap";
+import RepositoryDetails from "./RepositoryDetails";
+import { graphql } from "babel-plugin-relay/macro";
+import { usePreloadedQuery } from "react-relay";
 
-const RepositoryPage = () => {
+export const RepositoryPageQuery = graphql`
+  query RepositoryPageQuery($name: String!, $owner: String!) {
+    repository(name: $name, owner: $owner) {
+      ...RepositoryDetails_repository
+    }
+  }
+`;
+const RepositoryPage = ({ data: preloadedQuery }) => {
+  const { repository } = usePreloadedQuery(RepositoryPageQuery, preloadedQuery);
   return (
-    <Container className="p-4">
+    <>
       <h5>Repo page</h5>
-      <div className="d-flex justify-content-end">
-        <Button as={NavLink} to="/repositories">
+      <div className="d-flex justify-content-end mb-2">
+        <Button as={Link} to="/repositories" variant="outline-secondary">
           Back to repos list
         </Button>
       </div>
-    </Container>
+      <Suspense fallback={<div>Loading repository information</div>}>
+        <RepositoryDetails fragmentRef={repository} />
+      </Suspense>
+    </>
   );
 };
 

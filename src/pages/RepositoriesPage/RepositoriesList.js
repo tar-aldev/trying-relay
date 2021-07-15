@@ -8,6 +8,7 @@ export const RespositoriesListFragment = graphql`
   fragment RepositoriesList_repositories on RepositoryConnection {
     edges {
       node {
+        id
         ...RepositoriesListItem_repository
       }
     }
@@ -15,14 +16,12 @@ export const RespositoriesListFragment = graphql`
 `;
 
 const RepositoriesList = ({ fragmentRef }) => {
-  const { match, router } = useRouter();
+  const { router } = useRouter();
   const { edges } = useFragment(RespositoriesListFragment, fragmentRef);
-  // const history = useHistory();
 
   const onNavigateToRepositoryDetails = useCallback(
-    (repoId) => {
-      router.push(`/repositories/${repoId}`);
-      // history.push(`/repositories/${repoId}`);
+    (repoName, repoOwner) => {
+      router.push(`/repositories/${repoName}/${repoOwner}`);
     },
     [router]
   );
@@ -32,8 +31,9 @@ const RepositoriesList = ({ fragmentRef }) => {
       {edges.map((edge) => {
         return (
           <RepositoryListItem
+            key={edge.node.id}
             fragmentRef={edge.node}
-            handleListItemClick={onNavigateToRepositoryDetails}
+            handleShowRepoDetails={onNavigateToRepositoryDetails}
           />
         );
       })}

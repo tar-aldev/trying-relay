@@ -8,23 +8,22 @@
 
 /*::
 import type { ReaderFragment } from 'relay-runtime';
-type RepositoriesListItem_repository$ref = any;
 import type { FragmentReference } from "relay-runtime";
-declare export opaque type RepositoriesList_repositories$ref: FragmentReference;
-declare export opaque type RepositoriesList_repositories$fragmentType: RepositoriesList_repositories$ref;
-export type RepositoriesList_repositories = {|
+declare export opaque type BranchesSearchableSelect_branches$ref: FragmentReference;
+declare export opaque type BranchesSearchableSelect_branches$fragmentType: BranchesSearchableSelect_branches$ref;
+export type BranchesSearchableSelect_branches = {|
   +edges: ?$ReadOnlyArray<?{|
     +node: ?{|
       +id: string,
-      +$fragmentRefs: RepositoriesListItem_repository$ref,
+      +name: string,
     |}
   |}>,
-  +$refType: RepositoriesList_repositories$ref,
+  +$refType: BranchesSearchableSelect_branches$ref,
 |};
-export type RepositoriesList_repositories$data = RepositoriesList_repositories;
-export type RepositoriesList_repositories$key = {
-  +$data?: RepositoriesList_repositories$data,
-  +$fragmentRefs: RepositoriesList_repositories$ref,
+export type BranchesSearchableSelect_branches$data = BranchesSearchableSelect_branches;
+export type BranchesSearchableSelect_branches$key = {
+  +$data?: BranchesSearchableSelect_branches$data,
+  +$fragmentRefs: BranchesSearchableSelect_branches$ref,
   ...
 };
 */
@@ -34,12 +33,12 @@ const node/*: ReaderFragment*/ = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "RepositoriesList_repositories",
+  "name": "BranchesSearchableSelect_branches",
   "selections": [
     {
       "alias": null,
       "args": null,
-      "concreteType": "RepositoryEdge",
+      "concreteType": "RefEdge",
       "kind": "LinkedField",
       "name": "edges",
       "plural": true,
@@ -47,7 +46,7 @@ const node/*: ReaderFragment*/ = {
         {
           "alias": null,
           "args": null,
-          "concreteType": "Repository",
+          "concreteType": "Ref",
           "kind": "LinkedField",
           "name": "node",
           "plural": false,
@@ -60,9 +59,11 @@ const node/*: ReaderFragment*/ = {
               "storageKey": null
             },
             {
+              "alias": null,
               "args": null,
-              "kind": "FragmentSpread",
-              "name": "RepositoriesListItem_repository"
+              "kind": "ScalarField",
+              "name": "name",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -71,10 +72,10 @@ const node/*: ReaderFragment*/ = {
       "storageKey": null
     }
   ],
-  "type": "RepositoryConnection",
+  "type": "RefConnection",
   "abstractKey": null
 };
 // prettier-ignore
-(node/*: any*/).hash = '96ff1b69ae702330310a356752d6f842';
+(node/*: any*/).hash = 'c7d568650d70a41bbbe39c45c599d5d8';
 
 module.exports = node;

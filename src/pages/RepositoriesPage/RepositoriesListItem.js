@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Image } from "react-bootstrap";
+import { Card, Image, Button } from "react-bootstrap";
 import graphql from "babel-plugin-relay/macro";
 import { useFragment } from "react-relay";
 
@@ -24,15 +24,15 @@ export const RepositoriesListItemFragment = graphql`
   }
 `;
 
-const RepositoriesListItem = ({ fragmentRef, handleListItemClick }) => {
+const RepositoriesListItem = ({ fragmentRef, handleShowRepoDetails }) => {
   const repository = useFragment(RepositoriesListItemFragment, fragmentRef);
 
-  const onListItemClick = () => {
-    handleListItemClick(repository.id);
+  const onShowRepoDetails = () => {
+    handleShowRepoDetails(repository.name, repository.owner.login);
   };
 
   return (
-    <Card key={repository.id} className="mb-2" onClick={onListItemClick}>
+    <Card key={repository.id} className="mb-2">
       <Card.Body>
         <Card.Title
           as="div"
@@ -55,10 +55,15 @@ const RepositoriesListItem = ({ fragmentRef, handleListItemClick }) => {
         </Card.Title>
         <Card.Text as="div">
           <a href={repository.url} target="_blank" rel="noopener noreferrer">
-            Link to repo
+            See on github
           </a>
 
           <p>Owner: {repository.owner.login}</p>
+          <div className="d-flex justify-content-end">
+            <Button variant="outline-primary" onClick={onShowRepoDetails}>
+              Show details
+            </Button>
+          </div>
         </Card.Text>
       </Card.Body>
     </Card>

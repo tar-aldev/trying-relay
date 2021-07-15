@@ -58,8 +58,8 @@ fragment RepositoriesListItem_repository on Repository {
 fragment RepositoriesList_repositories on RepositoryConnection {
   edges {
     node {
-      ...RepositoriesListItem_repository
       id
+      ...RepositoriesListItem_repository
     }
   }
 }
@@ -266,12 +266,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "34006c7ac80d7425f0f2e6d0f163705c",
+    "cacheID": "86d9489c98643300d01ea29021ece471",
     "id": null,
     "metadata": {},
     "name": "RepositoriesPageQuery",
     "operationKind": "query",
-    "text": "query RepositoriesPageQuery {\n  viewer {\n    repositories(first: 100, orderBy: {field: NAME, direction: ASC}) {\n      ...RepositoriesList_repositories\n    }\n    id\n  }\n}\n\nfragment RepositoriesListItem_repository on Repository {\n  id\n  name\n  url\n  collaborators {\n    edges {\n      node {\n        login\n        id\n      }\n    }\n  }\n  owner {\n    __typename\n    id\n    login\n    url\n    avatarUrl\n  }\n}\n\nfragment RepositoriesList_repositories on RepositoryConnection {\n  edges {\n    node {\n      ...RepositoriesListItem_repository\n      id\n    }\n  }\n}\n"
+    "text": "query RepositoriesPageQuery {\n  viewer {\n    repositories(first: 100, orderBy: {field: NAME, direction: ASC}) {\n      ...RepositoriesList_repositories\n    }\n    id\n  }\n}\n\nfragment RepositoriesListItem_repository on Repository {\n  id\n  name\n  url\n  collaborators {\n    edges {\n      node {\n        login\n        id\n      }\n    }\n  }\n  owner {\n    __typename\n    id\n    login\n    url\n    avatarUrl\n  }\n}\n\nfragment RepositoriesList_repositories on RepositoryConnection {\n  edges {\n    node {\n      id\n      ...RepositoriesListItem_repository\n    }\n  }\n}\n"
   }
 };
 })();
