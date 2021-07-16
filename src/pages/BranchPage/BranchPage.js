@@ -9,6 +9,12 @@ export const BranchPageQuery = graphql`
       id
       ... on Ref {
         name
+        repository {
+          name
+          owner {
+            login
+          }
+        }
         target {
           ... on Commit {
             ...CommitsListFragment_commits
@@ -23,10 +29,10 @@ const BranchPage = ({ data: queryRef }) => {
   const { node: branch } = usePreloadedQuery(BranchPageQuery, queryRef);
 
   return (
-    <div>
+    <>
       <BranchInfo branch={branch} />
       <CommitsList fragmentRef={branch.target} />
-    </div>
+    </>
   );
 };
 
