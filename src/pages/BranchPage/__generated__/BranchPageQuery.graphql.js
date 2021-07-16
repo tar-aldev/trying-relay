@@ -8,7 +8,7 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-type SelectedBranchCommits_commits$ref = any;
+type CommitsListFragment_commits$ref = any;
 export type BranchPageQueryVariables = {|
   id: string
 |};
@@ -17,7 +17,7 @@ export type BranchPageQueryResponse = {|
     +id: string,
     +name?: string,
     +target?: {|
-      +$fragmentRefs: SelectedBranchCommits_commits$ref
+      +$fragmentRefs: CommitsListFragment_commits$ref
     |},
   |}
 |};
@@ -40,7 +40,7 @@ query BranchPageQuery(
       target {
         __typename
         ... on Commit {
-          ...SelectedBranchCommits_commits
+          ...CommitsListFragment_commits
         }
         id
       }
@@ -48,19 +48,33 @@ query BranchPageQuery(
   }
 }
 
-fragment SelectedBranchCommits_commits on Commit {
-  history(first: 100) {
+fragment CommitItemFragment_commit on CommitEdge {
+  node {
+    author {
+      email
+      name
+    }
+    message
+    id
+  }
+}
+
+fragment CommitsListFragment_commits on Commit {
+  history(first: 10) {
     edges {
+      cursor
+      ...CommitItemFragment_commit
       node {
+        __typename
         id
-        author {
-          email
-          name
-        }
-        message
       }
     }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
   }
+  id
 }
 */
 
@@ -99,7 +113,14 @@ v4 = {
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
-};
+},
+v5 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 10
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -134,7 +155,7 @@ return {
                       {
                         "args": null,
                         "kind": "FragmentSpread",
-                        "name": "SelectedBranchCommits_commits"
+                        "name": "CommitsListFragment_commits"
                       }
                     ],
                     "type": "Commit",
@@ -189,13 +210,7 @@ return {
                     "selections": [
                       {
                         "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "first",
-                            "value": 100
-                          }
-                        ],
+                        "args": (v5/*: any*/),
                         "concreteType": "CommitHistoryConnection",
                         "kind": "LinkedField",
                         "name": "history",
@@ -212,12 +227,18 @@ return {
                               {
                                 "alias": null,
                                 "args": null,
+                                "kind": "ScalarField",
+                                "name": "cursor",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
                                 "concreteType": "Commit",
                                 "kind": "LinkedField",
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v2/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -243,15 +264,51 @@ return {
                                     "kind": "ScalarField",
                                     "name": "message",
                                     "storageKey": null
-                                  }
+                                  },
+                                  (v2/*: any*/),
+                                  (v4/*: any*/)
                                 ],
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "PageInfo",
+                            "kind": "LinkedField",
+                            "name": "pageInfo",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "endCursor",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "hasNextPage",
                                 "storageKey": null
                               }
                             ],
                             "storageKey": null
                           }
                         ],
-                        "storageKey": "history(first:100)"
+                        "storageKey": "history(first:10)"
+                      },
+                      {
+                        "alias": null,
+                        "args": (v5/*: any*/),
+                        "filters": null,
+                        "handle": "connection",
+                        "key": "SelectedBranchCommits_history",
+                        "kind": "LinkedHandle",
+                        "name": "history"
                       }
                     ],
                     "type": "Commit",
@@ -270,16 +327,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a8161307515fc4121eb2b5b435b51f05",
+    "cacheID": "e4938fc60b1c560132c16c638eb941c4",
     "id": null,
     "metadata": {},
     "name": "BranchPageQuery",
     "operationKind": "query",
-    "text": "query BranchPageQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    id\n    ... on Ref {\n      name\n      target {\n        __typename\n        ... on Commit {\n          ...SelectedBranchCommits_commits\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectedBranchCommits_commits on Commit {\n  history(first: 100) {\n    edges {\n      node {\n        id\n        author {\n          email\n          name\n        }\n        message\n      }\n    }\n  }\n}\n"
+    "text": "query BranchPageQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    id\n    ... on Ref {\n      name\n      target {\n        __typename\n        ... on Commit {\n          ...CommitsListFragment_commits\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CommitItemFragment_commit on CommitEdge {\n  node {\n    author {\n      email\n      name\n    }\n    message\n    id\n  }\n}\n\nfragment CommitsListFragment_commits on Commit {\n  history(first: 10) {\n    edges {\n      cursor\n      ...CommitItemFragment_commit\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd8ef2f21f715f344bc5a076fee517d78';
+(node/*: any*/).hash = 'fa2e1d186383201ceabf7c79e3d022e4';
 
 module.exports = node;
