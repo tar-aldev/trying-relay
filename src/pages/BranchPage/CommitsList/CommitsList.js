@@ -1,7 +1,8 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React from "react";
-import { Button, Spinner } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { usePaginationFragment } from "react-relay";
+import ShownPaginationCount from "../../../shared/components/ShownPaginationCount";
 import CommitItem from "./CommitItem";
 
 export const CommitsListFragment = graphql`
@@ -36,17 +37,14 @@ const CommitsList = ({ fragmentRef }) => {
     loadNext(10);
   };
 
-  console.log("isLoadingNext", isLoadingNext, history);
   return (
     <div>
-      <p>
-        Showing {history.edges.length} of {history.totalCount} commits
-      </p>
       {history.edges.map((edge) => {
         return <CommitItem key={edge.cursor} fragmentRef={edge} />;
       })}
+
       {history.pageInfo.hasNextPage && (
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center mb-3">
           <Button
             onClick={onLoadMoreCommits}
             disabled={isLoadingNext}
@@ -56,6 +54,10 @@ const CommitsList = ({ fragmentRef }) => {
           </Button>
         </div>
       )}
+      <ShownPaginationCount
+        showing={history.edges.length}
+        total={history.totalCount}
+      />
     </div>
   );
 };
