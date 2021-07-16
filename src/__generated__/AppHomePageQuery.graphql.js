@@ -9,19 +9,19 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type HomePageContainer_viewer$ref = any;
-export type HomePageQueryVariables = {||};
-export type HomePageQueryResponse = {|
+export type AppHomePageQueryVariables = {||};
+export type AppHomePageQueryResponse = {|
   +$fragmentRefs: HomePageContainer_viewer$ref
 |};
-export type HomePageQuery = {|
-  variables: HomePageQueryVariables,
-  response: HomePageQueryResponse,
+export type AppHomePageQuery = {|
+  variables: AppHomePageQueryVariables,
+  response: AppHomePageQueryResponse,
 |};
 */
 
 
 /*
-query HomePageQuery {
+query AppHomePageQuery {
   ...HomePageContainer_viewer
 }
 
@@ -40,7 +40,7 @@ const node/*: ConcreteRequest*/ = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "HomePageQuery",
+    "name": "AppHomePageQuery",
     "selections": [
       {
         "args": null,
@@ -55,7 +55,7 @@ const node/*: ConcreteRequest*/ = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "HomePageQuery",
+    "name": "AppHomePageQuery",
     "selections": [
       {
         "alias": null,
@@ -99,15 +99,15 @@ const node/*: ConcreteRequest*/ = {
     ]
   },
   "params": {
-    "cacheID": "a2ac2250758df1088e5bc7f9aad404e8",
+    "cacheID": "65d11b304a54c8f93a1bb2bfb5ddb9b9",
     "id": null,
     "metadata": {},
-    "name": "HomePageQuery",
+    "name": "AppHomePageQuery",
     "operationKind": "query",
-    "text": "query HomePageQuery {\n  ...HomePageContainer_viewer\n}\n\nfragment HomePageContainer_viewer on Query {\n  viewer {\n    avatarUrl\n    url\n    email\n    id\n  }\n}\n"
+    "text": "query AppHomePageQuery {\n  ...HomePageContainer_viewer\n}\n\nfragment HomePageContainer_viewer on Query {\n  viewer {\n    avatarUrl\n    url\n    email\n    id\n  }\n}\n"
   }
 };
 // prettier-ignore
-(node/*: any*/).hash = '9486b8777899b1007c9deedbb64f6124';
+(node/*: any*/).hash = '5f5bf12833e3d2a214e06ab6006088af';
 
 module.exports = node;
