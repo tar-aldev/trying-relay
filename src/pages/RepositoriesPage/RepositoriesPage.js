@@ -16,6 +16,7 @@ export const RepositoriesPageQuery = graphql`
 `;
 
 function RepositoriesPage(props) {
+  console.log("props", props);
   const data = usePreloadedQuery(RepositoriesPageQuery, props.data);
   return (
     <>

@@ -15,6 +15,7 @@ export type SelectedBranchCommits_commits = {|
   +history: {|
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{|
+        +id: string,
         +author: ?{|
           +email: ?string,
           +name: ?string,
@@ -73,6 +74,13 @@ const node/*: ReaderFragment*/ = {
                 {
                   "alias": null,
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "GitActor",
                   "kind": "LinkedField",
                   "name": "author",
@@ -116,6 +124,6 @@ const node/*: ReaderFragment*/ = {
   "abstractKey": null
 };
 // prettier-ignore
-(node/*: any*/).hash = '59314336d1fd9db4d1d6716dcf9674eb';
+(node/*: any*/).hash = 'c49dba2dea94e7481ce57739849bb29e';
 
 module.exports = node;

@@ -9,7 +9,6 @@
 /*::
 import type { ReaderFragment } from 'relay-runtime';
 type BranchesSearchableSelect_branches$ref = any;
-type SelectedBranchInfo_branch$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type RepositoryDetails_repository$ref: FragmentReference;
 declare export opaque type RepositoryDetails_repository$fragmentType: RepositoryDetails_repository$ref;
@@ -17,13 +16,11 @@ export type RepositoryDetails_repository = {|
   +name: string,
   +descriptionHTML: any,
   +defaultBranchRef: ?{|
-    +name: string
+    +id: string,
+    +name: string,
   |},
   +refs: ?{|
     +$fragmentRefs: BranchesSearchableSelect_branches$ref
-  |},
-  +ref: ?{|
-    +$fragmentRefs: SelectedBranchInfo_branch$ref
   |},
   +$refType: RepositoryDetails_repository$ref,
 |};
@@ -66,6 +63,13 @@ return {
       "name": "defaultBranchRef",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
         (v0/*: any*/)
       ],
       "storageKey": null
@@ -96,28 +100,6 @@ return {
         }
       ],
       "storageKey": "refs(first:100,refPrefix:\"refs/heads/\")"
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "qualifiedName",
-          "value": "feature/auth"
-        }
-      ],
-      "concreteType": "Ref",
-      "kind": "LinkedField",
-      "name": "ref",
-      "plural": false,
-      "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "SelectedBranchInfo_branch"
-        }
-      ],
-      "storageKey": "ref(qualifiedName:\"feature/auth\")"
     }
   ],
   "type": "Repository",
@@ -125,6 +107,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '6b43dba0f9ab531e7951c1d2089a085a';
+(node/*: any*/).hash = '72bdd935269c511311f45208f95d8c27';
 
 module.exports = node;

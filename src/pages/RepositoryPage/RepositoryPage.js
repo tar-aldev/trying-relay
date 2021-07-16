@@ -12,8 +12,10 @@ export const RepositoryPageQuery = graphql`
     }
   }
 `;
-const RepositoryPage = ({ data: preloadedQuery }) => {
+
+const RepositoryPage = ({ data: preloadedQuery, branchInfo }) => {
   const { repository } = usePreloadedQuery(RepositoryPageQuery, preloadedQuery);
+
   return (
     <>
       <h5>Repo page</h5>

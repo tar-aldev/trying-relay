@@ -1,31 +1,36 @@
-import React from "react";
 import { graphql } from "babel-plugin-relay/macro";
+import { useRouter } from "found";
+import React, { useCallback } from "react";
 import { useFragment } from "react-relay";
+import BranchesSearchableSelect from "./BranchesSearchableSelect";
 
 export const RepositoryDetailsFragment = graphql`
   fragment RepositoryDetails_repository on Repository {
     name
     descriptionHTML
     defaultBranchRef {
+      id
       name
     }
     # the branches repository has
     refs(first: 100, refPrefix: "refs/heads/") {
       ...BranchesSearchableSelect_branches
     }
-    # selected branch from searchable select
-    # TODO: make it come from variable
-    ref(qualifiedName: "") {
-      ...SelectedBranchInfo_branch
-    }
   }
 `;
 
 const RepositoryDetails = ({ fragmentRef }) => {
-  console.log("fragmentRef", fragmentRef);
+  const {
+    router,
+    match: { params },
+  } = useRouter();
   const repository = useFragment(RepositoryDetailsFragment, fragmentRef);
-
-  console.log("repository", repository);
+  const handleBranchSelect = useCallback(
+    (branchId) => {
+      router.push(`/branches/${branchId}`);
+    },
+    [router]
+  );
 
   return (
     <div>
@@ -39,8 +44,22 @@ const RepositoryDetails = ({ fragmentRef }) => {
           </span>
         </p>
       </div>
-      {/* <BranchesSearchableSelect /> */}
-      {/* <SelectedBranchInfo /> */}
+      <BranchesSearchableSelect
+        fragmentRef={repository.refs}
+        selectedBranchId={params.branchId}
+        defaultBranchName={repository.defaultBranchRef.name}
+        handleBranchSelect={handleBranchSelect}
+      />
+
+      {/* <div className="mt-2">
+        {selectedBranchId ? (
+          <Suspense fallback={<div>Loading Selected branch Info</div>}>
+            <SelectedBranchInfo queryRef={selectedBranchQueryRef} />
+          </Suspense>
+        ) : (
+          <p>No branch selected yet</p>
+        )}
+      </div> */}
     </div>
   );
 };

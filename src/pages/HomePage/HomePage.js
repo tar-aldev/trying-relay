@@ -18,6 +18,7 @@ export const HomePageQuery = graphql`
 const HomePage = (props) => {
   const query = usePreloadedQuery(HomePageQuery, props.data);
 
+  console.log("props", props);
   return (
     <Container>
       <h4>Home page</h4>

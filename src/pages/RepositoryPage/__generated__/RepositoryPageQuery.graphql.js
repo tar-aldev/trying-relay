@@ -49,39 +49,11 @@ fragment RepositoryDetails_repository on Repository {
   name
   descriptionHTML
   defaultBranchRef {
-    name
     id
+    name
   }
   refs(first: 100, refPrefix: "refs/heads/") {
     ...BranchesSearchableSelect_branches
-  }
-  ref(qualifiedName: "feature/auth") {
-    ...SelectedBranchInfo_branch
-    id
-  }
-}
-
-fragment SelectedBranchCommits_commits on Commit {
-  history(first: 100) {
-    edges {
-      node {
-        author {
-          email
-          name
-        }
-        message
-        id
-      }
-    }
-  }
-}
-
-fragment SelectedBranchInfo_branch on Ref {
-  name
-  target {
-    __typename
-    ...SelectedBranchCommits_commits
-    id
   }
 }
 */
@@ -125,11 +97,10 @@ v3 = {
   "name": "id",
   "storageKey": null
 },
-v4 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 100
-};
+v4 = [
+  (v3/*: any*/),
+  (v2/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -186,16 +157,17 @@ return {
             "kind": "LinkedField",
             "name": "defaultBranchRef",
             "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/)
-            ],
+            "selections": (v4/*: any*/),
             "storageKey": null
           },
           {
             "alias": null,
             "args": [
-              (v4/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 100
+              },
               {
                 "kind": "Literal",
                 "name": "refPrefix",
@@ -222,10 +194,7 @@ return {
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
-                    "selections": [
-                      (v3/*: any*/),
-                      (v2/*: any*/)
-                    ],
+                    "selections": (v4/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -234,113 +203,6 @@ return {
             ],
             "storageKey": "refs(first:100,refPrefix:\"refs/heads/\")"
           },
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "qualifiedName",
-                "value": "feature/auth"
-              }
-            ],
-            "concreteType": "Ref",
-            "kind": "LinkedField",
-            "name": "ref",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": null,
-                "kind": "LinkedField",
-                "name": "target",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "__typename",
-                    "storageKey": null
-                  },
-                  (v3/*: any*/),
-                  {
-                    "kind": "InlineFragment",
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": [
-                          (v4/*: any*/)
-                        ],
-                        "concreteType": "CommitHistoryConnection",
-                        "kind": "LinkedField",
-                        "name": "history",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "CommitEdge",
-                            "kind": "LinkedField",
-                            "name": "edges",
-                            "plural": true,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Commit",
-                                "kind": "LinkedField",
-                                "name": "node",
-                                "plural": false,
-                                "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "concreteType": "GitActor",
-                                    "kind": "LinkedField",
-                                    "name": "author",
-                                    "plural": false,
-                                    "selections": [
-                                      {
-                                        "alias": null,
-                                        "args": null,
-                                        "kind": "ScalarField",
-                                        "name": "email",
-                                        "storageKey": null
-                                      },
-                                      (v2/*: any*/)
-                                    ],
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "message",
-                                    "storageKey": null
-                                  },
-                                  (v3/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": "history(first:100)"
-                      }
-                    ],
-                    "type": "Commit",
-                    "abstractKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              (v3/*: any*/)
-            ],
-            "storageKey": "ref(qualifiedName:\"feature/auth\")"
-          },
           (v3/*: any*/)
         ],
         "storageKey": null
@@ -348,12 +210,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "980e5dd6f1e73510fcea1d6e1af43802",
+    "cacheID": "ef75568fdce90934d5823ed388468621",
     "id": null,
     "metadata": {},
     "name": "RepositoryPageQuery",
     "operationKind": "query",
-    "text": "query RepositoryPageQuery(\n  $name: String!\n  $owner: String!\n) {\n  repository(name: $name, owner: $owner) {\n    ...RepositoryDetails_repository\n    id\n  }\n}\n\nfragment BranchesSearchableSelect_branches on RefConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n\nfragment RepositoryDetails_repository on Repository {\n  name\n  descriptionHTML\n  defaultBranchRef {\n    name\n    id\n  }\n  refs(first: 100, refPrefix: \"refs/heads/\") {\n    ...BranchesSearchableSelect_branches\n  }\n  ref(qualifiedName: \"feature/auth\") {\n    ...SelectedBranchInfo_branch\n    id\n  }\n}\n\nfragment SelectedBranchCommits_commits on Commit {\n  history(first: 100) {\n    edges {\n      node {\n        author {\n          email\n          name\n        }\n        message\n        id\n      }\n    }\n  }\n}\n\nfragment SelectedBranchInfo_branch on Ref {\n  name\n  target {\n    __typename\n    ...SelectedBranchCommits_commits\n    id\n  }\n}\n"
+    "text": "query RepositoryPageQuery(\n  $name: String!\n  $owner: String!\n) {\n  repository(name: $name, owner: $owner) {\n    ...RepositoryDetails_repository\n    id\n  }\n}\n\nfragment BranchesSearchableSelect_branches on RefConnection {\n  edges {\n    node {\n      id\n      name\n    }\n  }\n}\n\nfragment RepositoryDetails_repository on Repository {\n  name\n  descriptionHTML\n  defaultBranchRef {\n    id\n    name\n  }\n  refs(first: 100, refPrefix: \"refs/heads/\") {\n    ...BranchesSearchableSelect_branches\n  }\n}\n"
   }
 };
 })();
