@@ -6,12 +6,14 @@ import RelayEnvironment from "../../relay/Environment";
 
 const MainLayout = ({ children }) => {
   return (
-    <RelayEnvironmentProvider environment={RelayEnvironment}>
-      <Header />
-      <Suspense fallback={<div>Loading...</div>}>
-        <Container className="p-2">{children}</Container>
-      </Suspense>
-    </RelayEnvironmentProvider>
+    <div>
+      <RelayEnvironmentProvider environment={RelayEnvironment}>
+        <Header />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Container className="p-2">{children}</Container>
+        </Suspense>
+      </RelayEnvironmentProvider>
+    </div>
   );
 };
 
