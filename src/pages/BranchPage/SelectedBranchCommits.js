@@ -1,6 +1,6 @@
-import React from "react";
 import { graphql } from "babel-plugin-relay/macro";
-import { Card, ListGroup } from "react-bootstrap";
+import React from "react";
+import { Card } from "react-bootstrap";
 import { useFragment } from "react-relay";
 
 export const SelectedBranchCommitsFragment = graphql`

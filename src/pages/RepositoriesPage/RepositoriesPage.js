@@ -1,7 +1,6 @@
+import { graphql } from "babel-plugin-relay/macro";
 import React, { Suspense } from "react";
 import { usePreloadedQuery } from "react-relay";
-import { graphql } from "babel-plugin-relay/macro";
-import RepositoriesContainer from "./RepositoriesContainer";
 import RepositoriesList from "./RepositoriesList";
 
 export const RepositoriesPageQuery = graphql`

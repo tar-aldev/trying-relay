@@ -1,6 +1,5 @@
-import { usePreloadedQuery } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
-import { Card, ListGroup } from "react-bootstrap";
+import { usePreloadedQuery } from "react-relay";
 import SelectedBranchCommits from "./SelectedBranchCommits";
 
 export const BranchPageQuery = graphql`
