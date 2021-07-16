@@ -1,5 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { usePreloadedQuery } from "react-relay";
+import BranchInfo from "./BranchInfo/BranchInfo";
 import CommitsList from "./CommitsList/CommitsList";
 
 export const BranchPageQuery = graphql`
@@ -23,9 +24,7 @@ const BranchPage = ({ data: queryRef }) => {
 
   return (
     <div>
-      <h6>
-        Commits for <span className="text-primary">{branch.name}</span> branch
-      </h6>
+      <BranchInfo branch={branch} />
       <CommitsList fragmentRef={branch.target} />
     </div>
   );

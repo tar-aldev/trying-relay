@@ -13,6 +13,7 @@ declare export opaque type CommitItemFragment_commit$ref: FragmentReference;
 declare export opaque type CommitItemFragment_commit$fragmentType: CommitItemFragment_commit$ref;
 export type CommitItemFragment_commit = {|
   +node: ?{|
+    +committedDate: any,
     +author: ?{|
       +email: ?string,
       +name: ?string,
@@ -44,6 +45,13 @@ const node/*: ReaderFragment*/ = {
       "name": "node",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "committedDate",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -84,6 +92,6 @@ const node/*: ReaderFragment*/ = {
   "abstractKey": null
 };
 // prettier-ignore
-(node/*: any*/).hash = '800da3b63ab2461285ba811144bc591a';
+(node/*: any*/).hash = 'e412517d021b4fd8600046b884f1c0cd';
 
 module.exports = node;

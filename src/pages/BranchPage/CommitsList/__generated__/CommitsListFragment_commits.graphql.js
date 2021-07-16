@@ -14,10 +14,14 @@ declare export opaque type CommitsListFragment_commits$ref: FragmentReference;
 declare export opaque type CommitsListFragment_commits$fragmentType: CommitsListFragment_commits$ref;
 export type CommitsListFragment_commits = {|
   +history: {|
+    +totalCount: number,
+    +pageInfo: {|
+      +hasNextPage: boolean
+    |},
     +edges: ?$ReadOnlyArray<?{|
       +cursor: string,
       +$fragmentRefs: CommitItemFragment_commit$ref,
-    |}>
+    |}>,
   |},
   +id: string,
   +$refType: CommitsListFragment_commits$ref,
@@ -87,6 +91,38 @@ return {
         {
           "alias": null,
           "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "CommitEdge",
           "kind": "LinkedField",
           "name": "edges",
@@ -124,31 +160,6 @@ return {
             }
           ],
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasNextPage",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -166,6 +177,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '06767348817cacff452ed19cd862605b';
+(node/*: any*/).hash = '289d2704dfb787a78b444dad74ee9f63';
 
 module.exports = node;

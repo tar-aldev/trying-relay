@@ -1,9 +1,8 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import Router from "./core/Router/Router";
-import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import "./styles/bootstrap-overrides.scss";
 
 ReactDOM.render(
   <React.StrictMode>

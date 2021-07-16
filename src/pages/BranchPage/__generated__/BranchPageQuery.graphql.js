@@ -50,6 +50,7 @@ query BranchPageQuery(
 
 fragment CommitItemFragment_commit on CommitEdge {
   node {
+    committedDate
     author {
       email
       name
@@ -61,6 +62,11 @@ fragment CommitItemFragment_commit on CommitEdge {
 
 fragment CommitsListFragment_commits on Commit {
   history(first: 10) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
     edges {
       cursor
       ...CommitItemFragment_commit
@@ -68,10 +74,6 @@ fragment CommitsListFragment_commits on Commit {
         __typename
         id
       }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
     }
   }
   id
@@ -219,6 +221,38 @@ return {
                           {
                             "alias": null,
                             "args": null,
+                            "kind": "ScalarField",
+                            "name": "totalCount",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "PageInfo",
+                            "kind": "LinkedField",
+                            "name": "pageInfo",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "hasNextPage",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "endCursor",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
                             "concreteType": "CommitEdge",
                             "kind": "LinkedField",
                             "name": "edges",
@@ -239,6 +273,13 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "committedDate",
+                                    "storageKey": null
+                                  },
                                   {
                                     "alias": null,
                                     "args": null,
@@ -268,31 +309,6 @@ return {
                                   (v2/*: any*/),
                                   (v4/*: any*/)
                                 ],
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "PageInfo",
-                            "kind": "LinkedField",
-                            "name": "pageInfo",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "endCursor",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "hasNextPage",
                                 "storageKey": null
                               }
                             ],
@@ -327,12 +343,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e4938fc60b1c560132c16c638eb941c4",
+    "cacheID": "be1cc1def987b8490d0de44ad9cc3002",
     "id": null,
     "metadata": {},
     "name": "BranchPageQuery",
     "operationKind": "query",
-    "text": "query BranchPageQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    id\n    ... on Ref {\n      name\n      target {\n        __typename\n        ... on Commit {\n          ...CommitsListFragment_commits\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CommitItemFragment_commit on CommitEdge {\n  node {\n    author {\n      email\n      name\n    }\n    message\n    id\n  }\n}\n\nfragment CommitsListFragment_commits on Commit {\n  history(first: 10) {\n    edges {\n      cursor\n      ...CommitItemFragment_commit\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n"
+    "text": "query BranchPageQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    id\n    ... on Ref {\n      name\n      target {\n        __typename\n        ... on Commit {\n          ...CommitsListFragment_commits\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CommitItemFragment_commit on CommitEdge {\n  node {\n    committedDate\n    author {\n      email\n      name\n    }\n    message\n    id\n  }\n}\n\nfragment CommitsListFragment_commits on Commit {\n  history(first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      cursor\n      ...CommitItemFragment_commit\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  id\n}\n"
   }
 };
 })();

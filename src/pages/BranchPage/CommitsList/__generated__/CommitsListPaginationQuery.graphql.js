@@ -41,6 +41,7 @@ query CommitsListPaginationQuery(
 
 fragment CommitItemFragment_commit on CommitEdge {
   node {
+    committedDate
     author {
       email
       name
@@ -52,6 +53,11 @@ fragment CommitItemFragment_commit on CommitEdge {
 
 fragment CommitsListFragment_commits_1G22uz on Commit {
   history(first: $count, after: $cursor) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
     edges {
       cursor
       ...CommitItemFragment_commit
@@ -59,10 +65,6 @@ fragment CommitsListFragment_commits_1G22uz on Commit {
         __typename
         id
       }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
     }
   }
   id
@@ -188,6 +190,38 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "totalCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageInfo",
+                    "kind": "LinkedField",
+                    "name": "pageInfo",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "hasNextPage",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "endCursor",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "CommitEdge",
                     "kind": "LinkedField",
                     "name": "edges",
@@ -208,6 +242,13 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "committedDate",
+                            "storageKey": null
+                          },
                           {
                             "alias": null,
                             "args": null,
@@ -247,31 +288,6 @@ return {
                       }
                     ],
                     "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PageInfo",
-                    "kind": "LinkedField",
-                    "name": "pageInfo",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "endCursor",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "hasNextPage",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -295,16 +311,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "536e1235307def90cdbaee49f4827e49",
+    "cacheID": "066d7034d87ba2cdcafc549c1213b8eb",
     "id": null,
     "metadata": {},
     "name": "CommitsListPaginationQuery",
     "operationKind": "query",
-    "text": "query CommitsListPaginationQuery(\n  $count: Int = 10\n  $cursor: String\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...CommitsListFragment_commits_1G22uz\n    id\n  }\n}\n\nfragment CommitItemFragment_commit on CommitEdge {\n  node {\n    author {\n      email\n      name\n    }\n    message\n    id\n  }\n}\n\nfragment CommitsListFragment_commits_1G22uz on Commit {\n  history(first: $count, after: $cursor) {\n    edges {\n      cursor\n      ...CommitItemFragment_commit\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n"
+    "text": "query CommitsListPaginationQuery(\n  $count: Int = 10\n  $cursor: String\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...CommitsListFragment_commits_1G22uz\n    id\n  }\n}\n\nfragment CommitItemFragment_commit on CommitEdge {\n  node {\n    committedDate\n    author {\n      email\n      name\n    }\n    message\n    id\n  }\n}\n\nfragment CommitsListFragment_commits_1G22uz on Commit {\n  history(first: $count, after: $cursor) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      cursor\n      ...CommitItemFragment_commit\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '06767348817cacff452ed19cd862605b';
+(node/*: any*/).hash = '289d2704dfb787a78b444dad74ee9f63';
 
 module.exports = node;
