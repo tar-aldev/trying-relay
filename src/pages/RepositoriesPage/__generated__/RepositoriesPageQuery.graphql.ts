@@ -1,27 +1,22 @@
-/**
- * @flow
- */
-
+/* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
-'use strict';
+import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type RepositoriesPageQueryVariables = {};
+export type RepositoriesPageQueryResponse = {
+    readonly viewer: {
+        readonly repositories: {
+            readonly " $fragmentRefs": FragmentRefs<"RepositoriesList_repositories">;
+        };
+    };
+};
+export type RepositoriesPageQuery = {
+    readonly response: RepositoriesPageQueryResponse;
+    readonly variables: RepositoriesPageQueryVariables;
+};
 
-/*::
-import type { ConcreteRequest } from 'relay-runtime';
-type RepositoriesList_repositories$ref = any;
-export type RepositoriesPageQueryVariables = {||};
-export type RepositoriesPageQueryResponse = {|
-  +viewer: {|
-    +repositories: {|
-      +$fragmentRefs: RepositoriesList_repositories$ref
-    |}
-  |}
-|};
-export type RepositoriesPageQuery = {|
-  variables: RepositoriesPageQueryVariables,
-  response: RepositoriesPageQueryResponse,
-|};
-*/
 
 
 /*
@@ -65,7 +60,7 @@ fragment RepositoriesList_repositories on RepositoryConnection {
 }
 */
 
-const node/*: ConcreteRequest*/ = (function(){
+const node: ConcreteRequest = (function(){
 var v0 = [
   {
     "kind": "Literal",
@@ -275,7 +270,5 @@ return {
   }
 };
 })();
-// prettier-ignore
-(node/*: any*/).hash = 'a11457caa9a4f464f856f8beb9d4525f';
-
-module.exports = node;
+(node as any).hash = 'a11457caa9a4f464f856f8beb9d4525f';
+export default node;

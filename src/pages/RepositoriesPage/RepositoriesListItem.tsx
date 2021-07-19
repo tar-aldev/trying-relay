@@ -1,9 +1,14 @@
-import React from "react";
-import { Card, Image, Button } from "react-bootstrap";
-import graphql from "babel-plugin-relay/macro";
+import { graphql } from "babel-plugin-relay/macro";
+import { FC } from "react";
+import { Button, Card, Image } from "react-bootstrap";
 import { useFragment } from "react-relay";
+import { PropsWithFragment } from "../../interfaces/PropsWithFragment";
+import {
+  RepositoriesListItem_repository,
+  RepositoriesListItem_repository$key,
+} from "./__generated__/RepositoriesListItem_repository.graphql";
 
-export const RepositoriesListItemFragment = graphql`
+export const REPOSITORIES_LIST_ITEM_FRAGMENT = graphql`
   fragment RepositoriesListItem_repository on Repository {
     id
     name
@@ -24,8 +29,19 @@ export const RepositoriesListItemFragment = graphql`
   }
 `;
 
-const RepositoriesListItem = ({ fragmentRef, handleShowRepoDetails }) => {
-  const repository = useFragment(RepositoriesListItemFragment, fragmentRef);
+export interface RepositoriesListItemProps
+  extends PropsWithFragment<RepositoriesListItem_repository$key> {
+  handleShowRepoDetails: (
+    repoName: RepositoriesListItem_repository["name"],
+    ownerLogin: RepositoriesListItem_repository["owner"]["login"]
+  ) => void;
+}
+
+const RepositoriesListItem: FC<RepositoriesListItemProps> = ({
+  fragmentRef,
+  handleShowRepoDetails,
+}) => {
+  const repository = useFragment(REPOSITORIES_LIST_ITEM_FRAGMENT, fragmentRef);
 
   const onShowRepoDetails = () => {
     handleShowRepoDetails(repository.name, repository.owner.login);
@@ -40,12 +56,12 @@ const RepositoriesListItem = ({ fragmentRef, handleShowRepoDetails }) => {
         >
           <h5>{repository.name}</h5>
           <a
-            href={repository.owner.url}
+            href={repository.owner.url as string}
             target="_blank"
             rel="noopener noreferrer"
           >
             <Image
-              src={repository.owner.avatarUrl}
+              src={repository.owner.avatarUrl as string}
               alt="repo owner avatar"
               width={50}
               height={50}
@@ -54,7 +70,11 @@ const RepositoriesListItem = ({ fragmentRef, handleShowRepoDetails }) => {
           </a>
         </Card.Title>
         <Card.Text as="div">
-          <a href={repository.url} target="_blank" rel="noopener noreferrer">
+          <a
+            href={repository.url as string}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             See on github
           </a>
 

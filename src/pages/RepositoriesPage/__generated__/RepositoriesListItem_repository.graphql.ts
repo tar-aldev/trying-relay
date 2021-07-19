@@ -1,45 +1,37 @@
-/**
- * @flow
- */
-
+/* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
-'use strict';
-
-/*::
-import type { ReaderFragment } from 'relay-runtime';
-import type { FragmentReference } from "relay-runtime";
-declare export opaque type RepositoriesListItem_repository$ref: FragmentReference;
-declare export opaque type RepositoriesListItem_repository$fragmentType: RepositoriesListItem_repository$ref;
-export type RepositoriesListItem_repository = {|
-  +id: string,
-  +name: string,
-  +url: any,
-  +collaborators: ?{|
-    +edges: ?$ReadOnlyArray<?{|
-      +node: {|
-        +login: string
-      |}
-    |}>
-  |},
-  +owner: {|
-    +id: string,
-    +login: string,
-    +url: any,
-    +avatarUrl: any,
-  |},
-  +$refType: RepositoriesListItem_repository$ref,
-|};
+import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type RepositoriesListItem_repository = {
+    readonly id: string;
+    readonly name: string;
+    readonly url: unknown;
+    readonly collaborators: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly login: string;
+            };
+        } | null> | null;
+    } | null;
+    readonly owner: {
+        readonly id: string;
+        readonly login: string;
+        readonly url: unknown;
+        readonly avatarUrl: unknown;
+    };
+    readonly " $refType": "RepositoriesListItem_repository";
+};
 export type RepositoriesListItem_repository$data = RepositoriesListItem_repository;
 export type RepositoriesListItem_repository$key = {
-  +$data?: RepositoriesListItem_repository$data,
-  +$fragmentRefs: RepositoriesListItem_repository$ref,
-  ...
+    readonly " $data"?: RepositoriesListItem_repository$data;
+    readonly " $fragmentRefs": FragmentRefs<"RepositoriesListItem_repository">;
 };
-*/
 
 
-const node/*: ReaderFragment*/ = (function(){
+
+const node: ReaderFragment = (function(){
 var v0 = {
   "alias": null,
   "args": null,
@@ -136,7 +128,5 @@ return {
   "abstractKey": null
 };
 })();
-// prettier-ignore
-(node/*: any*/).hash = 'ae427854feb5e8b157cf3f90c528010b';
-
-module.exports = node;
+(node as any).hash = 'ae427854feb5e8b157cf3f90c528010b';
+export default node;

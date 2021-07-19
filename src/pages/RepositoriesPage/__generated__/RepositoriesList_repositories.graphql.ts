@@ -1,36 +1,27 @@
-/**
- * @flow
- */
-
+/* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
-'use strict';
-
-/*::
-import type { ReaderFragment } from 'relay-runtime';
-type RepositoriesListItem_repository$ref = any;
-import type { FragmentReference } from "relay-runtime";
-declare export opaque type RepositoriesList_repositories$ref: FragmentReference;
-declare export opaque type RepositoriesList_repositories$fragmentType: RepositoriesList_repositories$ref;
-export type RepositoriesList_repositories = {|
-  +edges: ?$ReadOnlyArray<?{|
-    +node: ?{|
-      +id: string,
-      +$fragmentRefs: RepositoriesListItem_repository$ref,
-    |}
-  |}>,
-  +$refType: RepositoriesList_repositories$ref,
-|};
+import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type RepositoriesList_repositories = {
+    readonly edges: ReadonlyArray<{
+        readonly node: {
+            readonly id: string;
+            readonly " $fragmentRefs": FragmentRefs<"RepositoriesListItem_repository">;
+        } | null;
+    } | null> | null;
+    readonly " $refType": "RepositoriesList_repositories";
+};
 export type RepositoriesList_repositories$data = RepositoriesList_repositories;
 export type RepositoriesList_repositories$key = {
-  +$data?: RepositoriesList_repositories$data,
-  +$fragmentRefs: RepositoriesList_repositories$ref,
-  ...
+    readonly " $data"?: RepositoriesList_repositories$data;
+    readonly " $fragmentRefs": FragmentRefs<"RepositoriesList_repositories">;
 };
-*/
 
 
-const node/*: ReaderFragment*/ = {
+
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -74,7 +65,5 @@ const node/*: ReaderFragment*/ = {
   "type": "RepositoryConnection",
   "abstractKey": null
 };
-// prettier-ignore
-(node/*: any*/).hash = '96ff1b69ae702330310a356752d6f842';
-
-module.exports = node;
+(node as any).hash = '96ff1b69ae702330310a356752d6f842';
+export default node;
