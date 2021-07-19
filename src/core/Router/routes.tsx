@@ -8,8 +8,9 @@ import RepositoriesPage, {
 } from "../../pages/RepositoriesPage/RepositoriesPage";
 import { RepositoriesPageQuery } from "../../pages/RepositoriesPage/__generated__/RepositoriesPageQuery.graphql";
 import RepositoryPage, {
-  RepositoryPageQuery,
+  REPOSITORY_PAGE_QUERY,
 } from "../../pages/RepositoryPage/RepositoryPage";
+import { RepositoryPageQuery } from "../../pages/RepositoryPage/__generated__/RepositoryPageQuery.graphql";
 import Environment from "../../relay/Environment";
 import MainLayout from "../layouts/MainLayout";
 
@@ -37,7 +38,7 @@ export const routes: RouteConfig = [
         path: "repositories/:name/:owner",
         Component: RepositoryPage,
         getData: ({ routeParams }) =>
-          loadQuery(Environment, RepositoryPageQuery, {
+          loadQuery<RepositoryPageQuery>(Environment, REPOSITORY_PAGE_QUERY, {
             name: routeParams.name,
             owner: routeParams.owner,
           }),

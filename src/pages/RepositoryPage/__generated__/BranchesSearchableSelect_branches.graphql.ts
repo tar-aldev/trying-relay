@@ -1,35 +1,27 @@
-/**
- * @flow
- */
-
+/* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
-'use strict';
-
-/*::
-import type { ReaderFragment } from 'relay-runtime';
-import type { FragmentReference } from "relay-runtime";
-declare export opaque type BranchesSearchableSelect_branches$ref: FragmentReference;
-declare export opaque type BranchesSearchableSelect_branches$fragmentType: BranchesSearchableSelect_branches$ref;
-export type BranchesSearchableSelect_branches = {|
-  +edges: ?$ReadOnlyArray<?{|
-    +node: ?{|
-      +id: string,
-      +name: string,
-    |}
-  |}>,
-  +$refType: BranchesSearchableSelect_branches$ref,
-|};
+import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type BranchesSearchableSelect_branches = {
+    readonly edges: ReadonlyArray<{
+        readonly node: {
+            readonly id: string;
+            readonly name: string;
+        } | null;
+    } | null> | null;
+    readonly " $refType": "BranchesSearchableSelect_branches";
+};
 export type BranchesSearchableSelect_branches$data = BranchesSearchableSelect_branches;
 export type BranchesSearchableSelect_branches$key = {
-  +$data?: BranchesSearchableSelect_branches$data,
-  +$fragmentRefs: BranchesSearchableSelect_branches$ref,
-  ...
+    readonly " $data"?: BranchesSearchableSelect_branches$data;
+    readonly " $fragmentRefs": FragmentRefs<"BranchesSearchableSelect_branches">;
 };
-*/
 
 
-const node/*: ReaderFragment*/ = {
+
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -75,7 +67,5 @@ const node/*: ReaderFragment*/ = {
   "type": "RefConnection",
   "abstractKey": null
 };
-// prettier-ignore
-(node/*: any*/).hash = 'c7d568650d70a41bbbe39c45c599d5d8';
-
-module.exports = node;
+(node as any).hash = 'c7d568650d70a41bbbe39c45c599d5d8';
+export default node;

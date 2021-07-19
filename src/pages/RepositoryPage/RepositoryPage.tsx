@@ -1,11 +1,13 @@
 import { Link } from "found";
-import React, { Suspense } from "react";
+import { FC, Suspense } from "react";
 import { Button } from "react-bootstrap";
 import RepositoryDetails from "./RepositoryDetails";
 import { graphql } from "babel-plugin-relay/macro";
 import { usePreloadedQuery } from "react-relay";
+import { PropsWithPreloadedQuery } from "../../interfaces/PropsWithPreloadedQuery";
+import { RepositoryPageQuery } from "./__generated__/RepositoryPageQuery.graphql";
 
-export const RepositoryPageQuery = graphql`
+export const REPOSITORY_PAGE_QUERY = graphql`
   query RepositoryPageQuery($name: String!, $owner: String!) {
     repository(name: $name, owner: $owner) {
       ...RepositoryDetails_repository
@@ -13,8 +15,10 @@ export const RepositoryPageQuery = graphql`
   }
 `;
 
-const RepositoryPage = ({ data: preloadedQuery, branchInfo }) => {
-  const { repository } = usePreloadedQuery(RepositoryPageQuery, preloadedQuery);
+const RepositoryPage: FC<PropsWithPreloadedQuery<RepositoryPageQuery>> = ({
+  data,
+}) => {
+  const { repository } = usePreloadedQuery(REPOSITORY_PAGE_QUERY, data);
 
   return (
     <>
@@ -25,7 +29,11 @@ const RepositoryPage = ({ data: preloadedQuery, branchInfo }) => {
         </Button>
       </div>
       <Suspense fallback={<div>Loading repository information</div>}>
-        <RepositoryDetails fragmentRef={repository} />
+        {repository ? (
+          <RepositoryDetails fragmentRef={repository} />
+        ) : (
+          "Repository cannot be found"
+        )}
       </Suspense>
     </>
   );

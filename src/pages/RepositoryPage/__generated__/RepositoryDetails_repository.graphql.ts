@@ -1,39 +1,30 @@
-/**
- * @flow
- */
-
+/* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
-'use strict';
-
-/*::
-import type { ReaderFragment } from 'relay-runtime';
-type BranchesSearchableSelect_branches$ref = any;
-import type { FragmentReference } from "relay-runtime";
-declare export opaque type RepositoryDetails_repository$ref: FragmentReference;
-declare export opaque type RepositoryDetails_repository$fragmentType: RepositoryDetails_repository$ref;
-export type RepositoryDetails_repository = {|
-  +name: string,
-  +descriptionHTML: any,
-  +defaultBranchRef: ?{|
-    +id: string,
-    +name: string,
-  |},
-  +refs: ?{|
-    +$fragmentRefs: BranchesSearchableSelect_branches$ref
-  |},
-  +$refType: RepositoryDetails_repository$ref,
-|};
+import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type RepositoryDetails_repository = {
+    readonly name: string;
+    readonly descriptionHTML: unknown;
+    readonly defaultBranchRef: {
+        readonly id: string;
+        readonly name: string;
+    } | null;
+    readonly refs: {
+        readonly " $fragmentRefs": FragmentRefs<"BranchesSearchableSelect_branches">;
+    } | null;
+    readonly " $refType": "RepositoryDetails_repository";
+};
 export type RepositoryDetails_repository$data = RepositoryDetails_repository;
 export type RepositoryDetails_repository$key = {
-  +$data?: RepositoryDetails_repository$data,
-  +$fragmentRefs: RepositoryDetails_repository$ref,
-  ...
+    readonly " $data"?: RepositoryDetails_repository$data;
+    readonly " $fragmentRefs": FragmentRefs<"RepositoryDetails_repository">;
 };
-*/
 
 
-const node/*: ReaderFragment*/ = (function(){
+
+const node: ReaderFragment = (function(){
 var v0 = {
   "alias": null,
   "args": null,
@@ -106,7 +97,5 @@ return {
   "abstractKey": null
 };
 })();
-// prettier-ignore
-(node/*: any*/).hash = '72bdd935269c511311f45208f95d8c27';
-
-module.exports = node;
+(node as any).hash = '72bdd935269c511311f45208f95d8c27';
+export default node;
