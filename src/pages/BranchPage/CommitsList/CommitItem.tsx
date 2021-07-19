@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { graphql } from "babel-plugin-relay/macro";
 import { useFragment } from "react-relay";
 import { Card } from "react-bootstrap";
@@ -17,7 +17,7 @@ export const CommitItemFragment = graphql`
     }
   }
 `;
-const CommitItem = ({ fragmentRef }) => {
+const CommitItem: FC<any> = ({ fragmentRef }) => {
   const { node: commitItem } = useFragment(CommitItemFragment, fragmentRef);
   const formattedCommitDate = useMemo(
     () => formatDate(commitItem.committedDate),

@@ -1,41 +1,32 @@
-/**
- * @flow
- */
-
+/* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
-'use strict';
-
-/*::
-import type { ReaderFragment } from 'relay-runtime';
-type CommitItemFragment_commit$ref = any;
-import type { FragmentReference } from "relay-runtime";
-declare export opaque type CommitsListFragment_commits$ref: FragmentReference;
-declare export opaque type CommitsListFragment_commits$fragmentType: CommitsListFragment_commits$ref;
-export type CommitsListFragment_commits = {|
-  +history: {|
-    +totalCount: number,
-    +pageInfo: {|
-      +hasNextPage: boolean
-    |},
-    +edges: ?$ReadOnlyArray<?{|
-      +cursor: string,
-      +$fragmentRefs: CommitItemFragment_commit$ref,
-    |}>,
-  |},
-  +id: string,
-  +$refType: CommitsListFragment_commits$ref,
-|};
+import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type CommitsListFragment_commits = {
+    readonly history: {
+        readonly totalCount: number;
+        readonly pageInfo: {
+            readonly hasNextPage: boolean;
+        };
+        readonly edges: ReadonlyArray<{
+            readonly cursor: string;
+            readonly " $fragmentRefs": FragmentRefs<"CommitItemFragment_commit">;
+        } | null> | null;
+    };
+    readonly id: string;
+    readonly " $refType": "CommitsListFragment_commits";
+};
 export type CommitsListFragment_commits$data = CommitsListFragment_commits;
 export type CommitsListFragment_commits$key = {
-  +$data?: CommitsListFragment_commits$data,
-  +$fragmentRefs: CommitsListFragment_commits$ref,
-  ...
+    readonly " $data"?: CommitsListFragment_commits$data;
+    readonly " $fragmentRefs": FragmentRefs<"CommitsListFragment_commits">;
 };
-*/
 
 
-const node/*: ReaderFragment*/ = (function(){
+
+const node: ReaderFragment = (function(){
 var v0 = [
   "history"
 ];
@@ -74,7 +65,7 @@ return {
       "fragmentPathInResult": [
         "node"
       ],
-      "operation": require('./CommitsListPaginationQuery.graphql.js'),
+      "operation": require('./CommitsListPaginationQuery.graphql.ts'),
       "identifierField": "id"
     }
   },
@@ -176,7 +167,5 @@ return {
   "abstractKey": null
 };
 })();
-// prettier-ignore
-(node/*: any*/).hash = '289d2704dfb787a78b444dad74ee9f63';
-
-module.exports = node;
+(node as any).hash = '289d2704dfb787a78b444dad74ee9f63';
+export default node;

@@ -1,37 +1,29 @@
-/**
- * @flow
- */
-
+/* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
-'use strict';
-
-/*::
-import type { ReaderFragment } from 'relay-runtime';
-import type { FragmentReference } from "relay-runtime";
-declare export opaque type CommitItemFragment_commit$ref: FragmentReference;
-declare export opaque type CommitItemFragment_commit$fragmentType: CommitItemFragment_commit$ref;
-export type CommitItemFragment_commit = {|
-  +node: ?{|
-    +committedDate: any,
-    +author: ?{|
-      +email: ?string,
-      +name: ?string,
-    |},
-    +message: string,
-  |},
-  +$refType: CommitItemFragment_commit$ref,
-|};
+import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type CommitItemFragment_commit = {
+    readonly node: {
+        readonly committedDate: unknown;
+        readonly author: {
+            readonly email: string | null;
+            readonly name: string | null;
+        } | null;
+        readonly message: string;
+    } | null;
+    readonly " $refType": "CommitItemFragment_commit";
+};
 export type CommitItemFragment_commit$data = CommitItemFragment_commit;
 export type CommitItemFragment_commit$key = {
-  +$data?: CommitItemFragment_commit$data,
-  +$fragmentRefs: CommitItemFragment_commit$ref,
-  ...
+    readonly " $data"?: CommitItemFragment_commit$data;
+    readonly " $fragmentRefs": FragmentRefs<"CommitItemFragment_commit">;
 };
-*/
 
 
-const node/*: ReaderFragment*/ = {
+
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -91,7 +83,5 @@ const node/*: ReaderFragment*/ = {
   "type": "CommitEdge",
   "abstractKey": null
 };
-// prettier-ignore
-(node/*: any*/).hash = 'e412517d021b4fd8600046b884f1c0cd';
-
-module.exports = node;
+(node as any).hash = 'e412517d021b4fd8600046b884f1c0cd';
+export default node;

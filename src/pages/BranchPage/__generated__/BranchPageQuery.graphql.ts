@@ -1,37 +1,32 @@
-/**
- * @flow
- */
-
+/* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
-'use strict';
+import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type BranchPageQueryVariables = {
+    id: string;
+};
+export type BranchPageQueryResponse = {
+    readonly node: {
+        readonly id: string;
+        readonly name?: string;
+        readonly repository?: {
+            readonly name: string;
+            readonly owner: {
+                readonly login: string;
+            };
+        };
+        readonly target?: {
+            readonly " $fragmentRefs": FragmentRefs<"CommitsListFragment_commits">;
+        };
+    } | null;
+};
+export type BranchPageQuery = {
+    readonly response: BranchPageQueryResponse;
+    readonly variables: BranchPageQueryVariables;
+};
 
-/*::
-import type { ConcreteRequest } from 'relay-runtime';
-type CommitsListFragment_commits$ref = any;
-export type BranchPageQueryVariables = {|
-  id: string
-|};
-export type BranchPageQueryResponse = {|
-  +node: ?{|
-    +id: string,
-    +name?: string,
-    +repository?: {|
-      +name: string,
-      +owner: {|
-        +login: string
-      |},
-    |},
-    +target?: {|
-      +$fragmentRefs: CommitsListFragment_commits$ref
-    |},
-  |}
-|};
-export type BranchPageQuery = {|
-  variables: BranchPageQueryVariables,
-  response: BranchPageQueryResponse,
-|};
-*/
 
 
 /*
@@ -95,7 +90,7 @@ fragment CommitsListFragment_commits on Commit {
 }
 */
 
-const node/*: ConcreteRequest*/ = (function(){
+const node: ConcreteRequest = (function(){
 var v0 = [
   {
     "defaultValue": null,
@@ -425,7 +420,5 @@ return {
   }
 };
 })();
-// prettier-ignore
-(node/*: any*/).hash = 'c57a458ac60c4bbcf8a360672348ee44';
-
-module.exports = node;
+(node as any).hash = 'c57a458ac60c4bbcf8a360672348ee44';
+export default node;

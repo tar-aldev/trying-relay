@@ -1,29 +1,24 @@
-/**
- * @flow
- */
-
+/* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
-'use strict';
+import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type CommitsListPaginationQueryVariables = {
+    count?: number | null;
+    cursor?: string | null;
+    id: string;
+};
+export type CommitsListPaginationQueryResponse = {
+    readonly node: {
+        readonly " $fragmentRefs": FragmentRefs<"CommitsListFragment_commits">;
+    } | null;
+};
+export type CommitsListPaginationQuery = {
+    readonly response: CommitsListPaginationQueryResponse;
+    readonly variables: CommitsListPaginationQueryVariables;
+};
 
-/*::
-import type { ConcreteRequest } from 'relay-runtime';
-type CommitsListFragment_commits$ref = any;
-export type CommitsListPaginationQueryVariables = {|
-  count?: ?number,
-  cursor?: ?string,
-  id: string,
-|};
-export type CommitsListPaginationQueryResponse = {|
-  +node: ?{|
-    +$fragmentRefs: CommitsListFragment_commits$ref
-  |}
-|};
-export type CommitsListPaginationQuery = {|
-  variables: CommitsListPaginationQueryVariables,
-  response: CommitsListPaginationQueryResponse,
-|};
-*/
 
 
 /*
@@ -71,7 +66,7 @@ fragment CommitsListFragment_commits_1G22uz on Commit {
 }
 */
 
-const node/*: ConcreteRequest*/ = (function(){
+const node: ConcreteRequest = (function(){
 var v0 = [
   {
     "defaultValue": 10,
@@ -320,7 +315,5 @@ return {
   }
 };
 })();
-// prettier-ignore
-(node/*: any*/).hash = '289d2704dfb787a78b444dad74ee9f63';
-
-module.exports = node;
+(node as any).hash = '289d2704dfb787a78b444dad74ee9f63';
+export default node;

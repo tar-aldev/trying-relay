@@ -1,6 +1,9 @@
 import { RouteConfig } from "found";
 import { loadQuery } from "react-relay";
-import BranchPage, { BranchPageQuery } from "../../pages/BranchPage/BranchPage";
+import BranchPage, {
+  BRANCH_PAGE_QUERY,
+} from "../../pages/BranchPage/BranchPage";
+import { BranchPageQuery } from "../../pages/BranchPage/__generated__/BranchPageQuery.graphql";
 import HomePage, { HOME_PAGE_QUERY } from "../../pages/HomePage/HomePage";
 import { HomePageQuery } from "../../pages/HomePage/__generated__/HomePageQuery.graphql";
 import RepositoriesPage, {
@@ -47,7 +50,9 @@ export const routes: RouteConfig = [
         path: "/branches/:branchId",
         Component: BranchPage,
         getData: ({ routeParams }) =>
-          loadQuery(Environment, BranchPageQuery, { id: routeParams.branchId }),
+          loadQuery<BranchPageQuery>(Environment, BRANCH_PAGE_QUERY, {
+            id: routeParams.branchId,
+          }),
       },
     ],
   },
