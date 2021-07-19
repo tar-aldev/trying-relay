@@ -6,11 +6,11 @@ import RelayEnvironment from "../../relay/Environment";
 
 const MainLayout = ({ children }) => {
   return (
-    <div>
+    <div className="d-flex flex-column vh-100">
       <RelayEnvironmentProvider environment={RelayEnvironment}>
         <Header />
         <Suspense fallback={<div>Loading...</div>}>
-          <Container className="p-2">{children}</Container>
+          <Container className="p-2 flex-grow-1">{children}</Container>
         </Suspense>
       </RelayEnvironmentProvider>
     </div>

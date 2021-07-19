@@ -1,4 +1,3 @@
-import React from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import { Link } from "found";
 
@@ -10,7 +9,7 @@ const Header = () => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link as={Link} to="/" exact>
-            User info
+            Home
           </Nav.Link>
           <Nav.Link as={Link} to="/repositories">
             Repositories

@@ -1,8 +1,9 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { FC } from "react";
-import { Button } from "react-bootstrap";
 import { usePaginationFragment } from "react-relay";
+import { PER_PAGE_AMOUNT } from "../../../core/constants";
 import { PropsWithFragment } from "../../../interfaces/PropsWithFragment";
+import LoadMoreButton from "../../../shared/components/LoadMoreButton";
 import ShownPaginationCount from "../../../shared/components/ShownPaginationCount";
 import CommitItem from "./CommitItem";
 import { CommitsListFragment_commits$key } from "./__generated__/CommitsListFragment_commits.graphql";
@@ -37,7 +38,7 @@ const CommitsList: FC<PropsWithFragment<CommitsListFragment_commits$key>> = ({
     loadNext,
   } = usePaginationFragment(COMMITS_LIST_FRAGMENT, fragmentRef);
   const onLoadMoreCommits = () => {
-    loadNext(10);
+    loadNext(PER_PAGE_AMOUNT);
   };
 
   return (
@@ -50,16 +51,14 @@ const CommitsList: FC<PropsWithFragment<CommitsListFragment_commits$key>> = ({
 
           {history.pageInfo.hasNextPage && (
             <div className="d-flex justify-content-center mb-3">
-              <Button
-                onClick={onLoadMoreCommits}
-                disabled={isLoadingNext}
-                style={{ width: 130 }}
-              >
-                <span>{isLoadingNext ? "Loading..." : "Load more"}</span>
-              </Button>
+              <LoadMoreButton
+                onLoadMore={onLoadMoreCommits}
+                isLoadingNext={isLoadingNext}
+              />
             </div>
           )}
           <ShownPaginationCount
+            position="bottom"
             showing={history.edges.length}
             total={history.totalCount}
           />

@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type HomePageQueryVariables = {};
 export type HomePageQueryResponse = {
     readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"HomePageContainer_viewer">;
+        readonly " $fragmentRefs": FragmentRefs<"MainUserInfo_viewer" | "FollowersList_followers">;
     };
 };
 export type HomePageQuery = {
@@ -20,20 +20,103 @@ export type HomePageQuery = {
 /*
 query HomePageQuery {
   viewer {
-    ...HomePageContainer_viewer
+    ...MainUserInfo_viewer
+    ...FollowersList_followers
     id
   }
 }
 
-fragment HomePageContainer_viewer on User {
+fragment FollowersListItem_follower on UserEdge {
+  node {
+    email
+    name
+    login
+    avatarUrl
+    url
+    createdAt
+    id
+  }
+}
+
+fragment FollowersList_followers on User {
+  followers(first: 10) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      cursor
+      ...FollowersListItem_follower
+      node {
+        __typename
+        id
+      }
+    }
+  }
+  id
+}
+
+fragment MainUserInfo_viewer on User {
   name
+  login
   avatarUrl
   url
   email
 }
 */
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "login",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "avatarUrl",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "url",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "email",
+  "storageKey": null
+},
+v5 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 10
+  }
+],
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -51,7 +134,12 @@ const node: ConcreteRequest = {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "HomePageContainer_viewer"
+            "name": "MainUserInfo_viewer"
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "FollowersList_followers"
           }
         ],
         "storageKey": null
@@ -74,54 +162,127 @@ const node: ConcreteRequest = {
         "name": "viewer",
         "plural": false,
         "selections": [
+          (v0/*: any*/),
+          (v1/*: any*/),
+          (v2/*: any*/),
+          (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
+            "args": (v5/*: any*/),
+            "concreteType": "FollowerConnection",
+            "kind": "LinkedField",
+            "name": "followers",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "UserEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cursor",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "User",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/),
+                      (v0/*: any*/),
+                      (v1/*: any*/),
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "createdAt",
+                        "storageKey": null
+                      },
+                      (v6/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "followers(first:10)"
           },
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "avatarUrl",
-            "storageKey": null
+            "args": (v5/*: any*/),
+            "filters": null,
+            "handle": "connection",
+            "key": "FollowersList_followers",
+            "kind": "LinkedHandle",
+            "name": "followers"
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "url",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "email",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "77be97fd5b49d696b55cc5cea4a4c867",
+    "cacheID": "95ae179fdc2bd190ecf1fbb9699cc431",
     "id": null,
     "metadata": {},
     "name": "HomePageQuery",
     "operationKind": "query",
-    "text": "query HomePageQuery {\n  viewer {\n    ...HomePageContainer_viewer\n    id\n  }\n}\n\nfragment HomePageContainer_viewer on User {\n  name\n  avatarUrl\n  url\n  email\n}\n"
+    "text": "query HomePageQuery {\n  viewer {\n    ...MainUserInfo_viewer\n    ...FollowersList_followers\n    id\n  }\n}\n\nfragment FollowersListItem_follower on UserEdge {\n  node {\n    email\n    name\n    login\n    avatarUrl\n    url\n    createdAt\n    id\n  }\n}\n\nfragment FollowersList_followers on User {\n  followers(first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      cursor\n      ...FollowersListItem_follower\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  id\n}\n\nfragment MainUserInfo_viewer on User {\n  name\n  login\n  avatarUrl\n  url\n  email\n}\n"
   }
 };
-(node as any).hash = '11ff29ab68dc61755b1189a7c6ad78e3';
+})();
+(node as any).hash = '52b77215109d3f76eb0aeaca60fc84fd';
 export default node;

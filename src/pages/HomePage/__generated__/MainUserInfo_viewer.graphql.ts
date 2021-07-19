@@ -4,17 +4,18 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type HomePageContainer_viewer = {
+export type MainUserInfo_viewer = {
     readonly name: string | null;
+    readonly login: string;
     readonly avatarUrl: unknown;
     readonly url: unknown;
     readonly email: string;
-    readonly " $refType": "HomePageContainer_viewer";
+    readonly " $refType": "MainUserInfo_viewer";
 };
-export type HomePageContainer_viewer$data = HomePageContainer_viewer;
-export type HomePageContainer_viewer$key = {
-    readonly " $data"?: HomePageContainer_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"HomePageContainer_viewer">;
+export type MainUserInfo_viewer$data = MainUserInfo_viewer;
+export type MainUserInfo_viewer$key = {
+    readonly " $data"?: MainUserInfo_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"MainUserInfo_viewer">;
 };
 
 
@@ -23,13 +24,20 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "HomePageContainer_viewer",
+  "name": "MainUserInfo_viewer",
   "selections": [
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "login",
       "storageKey": null
     },
     {
@@ -57,5 +65,5 @@ const node: ReaderFragment = {
   "type": "User",
   "abstractKey": null
 };
-(node as any).hash = '5b7a323ee77c07342e8f8bfb6936b2af';
+(node as any).hash = '4a1bc79c7b0e1df370af41d8dd854464';
 export default node;
