@@ -1,11 +1,26 @@
 {
   "name": "relay-github-app",
+  "homepage": "https://tar-aldev.github.io",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
+    "build": "yarn run relay && react-scripts build",
+    "relay": "yarn run relay-compiler --schema schema.graphql --src ./src/ --watchman false $@",
+    "relay:watch": "yarn run relay-compiler --schema schema.graphql --src ./src/ --language typescript --watchman --watch $@",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.3.3",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
     "bootstrap": "4.6.0",
     "farce": "^0.4.5",
     "found": "^0.6.0",
@@ -17,15 +32,17 @@
     "react-relay": "^11.0.2",
     "react-scripts": "4.0.3",
     "relay-runtime": "^11.0.2",
+    "typescript": "^4.3.5",
     "web-vitals": "^1.0.1"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "yarn run relay && react-scripts build",
-    "relay": "yarn run relay-compiler --schema schema.graphql --src ./src/ --watchman false $@",
-    "relay:watch": "yarn run relay-compiler --schema schema.graphql --src ./src/ --watchman --watch $@",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "@types/react-relay": "^11.0.2",
+    "@types/relay-runtime": "^11.0.1",
+    "babel-plugin-relay": "^11.0.2",
+    "gh-pages": "^3.2.3",
+    "graphql": "^15.5.1",
+    "relay-compiler": "^11.0.2",
+    "relay-compiler-language-typescript": "^14.0.0"
   },
   "eslintConfig": {
     "extends": [
@@ -44,10 +61,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "babel-plugin-relay": "^11.0.2",
-    "graphql": "^15.5.1",
-    "relay-compiler": "^11.0.2"
   }
 }

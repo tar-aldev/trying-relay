@@ -1,6 +1,7 @@
+import { RouteConfig } from "found";
 import { loadQuery } from "react-relay";
 import BranchPage, { BranchPageQuery } from "../../pages/BranchPage/BranchPage";
-import HomePage, { HomePageQuery } from "../../pages/HomePage/HomePage";
+import HomePage, { HOME_PAGE_QUERY } from "../../pages/HomePage/HomePage";
 import RepositoriesPage, {
   RepositoriesPageQuery,
 } from "../../pages/RepositoriesPage/RepositoriesPage";
@@ -9,20 +10,22 @@ import RepositoryPage, {
 } from "../../pages/RepositoryPage/RepositoryPage";
 import Environment from "../../relay/Environment";
 import MainLayout from "../layouts/MainLayout";
+import type { HomePageQuery } from "../../pages/HomePage/__generated__/HomePageQuery.graphql";
 
-export const routes = [
+export const routes: RouteConfig = [
   {
     path: "/",
     Component: MainLayout,
     children: [
       {
         Component: HomePage,
-        getData: () => loadQuery(Environment, HomePageQuery),
+        getData: () =>
+          loadQuery<HomePageQuery>(Environment, HOME_PAGE_QUERY, {}),
       },
       {
         path: "repositories",
         Component: RepositoriesPage,
-        getData: () => loadQuery(Environment, RepositoriesPageQuery),
+        getData: () => loadQuery(Environment, RepositoriesPageQuery, {}),
       },
       {
         path: "repositories/:name/:owner",

@@ -4,7 +4,6 @@ import { usePreloadedQuery } from "react-relay";
 import RepositoriesList from "./RepositoriesList";
 
 export const RepositoriesPageQuery = graphql`
-  # By convention it should be <ComponentName></ComponentName>
   query RepositoriesPageQuery {
     viewer {
       repositories(first: 100, orderBy: { field: NAME, direction: ASC }) {
@@ -15,7 +14,6 @@ export const RepositoriesPageQuery = graphql`
 `;
 
 function RepositoriesPage(props) {
-  console.log("props", props);
   const data = usePreloadedQuery(RepositoriesPageQuery, props.data);
   return (
     <>

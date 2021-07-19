@@ -1,41 +1,39 @@
-/**
- * @flow
- */
-
+/* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
-'use strict';
+import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type HomePageQueryVariables = {};
+export type HomePageQueryResponse = {
+    readonly viewer: {
+        readonly " $fragmentRefs": FragmentRefs<"HomePageContainer_viewer">;
+    };
+};
+export type HomePageQuery = {
+    readonly response: HomePageQueryResponse;
+    readonly variables: HomePageQueryVariables;
+};
 
-/*::
-import type { ConcreteRequest } from 'relay-runtime';
-type HomePageContainer_viewer$ref = any;
-export type HomePageQueryVariables = {||};
-export type HomePageQueryResponse = {|
-  +$fragmentRefs: HomePageContainer_viewer$ref
-|};
-export type HomePageQuery = {|
-  variables: HomePageQueryVariables,
-  response: HomePageQueryResponse,
-|};
-*/
 
 
 /*
 query HomePageQuery {
-  ...HomePageContainer_viewer
-}
-
-fragment HomePageContainer_viewer on Query {
   viewer {
-    avatarUrl
-    url
-    email
+    ...HomePageContainer_viewer
     id
   }
 }
+
+fragment HomePageContainer_viewer on User {
+  name
+  avatarUrl
+  url
+  email
+}
 */
 
-const node/*: ConcreteRequest*/ = {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -43,9 +41,20 @@ const node/*: ConcreteRequest*/ = {
     "name": "HomePageQuery",
     "selections": [
       {
+        "alias": null,
         "args": null,
-        "kind": "FragmentSpread",
-        "name": "HomePageContainer_viewer"
+        "concreteType": "User",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "HomePageContainer_viewer"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -65,6 +74,13 @@ const node/*: ConcreteRequest*/ = {
         "name": "viewer",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -99,15 +115,13 @@ const node/*: ConcreteRequest*/ = {
     ]
   },
   "params": {
-    "cacheID": "a2ac2250758df1088e5bc7f9aad404e8",
+    "cacheID": "77be97fd5b49d696b55cc5cea4a4c867",
     "id": null,
     "metadata": {},
     "name": "HomePageQuery",
     "operationKind": "query",
-    "text": "query HomePageQuery {\n  ...HomePageContainer_viewer\n}\n\nfragment HomePageContainer_viewer on Query {\n  viewer {\n    avatarUrl\n    url\n    email\n    id\n  }\n}\n"
+    "text": "query HomePageQuery {\n  viewer {\n    ...HomePageContainer_viewer\n    id\n  }\n}\n\nfragment HomePageContainer_viewer on User {\n  name\n  avatarUrl\n  url\n  email\n}\n"
   }
 };
-// prettier-ignore
-(node/*: any*/).hash = '9486b8777899b1007c9deedbb64f6124';
-
-module.exports = node;
+(node as any).hash = '11ff29ab68dc61755b1189a7c6ad78e3';
+export default node;
