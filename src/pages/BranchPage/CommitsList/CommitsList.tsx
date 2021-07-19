@@ -1,5 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import React, { FC } from "react";
+import { FC } from "react";
 import { Button } from "react-bootstrap";
 import { usePaginationFragment } from "react-relay";
 import { PropsWithFragment } from "../../../interfaces/PropsWithFragment";

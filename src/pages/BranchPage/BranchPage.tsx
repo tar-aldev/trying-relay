@@ -11,13 +11,7 @@ export const BRANCH_PAGE_QUERY = graphql`
     node(id: $id) {
       id
       ... on Ref {
-        name
-        repository {
-          name
-          owner {
-            login
-          }
-        }
+        ...BranchInfo_branch
         target {
           ... on Commit {
             ...CommitsListFragment_commits
@@ -35,7 +29,11 @@ const BranchPage: FC<PropsWithPreloadedQuery<BranchPageQuery>> = ({
 
   return (
     <>
-      <BranchInfo branch={branch} />
+      {branch ? (
+        <BranchInfo fragmentRef={branch} />
+      ) : (
+        <p>Branch cannot be found</p>
+      )}
       {branch?.target && <CommitsList fragmentRef={branch.target} />}
     </>
   );

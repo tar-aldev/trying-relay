@@ -1,12 +1,29 @@
+import { graphql } from "babel-plugin-relay/macro";
 import { Link } from "found";
 import { FC } from "react";
 import { Col, Container, Nav, Row } from "react-bootstrap";
-import { BranchPageQueryResponse } from "../__generated__/BranchPageQuery.graphql";
+import { useFragment } from "react-relay";
+import { PropsWithFragment } from "../../../interfaces/PropsWithFragment";
 import styles from "./styles.module.scss";
+import { BranchInfo_branch$key } from "./__generated__/BranchInfo_branch.graphql";
 
-const BranchInfo: FC<{ branch: BranchPageQueryResponse["node"] }> = ({
-  branch,
+export const BRANCH_INFO_FRAGMENT = graphql`
+  fragment BranchInfo_branch on Ref {
+    name
+    repository {
+      name
+      owner {
+        login
+      }
+    }
+  }
+`;
+
+const BranchInfo: FC<PropsWithFragment<BranchInfo_branch$key>> = ({
+  fragmentRef,
 }) => {
+  const branch = useFragment(BRANCH_INFO_FRAGMENT, fragmentRef);
+
   return (
     <div
       className={`text-center shadow p-2 mt-n2 mb-4 mx-n2 bg-white ${styles.root}`}

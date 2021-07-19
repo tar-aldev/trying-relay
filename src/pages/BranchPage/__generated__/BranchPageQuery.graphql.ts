@@ -10,16 +10,10 @@ export type BranchPageQueryVariables = {
 export type BranchPageQueryResponse = {
     readonly node: {
         readonly id: string;
-        readonly name?: string;
-        readonly repository?: {
-            readonly name: string;
-            readonly owner: {
-                readonly login: string;
-            };
-        };
         readonly target?: {
             readonly " $fragmentRefs": FragmentRefs<"CommitsListFragment_commits">;
         };
+        readonly " $fragmentRefs": FragmentRefs<"BranchInfo_branch">;
     } | null;
 };
 export type BranchPageQuery = {
@@ -37,16 +31,7 @@ query BranchPageQuery(
     __typename
     id
     ... on Ref {
-      name
-      repository {
-        name
-        owner {
-          __typename
-          login
-          id
-        }
-        id
-      }
+      ...BranchInfo_branch
       target {
         __typename
         ... on Commit {
@@ -55,6 +40,19 @@ query BranchPageQuery(
         id
       }
     }
+  }
+}
+
+fragment BranchInfo_branch on Ref {
+  name
+  repository {
+    name
+    owner {
+      __typename
+      login
+      id
+    }
+    id
   }
 }
 
@@ -116,24 +114,17 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "__typename",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "login",
+  "name": "name",
   "storageKey": null
 },
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v6 = [
+v5 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -159,31 +150,6 @@ return {
           {
             "kind": "InlineFragment",
             "selections": [
-              (v3/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Repository",
-                "kind": "LinkedField",
-                "name": "repository",
-                "plural": false,
-                "selections": [
-                  (v3/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": null,
-                    "kind": "LinkedField",
-                    "name": "owner",
-                    "plural": false,
-                    "selections": [
-                      (v4/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
               {
                 "alias": null,
                 "args": null,
@@ -206,6 +172,11 @@ return {
                   }
                 ],
                 "storageKey": null
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "BranchInfo_branch"
               }
             ],
             "type": "Ref",
@@ -232,12 +203,12 @@ return {
         "name": "node",
         "plural": false,
         "selections": [
-          (v5/*: any*/),
+          (v3/*: any*/),
           (v2/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
-              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -246,7 +217,7 @@ return {
                 "name": "repository",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -255,8 +226,14 @@ return {
                     "name": "owner",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/),
-                      (v4/*: any*/),
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "login",
+                        "storageKey": null
+                      },
                       (v2/*: any*/)
                     ],
                     "storageKey": null
@@ -273,14 +250,14 @@ return {
                 "name": "target",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
+                  (v3/*: any*/),
                   (v2/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
                       {
                         "alias": null,
-                        "args": (v6/*: any*/),
+                        "args": (v5/*: any*/),
                         "concreteType": "CommitHistoryConnection",
                         "kind": "LinkedField",
                         "name": "history",
@@ -363,7 +340,7 @@ return {
                                         "name": "email",
                                         "storageKey": null
                                       },
-                                      (v3/*: any*/)
+                                      (v4/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
@@ -375,7 +352,7 @@ return {
                                     "storageKey": null
                                   },
                                   (v2/*: any*/),
-                                  (v5/*: any*/)
+                                  (v3/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -387,7 +364,7 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v6/*: any*/),
+                        "args": (v5/*: any*/),
                         "filters": null,
                         "handle": "connection",
                         "key": "SelectedBranchCommits_history",
@@ -411,14 +388,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fcdcecd665bc675ba9af3f36321ef6a7",
+    "cacheID": "987ee518087dc46be5501cf7c343631d",
     "id": null,
     "metadata": {},
     "name": "BranchPageQuery",
     "operationKind": "query",
-    "text": "query BranchPageQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    id\n    ... on Ref {\n      name\n      repository {\n        name\n        owner {\n          __typename\n          login\n          id\n        }\n        id\n      }\n      target {\n        __typename\n        ... on Commit {\n          ...CommitsListFragment_commits\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CommitItemFragment_commit on CommitEdge {\n  node {\n    committedDate\n    author {\n      email\n      name\n    }\n    message\n    id\n  }\n}\n\nfragment CommitsListFragment_commits on Commit {\n  history(first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      cursor\n      ...CommitItemFragment_commit\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  id\n}\n"
+    "text": "query BranchPageQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    id\n    ... on Ref {\n      ...BranchInfo_branch\n      target {\n        __typename\n        ... on Commit {\n          ...CommitsListFragment_commits\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment BranchInfo_branch on Ref {\n  name\n  repository {\n    name\n    owner {\n      __typename\n      login\n      id\n    }\n    id\n  }\n}\n\nfragment CommitItemFragment_commit on CommitEdge {\n  node {\n    committedDate\n    author {\n      email\n      name\n    }\n    message\n    id\n  }\n}\n\nfragment CommitsListFragment_commits on Commit {\n  history(first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      cursor\n      ...CommitItemFragment_commit\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  id\n}\n"
   }
 };
 })();
-(node as any).hash = 'c57a458ac60c4bbcf8a360672348ee44';
+(node as any).hash = 'd58c88e80f1606c8d17ced64cf0e670c';
 export default node;
