@@ -8,9 +8,7 @@ import { RepositoriesPageQuery } from "./__generated__/RepositoriesPageQuery.gra
 export const REPOSITORIES_PAGE_QUERY = graphql`
   query RepositoriesPageQuery {
     viewer {
-      repositories(first: 100, orderBy: { field: NAME, direction: ASC }) {
-        ...RepositoriesList_repositories
-      }
+      ...RepositoriesList_repositories
     }
   }
 `;
@@ -22,9 +20,9 @@ const RepositoriesPage: FC<PropsWithPreloadedQuery<RepositoriesPageQuery>> = ({
 
   return (
     <>
-      <h6>Your Repositories</h6>
+      <h5 className="mb-2">Your Repositories</h5>
       <Suspense fallback={<div>Loading...</div>}>
-        <RepositoriesList fragmentRef={viewer.repositories} />
+        <RepositoriesList fragmentRef={viewer} />
       </Suspense>
     </>
   );

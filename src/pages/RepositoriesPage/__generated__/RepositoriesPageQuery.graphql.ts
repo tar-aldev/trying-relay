@@ -7,9 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type RepositoriesPageQueryVariables = {};
 export type RepositoriesPageQueryResponse = {
     readonly viewer: {
-        readonly repositories: {
-            readonly " $fragmentRefs": FragmentRefs<"RepositoriesList_repositories">;
-        };
+        readonly " $fragmentRefs": FragmentRefs<"RepositoriesList_repositories">;
     };
 };
 export type RepositoriesPageQuery = {
@@ -22,9 +20,7 @@ export type RepositoriesPageQuery = {
 /*
 query RepositoriesPageQuery {
   viewer {
-    repositories(first: 100, orderBy: {field: NAME, direction: ASC}) {
-      ...RepositoriesList_repositories
-    }
+    ...RepositoriesList_repositories
     id
   }
 }
@@ -50,13 +46,23 @@ fragment RepositoriesListItem_repository on Repository {
   }
 }
 
-fragment RepositoriesList_repositories on RepositoryConnection {
-  edges {
-    node {
-      id
-      ...RepositoriesListItem_repository
+fragment RepositoriesList_repositories on User {
+  repositories(first: 10, orderBy: {field: NAME, direction: ASC}) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        ...RepositoriesListItem_repository
+        __typename
+      }
+      cursor
     }
   }
+  id
 }
 */
 
@@ -65,7 +71,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 100
+    "value": 10
   },
   {
     "kind": "Literal",
@@ -96,6 +102,13 @@ v3 = {
   "kind": "ScalarField",
   "name": "login",
   "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -113,20 +126,9 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": (v0/*: any*/),
-            "concreteType": "RepositoryConnection",
-            "kind": "LinkedField",
-            "name": "repositories",
-            "plural": false,
-            "selections": [
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "RepositoriesList_repositories"
-              }
-            ],
-            "storageKey": "repositories(first:100,orderBy:{\"direction\":\"ASC\",\"field\":\"NAME\"})"
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "RepositoriesList_repositories"
           }
         ],
         "storageKey": null
@@ -157,6 +159,38 @@ return {
             "name": "repositories",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -225,13 +259,7 @@ return {
                         "name": "owner",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "__typename",
-                            "storageKey": null
-                          },
+                          (v4/*: any*/),
                           (v1/*: any*/),
                           (v3/*: any*/),
                           (v2/*: any*/),
@@ -244,15 +272,34 @@ return {
                           }
                         ],
                         "storageKey": null
-                      }
+                      },
+                      (v4/*: any*/)
                     ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cursor",
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": "repositories(first:100,orderBy:{\"direction\":\"ASC\",\"field\":\"NAME\"})"
+            "storageKey": "repositories(first:10,orderBy:{\"direction\":\"ASC\",\"field\":\"NAME\"})"
+          },
+          {
+            "alias": null,
+            "args": (v0/*: any*/),
+            "filters": [
+              "orderBy"
+            ],
+            "handle": "connection",
+            "key": "RepositoriesList_repositories",
+            "kind": "LinkedHandle",
+            "name": "repositories"
           },
           (v1/*: any*/)
         ],
@@ -261,14 +308,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "86d9489c98643300d01ea29021ece471",
+    "cacheID": "a1816b1c6a4a8a30ab8dba33dcbbf45f",
     "id": null,
     "metadata": {},
     "name": "RepositoriesPageQuery",
     "operationKind": "query",
-    "text": "query RepositoriesPageQuery {\n  viewer {\n    repositories(first: 100, orderBy: {field: NAME, direction: ASC}) {\n      ...RepositoriesList_repositories\n    }\n    id\n  }\n}\n\nfragment RepositoriesListItem_repository on Repository {\n  id\n  name\n  url\n  collaborators {\n    edges {\n      node {\n        login\n        id\n      }\n    }\n  }\n  owner {\n    __typename\n    id\n    login\n    url\n    avatarUrl\n  }\n}\n\nfragment RepositoriesList_repositories on RepositoryConnection {\n  edges {\n    node {\n      id\n      ...RepositoriesListItem_repository\n    }\n  }\n}\n"
+    "text": "query RepositoriesPageQuery {\n  viewer {\n    ...RepositoriesList_repositories\n    id\n  }\n}\n\nfragment RepositoriesListItem_repository on Repository {\n  id\n  name\n  url\n  collaborators {\n    edges {\n      node {\n        login\n        id\n      }\n    }\n  }\n  owner {\n    __typename\n    id\n    login\n    url\n    avatarUrl\n  }\n}\n\nfragment RepositoriesList_repositories on User {\n  repositories(first: 10, orderBy: {field: NAME, direction: ASC}) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...RepositoriesListItem_repository\n        __typename\n      }\n      cursor\n    }\n  }\n  id\n}\n"
   }
 };
 })();
-(node as any).hash = 'a11457caa9a4f464f856f8beb9d4525f';
+(node as any).hash = 'be21aa0660db4208acb62160bfba77e0';
 export default node;
