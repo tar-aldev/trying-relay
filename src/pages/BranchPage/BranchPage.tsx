@@ -27,15 +27,13 @@ const BranchPage: FC<PropsWithPreloadedQuery<BranchPageQuery>> = ({
 }) => {
   const { node: branch } = usePreloadedQuery(BRANCH_PAGE_QUERY, queryRef);
 
-  return (
+  return branch && branch?.target ? (
     <>
-      {branch ? (
-        <BranchInfo fragmentRef={branch} />
-      ) : (
-        <p>Branch cannot be found</p>
-      )}
-      {branch?.target && <CommitsList fragmentRef={branch.target} />}
+      <BranchInfo fragmentRef={branch} />
+      <CommitsList fragmentRef={branch.target} />
     </>
+  ) : (
+    <p>Branch cannot be found</p>
   );
 };
 
