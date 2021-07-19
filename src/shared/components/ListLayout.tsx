@@ -1,5 +1,4 @@
-import { count } from "console";
-import React, { ReactElement, useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 import LoadMoreButton from "./LoadMoreButton";
 import ShownPaginationCount from "./ShownPaginationCount";
 

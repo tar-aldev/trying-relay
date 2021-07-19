@@ -4,7 +4,6 @@ import { usePaginationFragment } from "react-relay";
 import { PER_PAGE_AMOUNT } from "../../../core/constants";
 import { PropsWithFragment } from "../../../interfaces/PropsWithFragment";
 import ListLayout from "../../../shared/components/ListLayout";
-import ShownPaginationCount from "../../../shared/components/ShownPaginationCount";
 import FollowersListItem from "./FollowersListItem";
 import { FollowersList_followers$key } from "./__generated__/FollowersList_followers.graphql";
 
