@@ -12,12 +12,22 @@ const Header = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link as={Link} to={`/${params.login}`} exact>
+          <Link
+            as={Nav.Link}
+            activeClassName="text-white"
+            to={`/${params.login}`}
+            exact
+          >
             Home
-          </Nav.Link>
-          <Nav.Link as={Link} to={`/${params.login}/repositories`}>
+          </Link>
+          <Link
+            as={Nav.Link}
+            activeClassName="text-white"
+            to={`/${params.login}/repositories`}
+            exact
+          >
             Repositories
-          </Nav.Link>
+          </Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

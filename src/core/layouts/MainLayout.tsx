@@ -1,7 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useRouter } from "found";
 import { useLazyLoadQuery } from "react-relay";
-import Header from "../Header";
+import Header from "../Header/Header";
 
 export const MAIN_LAYOUT_QUERY = graphql`
   query MainLayoutQuery {
