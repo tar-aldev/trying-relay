@@ -1,6 +1,6 @@
 import { Link } from "found";
 import { FC } from "react";
-import { Col, Container, Nav, Row } from "react-bootstrap";
+import { Button, Col, Container, Nav, Row } from "react-bootstrap";
 import { BranchInfo_branch } from "./__generated__/BranchInfo_branch.graphql";
 
 interface ConnectedRepositoryInfoProps {
@@ -26,13 +26,14 @@ const ConnectedRepositoryInfo: FC<ConnectedRepositoryInfoProps> = ({
       </Container>
 
       <div className="text-right">
-        <Nav.Link
-          className="d-inline"
+        <Button
+          variant="outline-secondary"
+          className="mt-2"
           as={Link}
-          to={`/repositories/${repository.name}/${repository.owner.login}`}
+          to={`/${repository.owner.login}/repositories/${repository.name}`}
         >
           Back to repo details
-        </Nav.Link>
+        </Button>
       </div>
     </>
   );
