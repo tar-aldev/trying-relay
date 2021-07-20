@@ -15,12 +15,13 @@ import RepositoryPage, {
 } from "../../pages/RepositoryPage/RepositoryPage";
 import { RepositoryPageQuery } from "../../pages/RepositoryPage/__generated__/RepositoryPageQuery.graphql";
 import Environment from "../../relay/Environment";
-import MainLayout from "../layouts/MainLayout";
+import MainLayout, { MAIN_LAYOUT_QUERY } from "../layouts/MainLayout";
 
 export const routes: RouteConfig = [
   {
-    path: "/",
+    path: "/:login?",
     Component: MainLayout,
+    getData: () => loadQuery(Environment, MAIN_LAYOUT_QUERY, {}),
     children: [
       {
         Component: HomePage,
@@ -30,20 +31,20 @@ export const routes: RouteConfig = [
       {
         path: "repositories",
         Component: RepositoriesPage,
-        getData: () =>
+        getData: ({ params }) =>
           loadQuery<RepositoriesPageQuery>(
             Environment,
             REPOSITORIES_PAGE_QUERY,
-            {}
+            { queryString: `user:${params.login}`, type: "REPOSITORY" }
           ),
       },
       {
-        path: "repositories/:name/:owner",
+        path: "repositories/:name",
         Component: RepositoryPage,
-        getData: ({ routeParams }) =>
+        getData: ({ params }) =>
           loadQuery<RepositoryPageQuery>(Environment, REPOSITORY_PAGE_QUERY, {
-            name: routeParams.name,
-            owner: routeParams.owner,
+            name: params.name,
+            owner: params.login,
           }),
       },
       {

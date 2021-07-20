@@ -1,5 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { FC, Suspense } from "react";
+import { FC } from "react";
 import { usePreloadedQuery } from "react-relay";
 import { PropsWithPreloadedQuery } from "../../interfaces/PropsWithPreloadedQuery";
 import FollowersList from "./FollowersList/FollowersList";
@@ -28,11 +28,9 @@ const HomePage: FC<PropsWithPreloadedQuery<HomePageQuery>> = ({
   return (
     <>
       <h5>Home page</h5>
-      <Suspense fallback={<div>Loading...</div>}>
-        <MainUserInfo fragmentRef={viewer} />
-        <hr />
-        <FollowersList fragmentRef={viewer} />
-      </Suspense>
+      <MainUserInfo fragmentRef={viewer} />
+      <hr />
+      <FollowersList fragmentRef={viewer} />
     </>
   );
 };

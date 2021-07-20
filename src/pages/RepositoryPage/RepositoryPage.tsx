@@ -1,4 +1,4 @@
-import { Link } from "found";
+import { Link, useRouter } from "found";
 import { FC, Suspense } from "react";
 import { Button } from "react-bootstrap";
 import RepositoryDetails from "./RepositoryDetails";
@@ -19,12 +19,19 @@ const RepositoryPage: FC<PropsWithPreloadedQuery<RepositoryPageQuery>> = ({
   data,
 }) => {
   const { repository } = usePreloadedQuery(REPOSITORY_PAGE_QUERY, data);
+  const {
+    match: { params },
+  } = useRouter();
 
   return (
     <>
       <h5>Repo page</h5>
       <div className="d-flex justify-content-end mb-2">
-        <Button as={Link} to="/repositories" variant="outline-secondary">
+        <Button
+          as={Link}
+          to={`/${params.login}/repositories`}
+          variant="outline-secondary"
+        >
           Back to repos list
         </Button>
       </div>

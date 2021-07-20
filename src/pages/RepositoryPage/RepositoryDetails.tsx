@@ -26,15 +26,18 @@ export const REPOSITORY_DETAILS_FRAGMENT = graphql`
 const RepositoryDetails: FC<
   PropsWithFragment<RepositoryDetails_repository$key>
 > = ({ fragmentRef }) => {
-  const { router } = useRouter();
+  const {
+    router,
+    match: { params },
+  } = useRouter();
   const repository = useFragment(REPOSITORY_DETAILS_FRAGMENT, fragmentRef);
   const handleBranchSelect = useCallback<
     BranchesSearchableSelectProps["handleBranchSelect"]
   >(
     (branchId) => {
-      router.push(`/branches/${branchId}`);
+      router.push(`/${params.login}/branches/${branchId}`);
     },
-    [router]
+    [params.login, router]
   );
 
   return (

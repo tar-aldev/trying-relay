@@ -1,6 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useRouter } from "found";
-import { FC, useCallback } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { usePaginationFragment } from "react-relay";
 import { PER_PAGE_AMOUNT } from "../../core/constants";
 import { PropsWithFragment } from "../../interfaces/PropsWithFragment";
@@ -11,77 +11,87 @@ import RepositoryListItem, {
 import { RepositoriesList_repositories$key } from "./__generated__/RepositoriesList_repositories.graphql";
 
 export const REPOSITORIES_LIST_FRAGMENT = graphql`
-  fragment RepositoriesList_repositories on User
+  fragment RepositoriesList_repositories on Query
   @argumentDefinitions(
     count: { type: "Int", defaultValue: 10 }
     cursor: { type: "String" }
   )
   @refetchable(queryName: "RepositoriesListPaginationQuery") {
-    repositories(
-      first: $count
-      after: $cursor
-      orderBy: { field: NAME, direction: ASC }
-    ) @connection(key: "RepositoriesList_repositories") {
-      totalCount
-      pageInfo {
-        hasNextPage
-      }
+    search(first: $count, after: $cursor, query: $queryString, type: $type)
+      @connection(key: "RepositoriesList_search") {
+      repositoryCount
       edges {
+        cursor
         node {
-          id
           ...RepositoriesListItem_repository
         }
       }
     }
   }
 `;
+export interface RepositoriesListProps
+  extends PropsWithFragment<RepositoriesList_repositories$key> {
+  searchStr: string;
+}
 
-const RepositoriesList: FC<
-  PropsWithFragment<RepositoriesList_repositories$key>
-> = ({ fragmentRef }) => {
+const RepositoriesList: FC<RepositoriesListProps> = ({
+  fragmentRef,
+  searchStr,
+}) => {
+  const {
+    match: { params },
+  } = useRouter();
   const { router } = useRouter();
   const {
-    data: { repositories },
+    data: { search },
     loadNext,
     hasNext,
     isLoadingNext,
+    refetch,
   } = usePaginationFragment(REPOSITORIES_LIST_FRAGMENT, fragmentRef);
+  const { edges } = search;
 
   const onNavigateToRepositoryDetails = useCallback<
     RepositoriesListItemProps["handleShowRepoDetails"]
   >(
     (repoName, repoOwner) => {
-      router.push(`/repositories/${repoName}/${repoOwner}`);
+      router.push(`/${params.login}/repositories/${repoName}`);
     },
-    [router]
+    [params.login, router]
   );
 
   const loadMoreRepositories = useCallback(() => {
     loadNext(PER_PAGE_AMOUNT);
   }, [loadNext]);
 
+  useEffect(() => {
+    refetch({ queryString: `${searchStr} in:name user:${params.login}` });
+  }, [params.login, searchStr, refetch]);
+
   return (
-    <ListLayout
-      list={
-        <>
-          {repositories.edges?.map((edge) => {
-            return edge?.node ? (
-              <RepositoryListItem
-                key={edge?.node?.id}
-                fragmentRef={edge?.node}
-                handleShowRepoDetails={onNavigateToRepositoryDetails}
-              />
-            ) : null;
-          })}
-        </>
-      }
-      countPosition="top"
-      isLoadingNext={isLoadingNext}
-      onLoadMore={loadMoreRepositories}
-      hasMore={hasNext}
-      shownItemsAmount={repositories.edges?.length || 0}
-      totalItemsAmount={repositories.totalCount}
-    />
+    <>
+      <ListLayout
+        list={
+          <>
+            {(edges || []).map((edge) => {
+              return edge?.node ? (
+                <RepositoryListItem
+                  key={edge?.cursor}
+                  fragmentRef={edge?.node}
+                  handleShowRepoDetails={onNavigateToRepositoryDetails}
+                />
+              ) : null;
+            })}
+          </>
+        }
+        countPosition="top"
+        isLoadingNext={isLoadingNext}
+        onLoadMore={loadMoreRepositories}
+        hasMore={hasNext}
+        shownItemsAmount={edges?.length || 0}
+        totalItemsAmount={search.repositoryCount}
+      />
+    </>
   );
 };
 

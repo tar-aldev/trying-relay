@@ -1,12 +1,18 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
+import { RelayEnvironmentProvider } from "react-relay";
 import Router from "./core/Router/Router";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/bootstrap-overrides.scss";
+import RelayEnvironment from "./relay/Environment";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router />
+    <RelayEnvironmentProvider environment={RelayEnvironment}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Router />
+      </Suspense>
+    </RelayEnvironmentProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
