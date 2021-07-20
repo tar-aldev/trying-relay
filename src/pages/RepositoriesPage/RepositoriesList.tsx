@@ -54,7 +54,7 @@ const RepositoriesList: FC<RepositoriesListProps> = ({
   const onNavigateToRepositoryDetails = useCallback<
     RepositoriesListItemProps["handleShowRepoDetails"]
   >(
-    (repoName, repoOwner) => {
+    (repoName) => {
       router.push(`/${params.login}/repositories/${repoName}`);
     },
     [params.login, router]

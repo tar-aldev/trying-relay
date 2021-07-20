@@ -1,6 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { ChangeEvent, FC, Suspense, useState } from "react";
-import { Form } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import { usePreloadedQuery } from "react-relay";
 import { PropsWithPreloadedQuery } from "../../interfaces/PropsWithPreloadedQuery";
 import RepositoriesList from "./RepositoriesList";
@@ -23,16 +23,19 @@ const RepositoriesPage: FC<PropsWithPreloadedQuery<RepositoriesPageQuery>> = ({
 
   return (
     <>
-      <h5 className="mb-2">Your Repositories</h5>
+      <Container fluid>
+        <h5 className="mb-2">Your Repositories</h5>
 
-      <Form.Control
-        size="sm"
-        type="text"
-        placeholder="Search for repository..."
-        className="mb-2"
-        value={searchStr}
-        onChange={onSearchChange}
-      />
+        <Form.Control
+          size="sm"
+          type="text"
+          placeholder="Search for repository..."
+          className="mb-2"
+          value={searchStr}
+          onChange={onSearchChange}
+        />
+      </Container>
+
       <Suspense fallback={<div>Loading repositories...</div>}>
         <RepositoriesList fragmentRef={repos} searchStr={searchStr} />
       </Suspense>

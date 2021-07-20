@@ -1,6 +1,8 @@
 import { ReactElement, useMemo } from "react";
+import { Container } from "react-bootstrap";
 import LoadMoreButton from "./LoadMoreButton";
 import ShownPaginationCount from "./ShownPaginationCount";
+import styles from "./styles.module.scss";
 
 interface ListLayoutProps {
   countPosition?: "top" | "bottom";
@@ -34,7 +36,9 @@ const ListLayout = ({
   return (
     <div>
       {countPosition === "top" && paginationCount}
-      {list}
+      <Container fluid className={styles.root}>
+        {list}
+      </Container>
       {hasMore && (
         <div className="d-flex justify-content-center">
           <LoadMoreButton
