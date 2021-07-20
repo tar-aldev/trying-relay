@@ -1,6 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useRouter } from "found";
-import { Container } from "react-bootstrap";
 import { useLazyLoadQuery } from "react-relay";
 import Header from "../Header";
 
@@ -25,7 +24,7 @@ const MainLayout = ({ data, children }: any) => {
   return (
     <div className="d-flex flex-column vh-100">
       <Header />
-      <Container className="p-2 flex-grow-1">{children}</Container>
+      <div className="flex-grow-1 py-2">{children}</div>
     </div>
   );
 };

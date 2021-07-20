@@ -34,8 +34,8 @@ const MainUserInfo: FC<PropsWithFragment<MainUserInfo_viewer$key>> = ({
       <h6 className="text-center mt-2">
         Welcome, {viewer.name || viewer.login}
       </h6>
-      <p className="m-0">
-        You can either browse our repositories or go directly to{" "}
+      <p className="m-0 text-md-center">
+        You can either browse your repositories or go directly to{" "}
         <a href={viewer.url as string}>your github account</a>
       </p>
     </>

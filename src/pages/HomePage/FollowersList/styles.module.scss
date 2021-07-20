@@ -1,0 +1,23 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/_breakpoints";
+
+.root {
+  @include media-breakpoint-up(md) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 14px;
+  }
+
+  @include media-breakpoint-up(xl) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    column-gap: 14px;
+  }
+}

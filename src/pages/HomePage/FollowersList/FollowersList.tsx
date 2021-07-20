@@ -1,11 +1,13 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { FC } from "react";
+import { Container } from "react-bootstrap";
 import { usePaginationFragment } from "react-relay";
 import { PER_PAGE_AMOUNT } from "../../../core/constants";
 import { PropsWithFragment } from "../../../interfaces/PropsWithFragment";
 import ListLayout from "../../../shared/components/ListLayout";
 import FollowersListItem from "./FollowersListItem";
 import { FollowersList_followers$key } from "./__generated__/FollowersList_followers.graphql";
+import styles from "./styles.module.scss";
 
 export const FOLLOWERS_LIST_FRAGMENT = graphql`
   fragment FollowersList_followers on User
@@ -46,14 +48,14 @@ const FollowersList: FC<PropsWithFragment<FollowersList_followers$key>> = ({
       <ListLayout
         hasMore={followers.pageInfo.hasNextPage}
         list={
-          <>
+          <Container fluid className={styles.root}>
             {followers.edges?.map((edge, index) => (
               <FollowersListItem
                 key={index || edge?.cursor}
                 fragmentRef={edge!}
               />
             ))}
-          </>
+          </Container>
         }
         isLoadingNext={isLoadingNext}
         onLoadMore={onLoadMoreFollowers}

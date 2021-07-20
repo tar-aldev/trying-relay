@@ -1,5 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { FC } from "react";
+import { Container } from "react-bootstrap";
 import { usePreloadedQuery } from "react-relay";
 import { PropsWithPreloadedQuery } from "../../interfaces/PropsWithPreloadedQuery";
 import FollowersList from "./FollowersList/FollowersList";
@@ -27,8 +28,10 @@ const HomePage: FC<PropsWithPreloadedQuery<HomePageQuery>> = ({
 
   return (
     <>
-      <h5>Home page</h5>
-      <MainUserInfo fragmentRef={viewer} />
+      <Container fluid>
+        <h5>Home page</h5>
+        <MainUserInfo fragmentRef={viewer} />
+      </Container>
       <hr />
       <FollowersList fragmentRef={viewer} />
     </>

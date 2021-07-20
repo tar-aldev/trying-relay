@@ -19,7 +19,7 @@ const ShownPaginationCount = ({ showing, total, position }) => {
   }, [position]);
 
   return (
-    <div style={styles} className="p-2 bg-white mx-n2">
+    <div style={styles} className="p-2 bg-white">
       <p className="text-center">
         Showing <span className="font-weight-bold">{showing}</span> of{" "}
         <span className="font-weight-bold">{total}</span> items

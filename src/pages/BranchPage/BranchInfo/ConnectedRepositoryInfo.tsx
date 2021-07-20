@@ -1,6 +1,6 @@
 import { Link } from "found";
 import { FC } from "react";
-import { Button, Col, Container, Nav, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { BranchInfo_branch } from "./__generated__/BranchInfo_branch.graphql";
 
 interface ConnectedRepositoryInfoProps {
