@@ -1,8 +1,14 @@
 import { gql, useQuery } from "@apollo/client";
 import { FC } from "react";
 import { Container } from "react-bootstrap";
-import { useParams } from "react-router-dom";
 import MainUserInfo, { MAIN_USER_INFO_FRAGMENT } from "./MainUserInfo";
+import {
+  HomePageQuery,
+  HomePageQueryVariables
+} from "./__generated__/HomePageQuery";
+import FollowersList, {
+  FOLLOWERS_LIST_FRAGMENT
+} from "./FollowersList/FollowersList";
 
 /* 
   Think of this component as tree root
@@ -10,17 +16,30 @@ import MainUserInfo, { MAIN_USER_INFO_FRAGMENT } from "./MainUserInfo";
   and defined data dependencies
 */
 export const HOME_PAGE_QUERY = gql`
-  query HomePageQuery {
+  query HomePageQuery($count: Int!, $after: String) {
     viewer {
-      ...MainUserInfo_viewer
-      # ...FollowersList_followers
+      id
+      ...MainUserInfoFragment
+      followers(first: $count, after: $after) {
+        ...FollowersListFragment
+      }
     }
   }
   ${MAIN_USER_INFO_FRAGMENT}
+  ${FOLLOWERS_LIST_FRAGMENT}
 `;
 
 const HomePage: FC = () => {
-  const { data } = useQuery(HOME_PAGE_QUERY);
+  const { data, fetchMore } = useQuery<HomePageQuery, HomePageQueryVariables>(
+    HOME_PAGE_QUERY,
+    {
+      variables: {
+        count: 2
+      }
+    }
+  );
+
+  console.log("data", data);
 
   return (
     <>
@@ -29,7 +48,12 @@ const HomePage: FC = () => {
         {data?.viewer && <MainUserInfo viewer={data?.viewer} />}
       </Container>
       <hr />
-      {/* <FollowersList fragmentRef={viewer} /> */}
+      {data?.viewer?.followers && (
+        <FollowersList
+          followers={data.viewer.followers}
+          fetchMore={fetchMore}
+        />
+      )}
     </>
   );
 };

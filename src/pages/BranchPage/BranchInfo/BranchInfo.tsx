@@ -2,7 +2,6 @@ import { graphql } from "babel-plugin-relay/macro";
 import { FC } from "react";
 import ConnectedRepositoryInfo from "./ConnectedRepositoryInfo";
 import styles from "./styles.module.scss";
-import { BranchInfo_branch$key } from "./__generated__/BranchInfo_branch.graphql";
 
 export const BRANCH_INFO_FRAGMENT = graphql`
   fragment BranchInfo_branch on Ref {

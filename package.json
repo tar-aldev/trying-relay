@@ -32,7 +32,8 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.8",
-    "apollo": "^2.33.4"
+    "apollo": "^2.33.4",
+    "prettier": "^2.3.2"
   },
   "eslintConfig": {
     "extends": [

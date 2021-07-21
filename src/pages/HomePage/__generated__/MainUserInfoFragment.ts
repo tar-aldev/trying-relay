@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: MainUserInfo_viewer
+// GraphQL fragment: MainUserInfoFragment
 // ====================================================
 
-export interface MainUserInfo_viewer {
+export interface MainUserInfoFragment {
   __typename: "User";
   /**
    * The user's public profile name.

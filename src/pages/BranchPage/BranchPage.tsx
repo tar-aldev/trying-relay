@@ -1,7 +1,6 @@
 import { FC } from "react";
 import BranchInfo from "./BranchInfo/BranchInfo";
 import CommitsList from "./CommitsList/CommitsList";
-import { BranchPageQuery } from "./__generated__/BranchPageQuery.graphql";
 
 // export const BRANCH_PAGE_QUERY = graphql`
 //   query BranchPageQuery($id: ID!) {

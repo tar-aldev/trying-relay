@@ -1,8 +1,4 @@
-import React, { FC, useCallback } from "react";
-import BranchesSearchableSelect, {
-  BranchesSearchableSelectProps,
-} from "./BranchesSearchableSelect";
-import { RepositoryDetails_repository$key } from "./__generated__/RepositoryDetails_repository.graphql";
+import React, { FC } from "react";
 
 /* export const REPOSITORY_DETAILS_FRAGMENT = graphql`
   fragment RepositoryDetails_repository on Repository {

@@ -4,7 +4,6 @@ import { PER_PAGE_AMOUNT } from "../../../core/constants";
 import LoadMoreButton from "../../../shared/components/LoadMoreButton";
 import ShownPaginationCount from "../../../shared/components/ShownPaginationCount";
 import CommitItem from "./CommitItem";
-import { CommitsListFragment_commits$key } from "./__generated__/CommitsListFragment_commits.graphql";
 
 /* export const COMMITS_LIST_FRAGMENT = graphql`
   fragment CommitsListFragment_commits on Commit

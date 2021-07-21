@@ -6,13 +6,28 @@ const link = createHttpLink({
   credentials: "same-origin",
   headers: {
     Authorization: `bearer ${REACT_APP_GITHUB_AUTH_TOKEN}`,
-    "Content-Type": "application/json",
-  },
+    "Content-Type": "application/json"
+  }
 });
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link,
+  cache: new InMemoryCache({
+    typePolicies: {
+      FollowerConnection: {
+        fields: {
+          edges: {
+            keyArgs: ["count", "after"],
+            merge(existing = [], incoming) {
+              console.log("MERGE");
+
+              return [...existing, ...incoming];
+            }
+          }
+        }
+      }
+    }
+  }),
+  link
 });
 
 export default client;

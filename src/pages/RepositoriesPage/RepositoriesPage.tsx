@@ -1,7 +1,6 @@
 import { ChangeEvent, FC, Suspense, useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import RepositoriesList from "./RepositoriesList";
-import { RepositoriesPageQuery } from "./__generated__/RepositoriesPageQuery.graphql";
 
 // export const REPOSITORIES_PAGE_QUERY = graphql`
 //   query RepositoriesPageQuery($queryString: String!, $type: SearchType!) {

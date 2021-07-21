@@ -4,7 +4,6 @@ import ListLayout from "../../shared/components/ListLayout";
 import RepositoryListItem, {
   RepositoriesListItemProps,
 } from "./RepositoriesListItem";
-import { RepositoriesList_repositories$key } from "./__generated__/RepositoriesList_repositories.graphql";
 
 /* export const REPOSITORIES_LIST_FRAGMENT = graphql`
   fragment RepositoriesList_repositories on Query

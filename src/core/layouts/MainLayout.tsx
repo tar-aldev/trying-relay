@@ -15,8 +15,8 @@ export const MAIN_LAYOUT_QUERY = gql`
 // index.js:1 Warning: Cannot update a component (`ConnectedRouter`) while rendering a different component (`Auth`).
 const MainLayout: FC = ({ children }) => {
   const { login } = useParams<{ login?: string }>();
-  const { data, loading, error } = useQuery(MAIN_LAYOUT_QUERY, {
-    skip: !!login,
+  const { data, loading } = useQuery(MAIN_LAYOUT_QUERY, {
+    skip: !!login
   });
   const history = useHistory();
 

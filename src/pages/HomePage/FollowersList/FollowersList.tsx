@@ -1,11 +1,18 @@
-import { graphql } from "babel-plugin-relay/macro";
+// import { PER_PAGE_AMOUNT } from "../../../core/constants";
+// import ListLayout from "../../../shared/components/ListLayout";
+// import FollowersListItem from "./FollowersListItem";
+import { gql, ObservableQueryFields } from "@apollo/client";
 import { FC } from "react";
-import { PER_PAGE_AMOUNT } from "../../../core/constants";
 import ListLayout from "../../../shared/components/ListLayout";
+import { MAIN_USER_INFO_FRAGMENT } from "../MainUserInfo";
+import {
+  HomePageQuery,
+  HomePageQueryVariables
+} from "../__generated__/HomePageQuery";
 import FollowersListItem from "./FollowersListItem";
-import { FollowersList_followers$key } from "./__generated__/FollowersList_followers.graphql";
+import { FollowersListFragment } from "./__generated__/FollowersListFragment";
 
-/* export const FOLLOWERS_LIST_FRAGMENT = graphql`
+/* export const FOLLOWERS_LIST_FRAGMENT = raphql`
   fragment FollowersList_followers on User
   @argumentDefinitions(
     count: { type: "Int", defaultValue: 10 }
@@ -26,39 +33,66 @@ import { FollowersList_followers$key } from "./__generated__/FollowersList_follo
   }
 `; */
 
-const FollowersList: FC = (/* {
-  fragmentRef,
-} */) => {
-  // const {
-  //   data: { followers },
-  //   isLoadingNext,
-  //   loadNext,
-  // } = usePaginationFragment(FOLLOWERS_LIST_FRAGMENT, fragmentRef);
+export const FOLLOWERS_LIST_FRAGMENT = gql`
+  fragment FollowersListFragment on FollowerConnection {
+    totalCount
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+    }
+    edges {
+      cursor
+      node {
+        id
+        createdAt
+        ...MainUserInfoFragment
+      }
+    }
+  }
+  ${MAIN_USER_INFO_FRAGMENT}
+`;
 
-  // const onLoadMoreFollowers = () => {
-  //   loadNext(PER_PAGE_AMOUNT);
-  // };
+export interface FollowersListProps {
+  followers: FollowersListFragment;
+  fetchMore: ObservableQueryFields<
+    HomePageQuery,
+    HomePageQueryVariables
+  >["fetchMore"];
+}
+
+const FollowersList: FC<FollowersListProps> = ({ followers, fetchMore }) => {
+  const onLoadMoreFollowers = () => {
+    fetchMore({
+      variables: {
+        count: 2,
+        after: followers.pageInfo.endCursor
+      }
+    });
+  };
 
   return (
     <>
-      {/* <ListLayout
+      <ListLayout
         hasMore={followers.pageInfo.hasNextPage}
         list={
           <>
-            {followers.edges?.map((edge, index) => (
-              <FollowersListItem
-                key={index || edge?.cursor}
-                fragmentRef={edge!}
-              />
-            ))}
+            {followers.edges?.map((edge, index) =>
+              edge ? (
+                <FollowersListItem
+                  key={index || edge?.cursor}
+                  follower={edge.node}
+                />
+              ) : null
+            )}
           </>
         }
-        isLoadingNext={isLoadingNext}
+        isLoadingNext={false}
         onLoadMore={onLoadMoreFollowers}
         shownItemsAmount={followers.edges?.length || 0}
         totalItemsAmount={followers.totalCount}
         countPosition="top"
-      /> */}
+      />
     </>
   );
 };

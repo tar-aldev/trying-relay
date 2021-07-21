@@ -1,21 +1,10 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { FC } from "react";
 import { Image } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import { MainUserInfo_viewer$key } from "./__generated__/MainUserInfo_viewer.graphql";
-
-/* export const MAIN_USER_INFO_FRAGMENT = graphql`
-  fragment MainUserInfo_viewer on User {
-    name
-    login
-    avatarUrl
-    url
-    email
-  }
-`; */
+import { MainUserInfoFragment } from "./__generated__/MainUserInfoFragment";
 
 export const MAIN_USER_INFO_FRAGMENT = gql`
-  fragment MainUserInfo_viewer on User {
+  fragment MainUserInfoFragment on User {
     name
     login
     avatarUrl
@@ -25,12 +14,10 @@ export const MAIN_USER_INFO_FRAGMENT = gql`
 `;
 
 export interface MainUserInfoProps {
-  viewer: any;
+  viewer: MainUserInfoFragment;
 }
 
 const MainUserInfo: FC<MainUserInfoProps> = ({ viewer }) => {
-  // const viewer = useFragment(MAIN_USER_INFO_FRAGMENT, fragmentRef);
-
   return (
     <>
       <div className="d-flex justify-content-center">
@@ -43,11 +30,11 @@ const MainUserInfo: FC<MainUserInfoProps> = ({ viewer }) => {
         />
       </div>
       <h6 className="text-center mt-2">
-        Welcome, {/* {viewer.name || viewer.login} */}
+        Welcome, {viewer.name || viewer.login}
       </h6>
       <p className="m-0 text-md-center">
         You can either browse your repositories or go directly to{" "}
-        {/* <a href={viewer.url as string}>your github account</a> */}
+        <a href={viewer.url as string}>your github account</a>
       </p>
     </>
   );
