@@ -1,18 +1,16 @@
-import React, { Suspense } from "react";
+import { ApolloProvider } from "@apollo/client";
+import React from "react";
 import ReactDOM from "react-dom";
-import { RelayEnvironmentProvider } from "react-relay";
-import Router from "./core/Router/Router";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/bootstrap-overrides.scss";
-import RelayEnvironment from "./relay/Environment";
+import apolloClient from "./apollo/apolloClient";
+import Routes from "./core/Router/Router";
 
 ReactDOM.render(
   <React.StrictMode>
-    <RelayEnvironmentProvider environment={RelayEnvironment}>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Router />
-      </Suspense>
-    </RelayEnvironmentProvider>
+    <ApolloProvider client={apolloClient}>
+      <Routes />
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

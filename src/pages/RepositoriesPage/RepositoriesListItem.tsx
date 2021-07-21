@@ -1,14 +1,7 @@
-import { graphql } from "babel-plugin-relay/macro";
 import { FC } from "react";
 import { Button, Card, Image } from "react-bootstrap";
-import { useFragment } from "react-relay";
-import { PropsWithFragment } from "../../interfaces/PropsWithFragment";
-import {
-  RepositoriesListItem_repository,
-  RepositoriesListItem_repository$key,
-} from "./__generated__/RepositoriesListItem_repository.graphql";
 
-export const REPOSITORIES_LIST_ITEM_FRAGMENT = graphql`
+/* export const REPOSITORIES_LIST_ITEM_FRAGMENT = graphql`
   fragment RepositoriesListItem_repository on Repository {
     id
     name
@@ -27,34 +20,30 @@ export const REPOSITORIES_LIST_ITEM_FRAGMENT = graphql`
       avatarUrl
     }
   }
-`;
+`; */
 
-export interface RepositoriesListItemProps
-  extends PropsWithFragment<RepositoriesListItem_repository$key> {
-  handleShowRepoDetails: (
-    repoName: RepositoriesListItem_repository["name"],
-    ownerLogin: RepositoriesListItem_repository["owner"]["login"]
-  ) => void;
+export interface RepositoriesListItemProps {
+  handleShowRepoDetails: (repoName: string, ownerLogin: string) => void;
 }
 
 const RepositoriesListItem: FC<RepositoriesListItemProps> = ({
-  fragmentRef,
+  /* fragmentRef, */
   handleShowRepoDetails,
 }) => {
-  const repository = useFragment(REPOSITORIES_LIST_ITEM_FRAGMENT, fragmentRef);
+  // const repository = useFragment(REPOSITORIES_LIST_ITEM_FRAGMENT, fragmentRef);
 
-  const onShowRepoDetails = () => {
+  /* const onShowRepoDetails = () => {
     handleShowRepoDetails(repository.name, repository.owner.login);
-  };
+  }; */
 
   return (
-    <Card key={repository.id} className="mb-2">
+    <Card className="mb-2">
       <Card.Body>
         <Card.Title
           as="div"
           className="d-flex align-items-center justify-content-between"
         >
-          <h5>{repository.name}</h5>
+          {/* <h5>{repository.name}</h5>
           <a
             href={repository.owner.url as string}
             target="_blank"
@@ -67,10 +56,10 @@ const RepositoriesListItem: FC<RepositoriesListItemProps> = ({
               height={50}
               roundedCircle
             />
-          </a>
+          </a> */}
         </Card.Title>
         <Card.Text as="div">
-          <a
+          {/* <a
             href={repository.url as string}
             target="_blank"
             rel="noopener noreferrer"
@@ -83,7 +72,7 @@ const RepositoriesListItem: FC<RepositoriesListItemProps> = ({
             <Button variant="outline-primary" onClick={onShowRepoDetails}>
               Show details
             </Button>
-          </div>
+          </div> */}
         </Card.Text>
       </Card.Body>
     </Card>

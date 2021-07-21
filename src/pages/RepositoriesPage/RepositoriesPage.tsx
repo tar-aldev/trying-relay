@@ -1,21 +1,18 @@
-import { graphql } from "babel-plugin-relay/macro";
 import { ChangeEvent, FC, Suspense, useState } from "react";
 import { Container, Form } from "react-bootstrap";
-import { usePreloadedQuery } from "react-relay";
-import { PropsWithPreloadedQuery } from "../../interfaces/PropsWithPreloadedQuery";
 import RepositoriesList from "./RepositoriesList";
 import { RepositoriesPageQuery } from "./__generated__/RepositoriesPageQuery.graphql";
 
-export const REPOSITORIES_PAGE_QUERY = graphql`
-  query RepositoriesPageQuery($queryString: String!, $type: SearchType!) {
-    ...RepositoriesList_repositories
-  }
-`;
+// export const REPOSITORIES_PAGE_QUERY = graphql`
+//   query RepositoriesPageQuery($queryString: String!, $type: SearchType!) {
+//     ...RepositoriesList_repositories
+//   }
+// `;
 
-const RepositoriesPage: FC<PropsWithPreloadedQuery<RepositoriesPageQuery>> = ({
+const RepositoriesPage: FC = (/* {
   data,
-}) => {
-  const repos = usePreloadedQuery(REPOSITORIES_PAGE_QUERY, data);
+} */) => {
+  // const repos = usePreloadedQuery(REPOSITORIES_PAGE_QUERY, data);
   const [searchStr, setSearchStr] = useState("");
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchStr(e.currentTarget.value);
@@ -37,7 +34,7 @@ const RepositoriesPage: FC<PropsWithPreloadedQuery<RepositoriesPageQuery>> = ({
       </Container>
 
       <Suspense fallback={<div>Loading repositories...</div>}>
-        <RepositoriesList fragmentRef={repos} searchStr={searchStr} />
+        {/* <RepositoriesList fragmentRef={repos} searchStr={searchStr} /> */}
       </Suspense>
     </>
   );

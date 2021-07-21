@@ -1,10 +1,10 @@
 import { Nav, Navbar } from "react-bootstrap";
-import { Link, useRouter } from "found";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
-  const {
-    match: { params },
-  } = useRouter();
+  // const {
+  //   match: { params },
+  // } = useRouter();
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -12,22 +12,22 @@ const Header = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Link
-            as={Nav.Link}
+          <NavLink
+            component={Nav.Link}
             activeClassName="text-white"
-            to={`/${params.login}`}
+            to={`/`}
             exact
           >
             Home
-          </Link>
-          <Link
-            as={Nav.Link}
+          </NavLink>
+          <NavLink
+            component={Nav.Link}
             activeClassName="text-white"
-            to={`/${params.login}/repositories`}
+            to={`/repositories`}
             exact
           >
             Repositories
-          </Link>
+          </NavLink>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
