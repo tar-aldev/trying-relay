@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "generate-typedefs:watch": "apollo client:codegen --target typescript --watch",
+    "generate-typedefs": "apollo client:codegen --target typescript",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -29,7 +31,8 @@
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.8"
+    "@types/react-router-dom": "^5.1.8",
+    "apollo": "^2.33.4"
   },
   "eslintConfig": {
     "extends": [

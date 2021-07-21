@@ -1,6 +1,7 @@
-import { graphql } from "babel-plugin-relay/macro";
+import { gql, useQuery } from "@apollo/client";
 import { FC } from "react";
 import { Image } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import { MainUserInfo_viewer$key } from "./__generated__/MainUserInfo_viewer.graphql";
 
 /* export const MAIN_USER_INFO_FRAGMENT = graphql`
@@ -13,21 +14,33 @@ import { MainUserInfo_viewer$key } from "./__generated__/MainUserInfo_viewer.gra
   }
 `; */
 
-const MainUserInfo: FC = (/* {
-  fragmentRef,
-} */) => {
+export const MAIN_USER_INFO_FRAGMENT = gql`
+  fragment MainUserInfo_viewer on User {
+    name
+    login
+    avatarUrl
+    url
+    email
+  }
+`;
+
+export interface MainUserInfoProps {
+  viewer: any;
+}
+
+const MainUserInfo: FC<MainUserInfoProps> = ({ viewer }) => {
   // const viewer = useFragment(MAIN_USER_INFO_FRAGMENT, fragmentRef);
 
   return (
     <>
       <div className="d-flex justify-content-center">
-        {/* <Image
+        <Image
           src={viewer.avatarUrl as string}
           alt="avatar"
           roundedCircle
           width={200}
           height={200}
-        /> */}
+        />
       </div>
       <h6 className="text-center mt-2">
         Welcome, {/* {viewer.name || viewer.login} */}
