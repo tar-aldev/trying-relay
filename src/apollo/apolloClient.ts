@@ -16,7 +16,7 @@ const client = new ApolloClient({
       FollowerConnection: {
         fields: {
           edges: {
-            keyArgs: ["count", "after"],
+            keyArgs: false,
             merge(existing = [], incoming) {
               console.log("MERGE");
 
