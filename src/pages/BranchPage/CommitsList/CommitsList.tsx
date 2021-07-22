@@ -6,31 +6,9 @@ import { PropsWithFetchMore } from "../../../shared/interfaces/PropsWithFetchMor
 import {
   BranchPageQuery,
   BranchPageQueryVariables,
-  BranchPageQuery_node_Ref_repository,
   BranchPageQuery_node_Ref_target_Commit_history
 } from "../__generated__/BranchPageQuery";
 import CommitItem, { COMMIT_ITEM_FRAGMENT } from "./CommitItem";
-
-/* export const COMMITS_LIST_FRAGMENT = graphql`
-  fragment CommitsListFragment_commits on Commit
-  @argumentDefinitions(
-    count: { type: "Int", defaultValue: 10 }
-    cursor: { type: "String" }
-  )
-  @refetchable(queryName: "CommitsListPaginationQuery") {
-    history(first: $count, after: $cursor)
-      @connection(key: "SelectedBranchCommits_history") {
-      totalCount
-      pageInfo {
-        hasNextPage
-      }
-      edges {
-        cursor
-        ...CommitItemFragment_commit
-      }
-    }
-  }
-`; */
 
 export const COMMITS_LIST_FRAGMENT = gql`
   fragment CommitsListFragment on Commit {

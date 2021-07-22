@@ -8,42 +8,6 @@ import {
   BranchPageQuery_node_Ref
 } from "./__generated__/BranchPageQuery";
 
-/* 
-... on Ref {
-        ...BranchInfoFragment
-        target {
-          ... on Commit {
-            history(first: 10) {
-              totalCount
-              pageInfo {
-                ...PageInfoFragment
-              }
-              edges {
-                cursor
-                node {
-                  associatedPullRequests(first: 10) {
-                    edges {
-                      node {
-                        body
-                        merged
-                        url
-                        id
-                      }
-                    }
-                  }
-                  committedDate
-                  author {
-                    email
-                    name
-                  }
-                  message
-                }
-              }
-            }
-          }
-        }
-      }
-*/
 export const BRANCH_PAGE_QUERY = gql`
   query BranchPageQuery(
     $branchId: ID!
