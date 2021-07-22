@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "generate-typedefs:watch": "apollo client:codegen --target typescript --watch",
+    "apollo": "apollo",
+    "generate-typedefs:watch": "apollo client:codegen --globalTypesFile=src/__generated__/globalTypes.ts --target typescript --watch",
     "generate-typedefs": "apollo client:codegen --target typescript",
     "start": "react-scripts start",
     "build": "react-scripts build",

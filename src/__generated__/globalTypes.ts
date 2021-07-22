@@ -7,6 +7,16 @@
 // START Enums and Input Objects
 //==============================================================
 
+/**
+ * Represents the individual results of a search.
+ */
+export enum SearchType {
+  DISCUSSION = "DISCUSSION",
+  ISSUE = "ISSUE",
+  REPOSITORY = "REPOSITORY",
+  USER = "USER",
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

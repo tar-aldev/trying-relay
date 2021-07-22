@@ -1,5 +1,5 @@
 const { parsed } = require("dotenv").config({
-  path: ".env.development",
+  path: ".env.development"
 });
 if (!parsed) {
   console.error("Unable to parse .env file");
@@ -14,11 +14,11 @@ if (!parsed) {
         url: "https://api.github.com/graphql",
         // optional headers
         headers: {
-          authorization: `bearer ${REACT_APP_GITHUB_AUTH_TOKEN}`,
+          authorization: `bearer ${REACT_APP_GITHUB_AUTH_TOKEN}`
         },
         // optional disable SSL validation check
-        skipSSLValidation: true,
-      },
-    },
+        skipSSLValidation: true
+      }
+    }
   };
 }

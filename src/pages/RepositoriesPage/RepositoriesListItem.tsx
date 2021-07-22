@@ -1,8 +1,15 @@
+import { gql } from "@apollo/client";
 import { FC } from "react";
 import { Button, Card, Image } from "react-bootstrap";
+import {
+  RepositoriesPageQuery_search_edges,
+  RepositoriesPageQuery_search_edges_node,
+  RepositoriesPageQuery_search_edges_node_Repository
+} from "./__generated__/RepositoriesPageQuery";
+import { RepositoryFragment } from "./__generated__/RepositoryFragment";
 
-/* export const REPOSITORIES_LIST_ITEM_FRAGMENT = graphql`
-  fragment RepositoriesListItem_repository on Repository {
+export const REPOSITORY_FRAGMENT = gql`
+  fragment RepositoryFragment on Repository {
     id
     name
     url
@@ -20,21 +27,22 @@ import { Button, Card, Image } from "react-bootstrap";
       avatarUrl
     }
   }
-`; */
+`;
 
 export interface RepositoriesListItemProps {
+  repository: RepositoriesPageQuery_search_edges_node_Repository;
   handleShowRepoDetails: (repoName: string, ownerLogin: string) => void;
 }
 
 const RepositoriesListItem: FC<RepositoriesListItemProps> = ({
-  /* fragmentRef, */
   handleShowRepoDetails,
+  repository
 }) => {
   // const repository = useFragment(REPOSITORIES_LIST_ITEM_FRAGMENT, fragmentRef);
 
-  /* const onShowRepoDetails = () => {
+  const onShowRepoDetails = () => {
     handleShowRepoDetails(repository.name, repository.owner.login);
-  }; */
+  };
 
   return (
     <Card className="mb-2">
@@ -43,7 +51,7 @@ const RepositoriesListItem: FC<RepositoriesListItemProps> = ({
           as="div"
           className="d-flex align-items-center justify-content-between"
         >
-          {/* <h5>{repository.name}</h5>
+          <h5>{repository.name}</h5>
           <a
             href={repository.owner.url as string}
             target="_blank"
@@ -56,10 +64,10 @@ const RepositoriesListItem: FC<RepositoriesListItemProps> = ({
               height={50}
               roundedCircle
             />
-          </a> */}
+          </a>
         </Card.Title>
         <Card.Text as="div">
-          {/* <a
+          <a
             href={repository.url as string}
             target="_blank"
             rel="noopener noreferrer"
@@ -72,7 +80,7 @@ const RepositoriesListItem: FC<RepositoriesListItemProps> = ({
             <Button variant="outline-primary" onClick={onShowRepoDetails}>
               Show details
             </Button>
-          </div> */}
+          </div>
         </Card.Text>
       </Card.Body>
     </Card>

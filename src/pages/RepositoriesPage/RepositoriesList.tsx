@@ -1,62 +1,32 @@
-import { FC, useCallback, useEffect } from "react";
-import { PER_PAGE_AMOUNT } from "../../core/constants";
+import { FC, useCallback } from "react";
 import ListLayout from "../../shared/components/ListLayout";
 import RepositoryListItem, {
-  RepositoriesListItemProps,
+  RepositoriesListItemProps
 } from "./RepositoriesListItem";
+import {
+  RepositoriesPageQuery_search,
+  RepositoriesPageQuery_search_edges_node_Repository
+} from "./__generated__/RepositoriesPageQuery";
 
-/* export const REPOSITORIES_LIST_FRAGMENT = graphql`
-  fragment RepositoriesList_repositories on Query
-  @argumentDefinitions(
-    count: { type: "Int", defaultValue: 10 }
-    cursor: { type: "String" }
-  )
-  @refetchable(queryName: "RepositoriesListPaginationQuery") {
-    search(first: $count, after: $cursor, query: $queryString, type: $type)
-      @connection(key: "RepositoriesList_search") {
-      repositoryCount
-      edges {
-        cursor
-        node {
-          ...RepositoriesListItem_repository
-        }
-      }
-    }
-  }
-`; */
 export interface RepositoriesListProps {
   searchStr: string;
+  repositoriesSearchResult: RepositoriesPageQuery_search;
 }
 
 const RepositoriesList: FC<RepositoriesListProps> = ({
-  /* fragmentRef, */
-  searchStr,
+  repositoriesSearchResult
 }) => {
+  const { edges = [], repositoryCount, pageInfo } = repositoriesSearchResult;
   /* const {
     match: { params },
   } = useRouter();
   const { router } = useRouter(); */
-  /* const { */
-  /*   data: { search }, */
-  /*   loadNext, */
-  /*   hasNext, */
-  /*   isLoadingNext, */
-  /*   refetch, */
-  /* } = usePaginationFragment(REPOSITORIES_LIST_FRAGMENT, fragmentRef); */
-  // const { edges } = search;
 
-  /* const onNavigateToRepositoryDetails = useCallback<
+  const onNavigateToRepositoryDetails = useCallback<
     RepositoriesListItemProps["handleShowRepoDetails"]
-  >(
-    (repoName) => {
-      router.push(`/${params.login}/repositories/${repoName}`);
-    },
-    [params.login, router]
-  ); */
+  >((repoName) => {}, []);
 
-  /* const loadMoreRepositories = useCallback(() => {
-    loadNext(PER_PAGE_AMOUNT);
-  }, [loadNext]); */
+  const loadMoreRepositories = useCallback(() => {}, []);
 
   /* useEffect(() => {
     refetch({ queryString: `${searchStr} in:name user:${params.login}` });
@@ -64,14 +34,16 @@ const RepositoriesList: FC<RepositoriesListProps> = ({
 
   return (
     <>
-      {/* <ListLayout
+      <ListLayout
         list={
           <>
             {(edges || []).map((edge) => {
               return edge?.node ? (
                 <RepositoryListItem
                   key={edge?.cursor}
-                  fragmentRef={edge?.node}
+                  repository={
+                    edge.node as RepositoriesPageQuery_search_edges_node_Repository
+                  }
                   handleShowRepoDetails={onNavigateToRepositoryDetails}
                 />
               ) : null;
@@ -79,12 +51,12 @@ const RepositoriesList: FC<RepositoriesListProps> = ({
           </>
         }
         countPosition="top"
-        isLoadingNext={isLoadingNext}
+        isLoadingNext={false}
         onLoadMore={loadMoreRepositories}
-        hasMore={hasNext}
+        hasMore={pageInfo.hasNextPage}
         shownItemsAmount={edges?.length || 0}
-        totalItemsAmount={search.repositoryCount}
-      /> */}
+        totalItemsAmount={repositoryCount}
+      />
     </>
   );
 };
