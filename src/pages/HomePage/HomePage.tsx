@@ -31,7 +31,8 @@ const HomePage: FC = () => {
   >(HOME_PAGE_QUERY, {
     variables: {
       count: 2
-    }
+    },
+    notifyOnNetworkStatusChange: true
   });
 
   return (
@@ -39,12 +40,13 @@ const HomePage: FC = () => {
       <Container fluid>
         <h5>Home page</h5>
         {data?.viewer && <MainUserInfo viewer={data?.viewer} />}
-        {loading ? <p>Loading info...</p> : <hr />}
+        {loading && !data ? <p>Loading info...</p> : <hr />}
       </Container>
       {data?.viewer?.followers && (
         <FollowersList
           followers={data.viewer.followers}
           fetchMore={fetchMore}
+          loading={loading}
         />
       )}
     </>

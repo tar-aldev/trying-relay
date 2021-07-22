@@ -59,9 +59,14 @@ export interface FollowersListProps {
     HomePageQuery,
     HomePageQueryVariables
   >["fetchMore"];
+  loading: boolean;
 }
 
-const FollowersList: FC<FollowersListProps> = ({ followers, fetchMore }) => {
+const FollowersList: FC<FollowersListProps> = ({
+  followers,
+  fetchMore,
+  loading
+}) => {
   const onLoadMoreFollowers = () => {
     fetchMore({
       variables: {
@@ -87,7 +92,7 @@ const FollowersList: FC<FollowersListProps> = ({ followers, fetchMore }) => {
             )}
           </>
         }
-        isLoadingNext={false}
+        isLoadingNext={loading}
         onLoadMore={onLoadMoreFollowers}
         shownItemsAmount={followers.edges?.length || 0}
         totalItemsAmount={followers.totalCount}

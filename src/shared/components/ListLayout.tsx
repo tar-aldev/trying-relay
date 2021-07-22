@@ -21,7 +21,7 @@ const ListLayout = ({
   isLoadingNext,
   onLoadMore,
   hasMore,
-  countPosition = "bottom",
+  countPosition = "bottom"
 }: ListLayoutProps) => {
   const paginationCount = useMemo(() => {
     return (
@@ -38,6 +38,7 @@ const ListLayout = ({
       {countPosition === "top" && paginationCount}
       <Container fluid className={styles.root}>
         {list}
+        {isLoadingNext && <p>Loading more items...</p>}
       </Container>
       {hasMore && (
         <div className="d-flex justify-content-center">
