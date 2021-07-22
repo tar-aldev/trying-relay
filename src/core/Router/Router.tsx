@@ -1,5 +1,6 @@
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import HomePage from "../../pages/HomePage/HomePage";
+import RepositoriesPage from "../../pages/RepositoriesPage/RepositoriesPage";
 import MainLayout from "../layouts/MainLayout";
 
 const Routes = () => {
@@ -8,8 +9,11 @@ const Routes = () => {
       <Switch>
         <Route path="/:login?">
           <MainLayout>
-            <Route path="/">
+            <Route path="/:login" exact>
               <HomePage />
+            </Route>
+            <Route path="/:login/repositories">
+              <RepositoriesPage />
             </Route>
           </MainLayout>
         </Route>
