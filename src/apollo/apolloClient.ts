@@ -1,4 +1,5 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
+import { relayStylePagination } from "@apollo/client/utilities";
 const REACT_APP_GITHUB_AUTH_TOKEN = process.env.REACT_APP_GITHUB_AUTH_TOKEN;
 
 const link = createHttpLink({
@@ -13,18 +14,36 @@ const link = createHttpLink({
 const client = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies: {
-      FollowerConnection: {
+      User: {
+        fields: {
+          followers: relayStylePagination()
+        }
+      }
+      /* viewer: {
+        fields: {
+          followers: relayStylePagination()
+        }
+      } */
+      /* Query: {
+        fields: {
+          viewer: {
+            merge: true
+
+          }
+        }
+      } */
+      /* FollowerConnection: {
         fields: {
           edges: {
             keyArgs: false,
             merge(existing = [], incoming) {
-              console.log("MERGE");
+              console.log("MERGE", existing, incoming);
 
               return [...existing, ...incoming];
             }
           }
         }
-      }
+      } */
     }
   }),
   link

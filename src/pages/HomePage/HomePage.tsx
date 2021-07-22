@@ -10,11 +10,6 @@ import FollowersList, {
   FOLLOWERS_LIST_FRAGMENT
 } from "./FollowersList/FollowersList";
 
-/* 
-  Think of this component as tree root
-  It gathers all the data that nested components need
-  and defined data dependencies
-*/
 export const HOME_PAGE_QUERY = gql`
   query HomePageQuery($count: Int!, $after: String) {
     viewer {
@@ -30,24 +25,22 @@ export const HOME_PAGE_QUERY = gql`
 `;
 
 const HomePage: FC = () => {
-  const { data, fetchMore } = useQuery<HomePageQuery, HomePageQueryVariables>(
-    HOME_PAGE_QUERY,
-    {
-      variables: {
-        count: 2
-      }
+  const { data, loading, fetchMore } = useQuery<
+    HomePageQuery,
+    HomePageQueryVariables
+  >(HOME_PAGE_QUERY, {
+    variables: {
+      count: 2
     }
-  );
-
-  console.log("data", data);
+  });
 
   return (
     <>
       <Container fluid>
         <h5>Home page</h5>
         {data?.viewer && <MainUserInfo viewer={data?.viewer} />}
+        {loading ? <p>Loading info...</p> : <hr />}
       </Container>
-      <hr />
       {data?.viewer?.followers && (
         <FollowersList
           followers={data.viewer.followers}
