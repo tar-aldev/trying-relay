@@ -1,32 +1,75 @@
+import { gql, useQuery } from "@apollo/client";
 import { FC } from "react";
-import BranchInfo from "./BranchInfo/BranchInfo";
-import CommitsList from "./CommitsList/CommitsList";
+import { useParams } from "react-router-dom";
+import BranchInfo, { BRANCH_INFO_FRAGMENT } from "./BranchInfo/BranchInfo";
+import {
+  BranchPageQuery,
+  BranchPageQueryVariables,
+  BranchPageQuery_node_Ref
+} from "./__generated__/BranchPageQuery";
 
-// export const BRANCH_PAGE_QUERY = graphql`
-//   query BranchPageQuery($id: ID!) {
-//     node(id: $id) {
-//       id
-//       ... on Ref {
-//         ...BranchInfo_branch
-//         target {
-//           ... on Commit {
-//             ...CommitsListFragment_commits
-//           }
-//         }
-//       }
-//     }
-//   }
-// `;
+/* 
+... on Ref {
+        ...BranchInfoFragment
+        target {
+          ... on Commit {
+            history(first: 10) {
+              totalCount
+              pageInfo {
+                ...PageInfoFragment
+              }
+              edges {
+                cursor
+                node {
+                  associatedPullRequests(first: 10) {
+                    edges {
+                      node {
+                        body
+                        merged
+                        url
+                        id
+                      }
+                    }
+                  }
+                  committedDate
+                  author {
+                    email
+                    name
+                  }
+                  message
+                }
+              }
+            }
+          }
+        }
+      }
+*/
+export const BRANCH_PAGE_QUERY = gql`
+  query BranchPageQuery(
+    $branchId: ID!
+    $connectedCommitsCount: Int!
+    $cursor: String
+  ) {
+    node(id: $branchId) {
+      ...BranchInfoFragment
+    }
+  }
+  ${BRANCH_INFO_FRAGMENT}
+`;
 
-const BranchPage: FC = (/* {
-  data: queryRef,
-} */) => {
-  // const { node: branch } = usePreloadedQuery(BRANCH_PAGE_QUERY, queryRef);
+const BranchPage: FC = () => {
+  const { branchId } = useParams<{ branchId: string }>();
+  const { data, fetchMore } = useQuery<
+    BranchPageQuery,
+    BranchPageQueryVariables
+  >(BRANCH_PAGE_QUERY, { variables: { branchId, connectedCommitsCount: 5 } });
 
-  return false ? (
+  return data?.node ? (
     <>
-      {/* <BranchInfo fragmentRef={branch} />
-      <CommitsList fragmentRef={branch.target} /> */}
+      <BranchInfo
+        branch={data?.node as BranchPageQuery_node_Ref}
+        fetchMore={fetchMore}
+      />
     </>
   ) : (
     <p>Branch cannot be found</p>

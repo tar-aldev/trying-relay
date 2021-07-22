@@ -1,6 +1,6 @@
 import { Nav, Navbar } from "react-bootstrap";
-import { Link, NavLink, useParams } from "react-router-dom";
-import { ParamsWithLogin } from "../../interfaces/ParamsWithLogin";
+import { NavLink, useParams } from "react-router-dom";
+import { ParamsWithLogin } from "../../shared/interfaces/ParamsWithLogin";
 
 const Header = () => {
   const { login } = useParams<ParamsWithLogin>();

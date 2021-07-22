@@ -1,9 +1,9 @@
 import { gql, useQuery } from "@apollo/client";
-import { ChangeEvent, FC, Suspense, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { ParamsWithLogin } from "../../interfaces/ParamsWithLogin";
 import { PAGE_INFO_FRAGMENT } from "../../shared/fragments/pageInfoFragment";
+import { ParamsWithLogin } from "../../shared/interfaces/ParamsWithLogin";
 import { SearchType } from "../../__generated__/globalTypes";
 import RepositoriesList from "./RepositoriesList";
 import { REPOSITORY_FRAGMENT } from "./RepositoriesListItem";
@@ -36,12 +36,10 @@ const REPOSITORIES_PAGE_QUERY = gql`
   ${PAGE_INFO_FRAGMENT}
 `;
 
-const RepositoriesPage: FC = (/* {
-  data,
-} */) => {
+const RepositoriesPage: FC = () => {
   const [searchStr, setSearchStr] = useState("");
   const { login } = useParams<ParamsWithLogin>();
-  const { data, loading, refetch, fetchMore } = useQuery<
+  const { data, loading, fetchMore } = useQuery<
     RepositoriesPageQuery,
     RepositoriesPageQueryVariables
   >(REPOSITORIES_PAGE_QUERY, {
@@ -55,8 +53,6 @@ const RepositoriesPage: FC = (/* {
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchStr(e.currentTarget.value);
   };
-
-  console.log("data", data);
 
   return (
     <>
@@ -76,11 +72,10 @@ const RepositoriesPage: FC = (/* {
       {loading && !data && <div>Loading repositories...</div>}
       {data && (
         <RepositoriesList
-          searchStr={searchStr}
           repositoriesSearchResult={data.search}
+          fetchMore={fetchMore}
         />
       )}
-      <Suspense fallback={<div></div>}></Suspense>
     </>
   );
 };

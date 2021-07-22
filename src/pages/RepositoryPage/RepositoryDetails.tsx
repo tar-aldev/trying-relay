@@ -1,7 +1,12 @@
-import React, { FC } from "react";
+import { gql } from "@apollo/client";
+import React, { FC, useCallback } from "react";
+import { useHistory } from "react-router-dom";
+import { PAGE_INFO_FRAGMENT } from "../../shared/fragments/pageInfoFragment";
+import BranchesSearchableSelect from "./BranchesSearchableSelect";
+import { RepositoryPageQuery_repository } from "./__generated__/RepositoryPageQuery";
 
-/* export const REPOSITORY_DETAILS_FRAGMENT = graphql`
-  fragment RepositoryDetails_repository on Repository {
+/* export const REPOSITORY_DETAILS_FRAGMENT = gqfl`
+  fragment RepositoryDetails on Repository {
     name
     descriptionHTML
     defaultBranchRef {
@@ -15,44 +20,71 @@ import React, { FC } from "react";
   }
 `; */
 
-const RepositoryDetails: FC = (/* { fragmentRef } */) => {
-  /* const {
-    router,
-    match: { params },
-  } = useRouter();
-  const repository = useFragment(REPOSITORY_DETAILS_FRAGMENT, fragmentRef); */
-  /* const handleBranchSelect = useCallback<
-    BranchesSearchableSelectProps["handleBranchSelect"]
-  >(
+export const REPOSITORY_DETAILS_FRAGMENT = gql`
+  fragment RepositoryDetailsFragment on Repository {
+    name
+    descriptionHTML
+    defaultBranchRef {
+      id
+      name
+    }
+    # the branches repository has
+    refs(first: 100, refPrefix: "refs/heads/") {
+      totalCount
+      pageInfo {
+        ...PageInfoFragment
+      }
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+  ${PAGE_INFO_FRAGMENT}
+`;
+
+export interface RepositoryDetailsProps {
+  repository: RepositoryPageQuery_repository;
+}
+const RepositoryDetails: FC<RepositoryDetailsProps> = ({ repository }) => {
+  const history = useHistory();
+
+  const handleBranchSelect = useCallback(
     (branchId) => {
-      router.push(`/${params.login}/branches/${branchId}`);
+      history.push(`${history.location.pathname}/branches/${branchId}`);
     },
-    [params.login, router]
-  ); */
+    [history]
+  );
+
+  console.log("repository", repository);
 
   return (
     <div>
       <div>
-        <h4 className="text-center text-primary">{/* {repository.name} */}</h4>
-        {/* <div
+        <h4 className="text-center text-primary">{repository.name}</h4>
+        <div
           dangerouslySetInnerHTML={{
-            __html: repository.descriptionHTML as any,
+            __html: repository.descriptionHTML as any
           }}
-        /> */}
-        <p>
-          The default branch is:{" "}
-          <span className="font-weight-bold text-primary">
-            {/* {repository.defaultBranchRef?.name} */}
-          </span>
-        </p>
+        />
+        {repository.defaultBranchRef?.name && (
+          <p>
+            The default branch is:{" "}
+            <span className="font-weight-bold text-primary">
+              {repository.defaultBranchRef?.name}
+            </span>
+          </p>
+        )}
       </div>
-      {/* {repository.refs && (
+      {repository.refs && (
         <BranchesSearchableSelect
-          fragmentRef={repository.refs}
+          branchesPagination={repository.refs}
           defaultBranchName={repository.defaultBranchRef?.name}
           handleBranchSelect={handleBranchSelect}
         />
-      )} */}
+      )}
     </div>
   );
 };

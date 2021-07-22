@@ -41,7 +41,7 @@ const ListLayout = ({
         {isLoadingNext && <p>Loading more items...</p>}
       </Container>
       {hasMore && (
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center mb-2">
           <LoadMoreButton
             isLoadingNext={isLoadingNext}
             onLoadMore={onLoadMore}

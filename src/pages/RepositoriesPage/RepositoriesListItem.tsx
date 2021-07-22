@@ -1,12 +1,7 @@
 import { gql } from "@apollo/client";
 import { FC } from "react";
 import { Button, Card, Image } from "react-bootstrap";
-import {
-  RepositoriesPageQuery_search_edges,
-  RepositoriesPageQuery_search_edges_node,
-  RepositoriesPageQuery_search_edges_node_Repository
-} from "./__generated__/RepositoriesPageQuery";
-import { RepositoryFragment } from "./__generated__/RepositoryFragment";
+import { RepositoriesPageQuery_search_edges_node_Repository } from "./__generated__/RepositoriesPageQuery";
 
 export const REPOSITORY_FRAGMENT = gql`
   fragment RepositoryFragment on Repository {

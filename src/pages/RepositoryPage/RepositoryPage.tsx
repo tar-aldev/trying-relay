@@ -1,41 +1,61 @@
-import { FC, Suspense } from "react";
-import { Button } from "react-bootstrap";
-import RepositoryDetails from "./RepositoryDetails";
+import { gql, useQuery } from "@apollo/client";
+import { FC } from "react";
+import { Button, Container } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import { ParamsWithLogin } from "../../shared/interfaces/ParamsWithLogin";
+import RepositoryDetails, {
+  REPOSITORY_DETAILS_FRAGMENT
+} from "./RepositoryDetails";
+import {
+  RepositoryPageQuery,
+  RepositoryPageQueryVariables
+} from "./__generated__/RepositoryPageQuery";
 
-/* export const REPOSITORY_PAGE_QUERY = graphql`
+export const REPOSITORY_PAGE_QUERY = gql`
   query RepositoryPageQuery($name: String!, $owner: String!) {
     repository(name: $name, owner: $owner) {
-      ...RepositoryDetails_repository
+      ...RepositoryDetailsFragment
     }
   }
-`; */
+  ${REPOSITORY_DETAILS_FRAGMENT}
+`;
 
-const RepositoryPage: FC = (/* { data } */) => {
-  /*  const { repository } = usePreloadedQuery(REPOSITORY_PAGE_QUERY, data);
-  const {
-    match: { params },
-  } = useRouter(); */
+const RepositoryPage: FC = () => {
+  const { login, repoName } = useParams<
+    ParamsWithLogin & { repoName: string }
+  >();
+  const { data, loading } = useQuery<
+    RepositoryPageQuery,
+    RepositoryPageQueryVariables
+  >(REPOSITORY_PAGE_QUERY, {
+    variables: {
+      name: repoName,
+      owner: login
+    }
+  });
+
+  console.log("data", data);
 
   return (
-    <>
+    <Container fluid>
       <h5>Repo page</h5>
       <div className="d-flex justify-content-end mb-2">
-        {/* <Button
+        <Button
           as={Link}
-          to={`/${params.login}/repositories`}
+          to={`/${login}/repositories`}
           variant="outline-secondary"
         >
           Back to repos list
-        </Button> */}
+        </Button>
       </div>
-      <Suspense fallback={<div>Loading repository information</div>}>
-        {/* {repository ? (
+      {loading && <div>Loading repository information</div>}
+      {data?.repository && <RepositoryDetails repository={data?.repository} />}
+      {/* {repository ? (
           <RepositoryDetails fragmentRef={repository} />
         ) : (
           "Repository cannot be found"
         )} */}
-      </Suspense>
-    </>
+    </Container>
   );
 };
 

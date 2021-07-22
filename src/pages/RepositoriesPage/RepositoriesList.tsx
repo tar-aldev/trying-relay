@@ -1,36 +1,49 @@
 import { FC, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import ListLayout from "../../shared/components/ListLayout";
+import { PropsWithFetchMore } from "../../shared/interfaces/PropsWithFetchMore";
 import RepositoryListItem, {
   RepositoriesListItemProps
 } from "./RepositoriesListItem";
 import {
+  RepositoriesPageQuery,
+  RepositoriesPageQueryVariables,
   RepositoriesPageQuery_search,
   RepositoriesPageQuery_search_edges_node_Repository
 } from "./__generated__/RepositoriesPageQuery";
 
-export interface RepositoriesListProps {
-  searchStr: string;
+export interface RepositoriesListProps
+  extends PropsWithFetchMore<
+    RepositoriesPageQuery,
+    RepositoriesPageQueryVariables
+  > {
   repositoriesSearchResult: RepositoriesPageQuery_search;
 }
 
 const RepositoriesList: FC<RepositoriesListProps> = ({
-  repositoriesSearchResult
+  repositoriesSearchResult,
+  fetchMore
 }) => {
   const { edges = [], repositoryCount, pageInfo } = repositoriesSearchResult;
-  /* const {
-    match: { params },
-  } = useRouter();
-  const { router } = useRouter(); */
+  const history = useHistory();
 
   const onNavigateToRepositoryDetails = useCallback<
     RepositoriesListItemProps["handleShowRepoDetails"]
-  >((repoName) => {}, []);
+  >(
+    (repoName) => {
+      history.push(`${history.location.pathname}/${repoName}`);
+    },
+    [history]
+  );
 
-  const loadMoreRepositories = useCallback(() => {}, []);
-
-  /* useEffect(() => {
-    refetch({ queryString: `${searchStr} in:name user:${params.login}` });
-  }, [params.login, searchStr, refetch]); */
+  const loadMoreRepositories = useCallback(() => {
+    fetchMore({
+      variables: {
+        count: 2,
+        after: pageInfo.endCursor
+      }
+    });
+  }, [pageInfo.endCursor, fetchMore]);
 
   return (
     <>

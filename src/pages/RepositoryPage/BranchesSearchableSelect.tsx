@@ -1,47 +1,33 @@
 import { FC } from "react";
 import { Card, ListGroup } from "react-bootstrap";
-
-/* export const BRANCHES_SEARCHABLE_SELECT_FRAGMENT = graphql`
-  fragment BranchesSearchableSelect_branches on RefConnection {
-    # TODO: Add search as part of query instead of local
-    edges {
-      node {
-        id
-        name
-      }
-    }
-  }
-`; */
+import { RepositoryPageQuery_repository_refs } from "./__generated__/RepositoryPageQuery";
 
 export interface BranchesSearchableSelectProps {
   defaultBranchName?: string;
+  branchesPagination: RepositoryPageQuery_repository_refs;
   handleBranchSelect: (branchId: string) => void;
 }
 
 const BranchesSearchableSelect: FC<BranchesSearchableSelectProps> = ({
-  /* fragmentRef, */
+  branchesPagination,
   defaultBranchName,
-  handleBranchSelect,
+  handleBranchSelect
 }) => {
-  /* const { edges } = useFragment(
-    BRANCHES_SEARCHABLE_SELECT_FRAGMENT,
-    fragmentRef
-  ); */
+  const { edges /* , pageInfo, totalCount */ } = branchesPagination;
 
   const onBranchSelect = (branchId: string) => () => {
     handleBranchSelect(branchId);
   };
 
   return (
-    <div>
-      <p>Click on any of the branches to view its detailed info</p>
+    <div className="my-2">
+      <h6>Click on any of the branches to view its detailed info</h6>
 
-      {
-        /* edges && edges.length > 0 */ [] ? (
-          <div>
-            <Card>
-              <ListGroup variant="flush">
-                {/* {edges.map(({ node }: any) => {
+      {edges && edges.length > 0 ? (
+        <div>
+          <Card>
+            <ListGroup variant="flush">
+              {edges.map(({ node }: any) => {
                 return (
                   <ListGroup.Item
                     key={node.id}
@@ -61,14 +47,13 @@ const BranchesSearchableSelect: FC<BranchesSearchableSelectProps> = ({
                     )}
                   </ListGroup.Item>
                 );
-              })} */}
-              </ListGroup>
-            </Card>
-          </div>
-        ) : (
-          "No branches for this repo yet..."
-        )
-      }
+              })}
+            </ListGroup>
+          </Card>
+        </div>
+      ) : (
+        "No branches for this repo yet..."
+      )}
     </div>
   );
 };

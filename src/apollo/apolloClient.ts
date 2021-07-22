@@ -18,6 +18,11 @@ const client = new ApolloClient({
         fields: {
           followers: relayStylePagination()
         }
+      },
+      Commit: {
+        fields: {
+          history: relayStylePagination()
+        }
       }
       /* viewer: {
         fields: {
