@@ -1,8 +1,9 @@
 import { gql } from "@apollo/client";
 import React, { FC, useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { PAGE_INFO_FRAGMENT } from "../../shared/fragments/pageInfoFragment";
-import BranchesSearchableSelect from "./BranchesSearchableSelect";
+import BranchesSearchableSelect, {
+  BRANCHES_FRAGMENT
+} from "./BranchesSearchableSelect";
 import { RepositoryPageQuery_repository } from "./__generated__/RepositoryPageQuery";
 
 /* export const REPOSITORY_DETAILS_FRAGMENT = gqfl`
@@ -29,20 +30,11 @@ export const REPOSITORY_DETAILS_FRAGMENT = gql`
       name
     }
     # the branches repository has
-    refs(first: 100, refPrefix: "refs/heads/") {
-      totalCount
-      pageInfo {
-        ...PageInfoFragment
-      }
-      edges {
-        node {
-          id
-          name
-        }
-      }
+    refs(first: $count, refPrefix: "refs/heads/") {
+      ...BranchesFragment
     }
   }
-  ${PAGE_INFO_FRAGMENT}
+  ${BRANCHES_FRAGMENT}
 `;
 
 export interface RepositoryDetailsProps {
@@ -50,7 +42,6 @@ export interface RepositoryDetailsProps {
 }
 const RepositoryDetails: FC<RepositoryDetailsProps> = ({ repository }) => {
   const history = useHistory();
-
   const handleBranchSelect = useCallback(
     (branchId) => {
       history.push(`${history.location.pathname}/branches/${branchId}`);

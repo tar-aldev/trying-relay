@@ -95,4 +95,5 @@ export interface RepositoryPageQuery {
 export interface RepositoryPageQueryVariables {
   name: string;
   owner: string;
+  count: number;
 }

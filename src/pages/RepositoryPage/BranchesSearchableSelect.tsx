@@ -1,5 +1,7 @@
+import { gql } from "@apollo/client";
 import { FC } from "react";
 import { Card, ListGroup } from "react-bootstrap";
+import { PAGE_INFO_FRAGMENT } from "../../shared/fragments/pageInfoFragment";
 import { RepositoryPageQuery_repository_refs } from "./__generated__/RepositoryPageQuery";
 
 export interface BranchesSearchableSelectProps {
@@ -8,13 +10,28 @@ export interface BranchesSearchableSelectProps {
   handleBranchSelect: (branchId: string) => void;
 }
 
+export const BRANCHES_FRAGMENT = gql`
+  fragment BranchesFragment on RefConnection {
+    totalCount
+    pageInfo {
+      ...PageInfoFragment
+    }
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+  ${PAGE_INFO_FRAGMENT}
+`;
+
 const BranchesSearchableSelect: FC<BranchesSearchableSelectProps> = ({
   branchesPagination,
   defaultBranchName,
   handleBranchSelect
 }) => {
-  const { edges /* , pageInfo, totalCount */ } = branchesPagination;
-
+  const { edges, pageInfo, totalCount } = branchesPagination;
   const onBranchSelect = (branchId: string) => () => {
     handleBranchSelect(branchId);
   };

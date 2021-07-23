@@ -13,6 +13,9 @@ const link = createHttpLink({
 
 const client = new ApolloClient({
   cache: new InMemoryCache({
+    // dataIdFromObject: (obj) => {
+    //   return obj?.id ? (obj?.id as string) : obj.__typename;
+    // },
     typePolicies: {
       User: {
         fields: {

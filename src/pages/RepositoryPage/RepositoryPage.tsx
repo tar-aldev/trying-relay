@@ -2,6 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import { FC } from "react";
 import { Button, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import { PER_PAGE_AMOUNT } from "../../core/constants";
 import { ParamsWithLogin } from "../../shared/interfaces/ParamsWithLogin";
 import RepositoryDetails, {
   REPOSITORY_DETAILS_FRAGMENT
@@ -12,7 +13,7 @@ import {
 } from "./__generated__/RepositoryPageQuery";
 
 export const REPOSITORY_PAGE_QUERY = gql`
-  query RepositoryPageQuery($name: String!, $owner: String!) {
+  query RepositoryPageQuery($name: String!, $owner: String!, $count: Int!) {
     repository(name: $name, owner: $owner) {
       ...RepositoryDetailsFragment
     }
@@ -30,7 +31,8 @@ const RepositoryPage: FC = () => {
   >(REPOSITORY_PAGE_QUERY, {
     variables: {
       name: repoName,
-      owner: login
+      owner: login,
+      count: 100
     }
   });
 
@@ -46,7 +48,7 @@ const RepositoryPage: FC = () => {
           Back to repos list
         </Button>
       </div>
-      {loading && <div>Loading repository information</div>}
+      {loading && <div>Loading repository information...</div>}
       {data?.repository && <RepositoryDetails repository={data.repository} />}
     </Container>
   );
