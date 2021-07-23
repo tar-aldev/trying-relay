@@ -1,10 +1,7 @@
 import { gql } from "@apollo/client";
 import { FC, ReactElement } from "react";
-import { PropsWithFetchMore } from "../../../shared/interfaces/PropsWithFetchMore";
-import CommitsList, { COMMITS_LIST_FRAGMENT } from "../CommitsList/CommitsList";
+import { COMMITS_LIST_FRAGMENT } from "../CommitsList/CommitsList";
 import {
-  BranchPageQuery,
-  BranchPageQueryVariables,
   BranchPageQuery_node_Ref,
   BranchPageQuery_node_Ref_target_Commit,
   BranchPageQuery_node_Ref_target_Commit_history

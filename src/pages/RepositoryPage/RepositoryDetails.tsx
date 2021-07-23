@@ -58,8 +58,6 @@ const RepositoryDetails: FC<RepositoryDetailsProps> = ({ repository }) => {
     [history]
   );
 
-  console.log("repository", repository);
-
   return (
     <div>
       <div>

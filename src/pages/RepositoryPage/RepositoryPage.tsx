@@ -34,8 +34,6 @@ const RepositoryPage: FC = () => {
     }
   });
 
-  console.log("data", data);
-
   return (
     <Container fluid>
       <h5>Repo page</h5>
@@ -49,12 +47,7 @@ const RepositoryPage: FC = () => {
         </Button>
       </div>
       {loading && <div>Loading repository information</div>}
-      {data?.repository && <RepositoryDetails repository={data?.repository} />}
-      {/* {repository ? (
-          <RepositoryDetails fragmentRef={repository} />
-        ) : (
-          "Repository cannot be found"
-        )} */}
+      {data?.repository && <RepositoryDetails repository={data.repository} />}
     </Container>
   );
 };
