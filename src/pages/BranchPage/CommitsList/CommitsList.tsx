@@ -30,10 +30,12 @@ export const COMMITS_LIST_FRAGMENT = gql`
 export interface CommitsListProps
   extends PropsWithFetchMore<BranchPageQuery, BranchPageQueryVariables> {
   commitsPagination: BranchPageQuery_node_Ref_target_Commit_history;
+  loadingNext: boolean;
 }
 
 const CommitsList: FC<CommitsListProps> = ({
   commitsPagination,
+  loadingNext,
   fetchMore
 }) => {
   const { edges, pageInfo, totalCount } = commitsPagination;
@@ -61,7 +63,7 @@ const CommitsList: FC<CommitsListProps> = ({
       onLoadMore={onLoadMoreCommits}
       shownItemsAmount={edges.length}
       totalItemsAmount={totalCount}
-      isLoadingNext={false}
+      isLoadingNext={loadingNext}
     />
   ) : (
     <p>No commits yet...</p>

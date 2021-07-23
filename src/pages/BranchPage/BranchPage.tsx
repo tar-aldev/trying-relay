@@ -22,11 +22,12 @@ export const BRANCH_PAGE_QUERY = gql`
 
 const BranchPage: FC = () => {
   const { branchId } = useParams<{ branchId: string }>();
-  const { data, fetchMore } = useQuery<
+  const { data, fetchMore, loading } = useQuery<
     BranchPageQuery,
     BranchPageQueryVariables
   >(BRANCH_PAGE_QUERY, {
-    variables: { branchId, commitsCount: PER_PAGE_AMOUNT }
+    variables: { branchId, commitsCount: PER_PAGE_AMOUNT },
+    notifyOnNetworkStatusChange: true
   });
 
   return data?.node ? (
@@ -34,7 +35,13 @@ const BranchPage: FC = () => {
       branch={data?.node as BranchPageQuery_node_Ref}
       renderCommitsList={(
         history: BranchPageQuery_node_Ref_target_Commit_history
-      ) => <CommitsList fetchMore={fetchMore} commitsPagination={history} />}
+      ) => (
+        <CommitsList
+          fetchMore={fetchMore}
+          commitsPagination={history}
+          loadingNext={!!data && loading}
+        />
+      )}
     />
   ) : (
     <p>Branch cannot be found</p>
