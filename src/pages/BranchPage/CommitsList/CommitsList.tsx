@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import { FC } from "react";
+import { PER_PAGE_AMOUNT } from "../../../core/constants";
 import ListLayout from "../../../shared/components/ListLayout";
 import { PAGE_INFO_FRAGMENT } from "../../../shared/fragments/pageInfoFragment";
 import { PropsWithFetchMore } from "../../../shared/interfaces/PropsWithFetchMore";
@@ -12,7 +13,7 @@ import CommitItem, { COMMIT_ITEM_FRAGMENT } from "./CommitItem";
 
 export const COMMITS_LIST_FRAGMENT = gql`
   fragment CommitsListFragment on Commit {
-    history(first: $connectedCommitsCount, after: $cursor) {
+    history(first: $commitsCount, after: $cursor) {
       totalCount
       pageInfo {
         ...PageInfoFragment
@@ -39,7 +40,7 @@ const CommitsList: FC<CommitsListProps> = ({
   const onLoadMoreCommits = () => {
     fetchMore({
       variables: {
-        connectedCommitsCount: 10,
+        commitsCount: PER_PAGE_AMOUNT,
         cursor: pageInfo.endCursor
       }
     });
@@ -68,30 +69,3 @@ const CommitsList: FC<CommitsListProps> = ({
 };
 
 export default CommitsList;
-
-/* 
-<>
-      <Container fluid>
-        {edges.map((edge) => {
-          return edge?.node ? (
-            <CommitItem key={edge.cursor} commit={edge.node} />
-          ) : null;
-        })}
-
-        {pageInfo.hasNextPage && (
-          <div className="d-flex justify-content-center mb-3">
-            <LoadMoreButton
-              onLoadMore={onLoadMoreCommits}
-              isLoadingNext={false}
-            />
-          </div>
-        )}
-      </Container>
-      <ShownPaginationCount
-        position="bottom"
-        showing={edges.length}
-        total={totalCount}
-      />
-    </>
-
-*/

@@ -145,6 +145,6 @@ export interface BranchPageQuery {
 
 export interface BranchPageQueryVariables {
   branchId: string;
-  connectedCommitsCount: number;
+  commitsCount: number;
   cursor?: string | null;
 }

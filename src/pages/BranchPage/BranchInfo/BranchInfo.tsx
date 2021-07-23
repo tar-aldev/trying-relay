@@ -1,12 +1,13 @@
 import { gql } from "@apollo/client";
-import { FC } from "react";
+import { FC, ReactElement } from "react";
 import { PropsWithFetchMore } from "../../../shared/interfaces/PropsWithFetchMore";
 import CommitsList, { COMMITS_LIST_FRAGMENT } from "../CommitsList/CommitsList";
 import {
   BranchPageQuery,
   BranchPageQueryVariables,
   BranchPageQuery_node_Ref,
-  BranchPageQuery_node_Ref_target_Commit
+  BranchPageQuery_node_Ref_target_Commit,
+  BranchPageQuery_node_Ref_target_Commit_history
 } from "../__generated__/BranchPageQuery";
 import ConnectedRepositoryInfo from "./ConnectedRepositoryInfo";
 import styles from "./styles.module.scss";
@@ -28,12 +29,14 @@ export const BRANCH_INFO_FRAGMENT = gql`
   ${COMMITS_LIST_FRAGMENT}
 `;
 
-export interface BranchInfoProps
-  extends PropsWithFetchMore<BranchPageQuery, BranchPageQueryVariables> {
+export interface BranchInfoProps {
   branch: BranchPageQuery_node_Ref;
+  renderCommitsList: (
+    history: BranchPageQuery_node_Ref_target_Commit_history
+  ) => ReactElement;
 }
 
-const BranchInfo: FC<BranchInfoProps> = ({ branch, fetchMore }) => {
+const BranchInfo: FC<BranchInfoProps> = ({ branch, renderCommitsList }) => {
   return (
     <>
       <div
@@ -45,12 +48,9 @@ const BranchInfo: FC<BranchInfoProps> = ({ branch, fetchMore }) => {
         <ConnectedRepositoryInfo repository={branch.repository} />
       </div>
       {branch.target ? (
-        <CommitsList
-          fetchMore={fetchMore}
-          commitsPagination={
-            (branch.target as BranchPageQuery_node_Ref_target_Commit)?.history
-          }
-        />
+        renderCommitsList(
+          (branch.target as BranchPageQuery_node_Ref_target_Commit)?.history
+        )
       ) : (
         <p>Unable to get commits list...</p>
       )}
