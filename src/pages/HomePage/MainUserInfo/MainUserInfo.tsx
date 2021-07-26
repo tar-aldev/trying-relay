@@ -1,17 +1,6 @@
-import { gql } from "@apollo/client";
 import { FC } from "react";
 import { Image } from "react-bootstrap";
 import { MainUserInfoFragment } from "./__generated__/MainUserInfoFragment";
-
-export const MAIN_USER_INFO_FRAGMENT = gql`
-  fragment MainUserInfoFragment on User {
-    name
-    login
-    avatarUrl
-    url
-    email
-  }
-`;
 
 export interface MainUserInfoProps {
   viewer: MainUserInfoFragment;
