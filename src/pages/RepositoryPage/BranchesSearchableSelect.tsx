@@ -1,4 +1,4 @@
-import { gql, useApolloClient } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { Dispatch, FC, useCallback } from "react";
 import {
   Card,
@@ -57,16 +57,6 @@ const BranchesSearchableSelect: FC<BranchesSearchableSelectProps> = ({
   setSearchStr,
   fetchMore
 }) => {
-  const client = useApolloClient();
-
-  console.log(
-    "FFFF",
-    client.cache.readFragment({
-      fragment: BRANCHES_FRAGMENT,
-      fragmentName: "BranchesFragment",
-      id: "RefConnection:{}"
-    })
-  );
   const { edges, pageInfo, totalCount } = branchesPagination;
 
   const onBranchSelect = (branchId: string) => () => {
