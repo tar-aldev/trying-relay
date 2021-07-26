@@ -1,12 +1,7 @@
-// import { Link } from "found";
 import { FC } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BranchPageQuery_node_Ref_repository } from "../__generated__/BranchPageQuery";
-
-// interface ConnectedRepositoryInfoProps {
-//   repository: BranchInfo_branch["repository"];
-// }
 
 export interface ConnectedRepositoryInfoProps {
   repository: BranchPageQuery_node_Ref_repository;

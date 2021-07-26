@@ -1,31 +1,13 @@
-import { gql } from "@apollo/client";
 import { FC } from "react";
 import { PER_PAGE_AMOUNT } from "../../../core/constants";
 import ListLayout from "../../../shared/components/ListLayout";
-import { PAGE_INFO_FRAGMENT } from "../../../shared/fragments/pageInfoFragment";
 import { PropsWithFetchMore } from "../../../shared/interfaces/PropsWithFetchMore";
 import {
   BranchPageQuery,
   BranchPageQueryVariables,
   BranchPageQuery_node_Ref_target_Commit_history
 } from "../__generated__/BranchPageQuery";
-import CommitItem, { COMMIT_ITEM_FRAGMENT } from "./CommitItem";
-
-export const COMMITS_LIST_FRAGMENT = gql`
-  fragment CommitsListFragment on Commit {
-    history(first: $commitsCount, after: $cursor) {
-      totalCount
-      pageInfo {
-        ...PageInfoFragment
-      }
-      edges {
-        ...CommitItemFragment
-      }
-    }
-  }
-  ${PAGE_INFO_FRAGMENT}
-  ${COMMIT_ITEM_FRAGMENT}
-`;
+import CommitItem from "./CommitItem/CommitItem";
 
 export interface CommitsListProps
   extends PropsWithFetchMore<BranchPageQuery, BranchPageQueryVariables> {

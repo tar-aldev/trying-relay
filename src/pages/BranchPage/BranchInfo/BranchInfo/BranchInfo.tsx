@@ -1,30 +1,11 @@
-import { gql } from "@apollo/client";
 import { FC, ReactElement } from "react";
-import { COMMITS_LIST_FRAGMENT } from "../CommitsList/CommitsList";
 import {
   BranchPageQuery_node_Ref,
   BranchPageQuery_node_Ref_target_Commit,
   BranchPageQuery_node_Ref_target_Commit_history
-} from "../__generated__/BranchPageQuery";
-import ConnectedRepositoryInfo from "./ConnectedRepositoryInfo";
+} from "../../__generated__/BranchPageQuery";
+import ConnectedRepositoryInfo from "../ConnectedRepositoryInfo";
 import styles from "./styles.module.scss";
-
-export const BRANCH_INFO_FRAGMENT = gql`
-  fragment BranchInfoFragment on Ref {
-    id
-    name
-    repository {
-      name
-      owner {
-        login
-      }
-    }
-    target {
-      ...CommitsListFragment
-    }
-  }
-  ${COMMITS_LIST_FRAGMENT}
-`;
 
 export interface BranchInfoProps {
   branch: BranchPageQuery_node_Ref;
