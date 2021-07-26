@@ -67,6 +67,7 @@ export interface RepositoryPageQuery_repository_refs {
 
 export interface RepositoryPageQuery_repository {
   __typename: "Repository";
+  id: string;
   /**
    * The name of the repository.
    */

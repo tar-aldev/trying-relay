@@ -18,6 +18,7 @@ export interface RepositoryMainInfoFragment_defaultBranchRef {
 
 export interface RepositoryMainInfoFragment {
   __typename: "Repository";
+  id: string;
   /**
    * The name of the repository.
    */

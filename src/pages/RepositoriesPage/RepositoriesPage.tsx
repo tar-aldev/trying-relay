@@ -38,6 +38,9 @@ const REPOSITORIES_PAGE_QUERY = gql`
 
 const RepositoriesPage: FC = () => {
   const [searchStr, setSearchStr] = useState("");
+
+  console.log("searchStr", searchStr);
+
   const { login } = useParams<ParamsWithLogin>();
   const { data, loading, fetchMore } = useQuery<
     RepositoriesPageQuery,
@@ -45,7 +48,7 @@ const RepositoriesPage: FC = () => {
   >(REPOSITORIES_PAGE_QUERY, {
     variables: {
       count: 10,
-      queryString: `user:${login} ${searchStr} in:name`,
+      queryString: `user:${login}`,
       type: SearchType.REPOSITORY
     }
   });
@@ -53,6 +56,8 @@ const RepositoriesPage: FC = () => {
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchStr(e.currentTarget.value);
   };
+
+  console.log("data", data);
 
   return (
     <>
