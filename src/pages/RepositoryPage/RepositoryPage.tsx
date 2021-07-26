@@ -29,10 +29,11 @@ export const REPOSITORY_PAGE_QUERY = gql`
 
 const RepositoryPage: FC = () => {
   const history = useHistory();
-  const { login, repoName } = useParams<
-    ParamsWithLogin & { repoName: string }
+  const { login, name: repoName } = useParams<
+    ParamsWithLogin & { name: string }
   >();
   const [searchStr, setSearchStr] = useState("");
+
   const { data, loading, previousData, fetchMore } = useQuery<
     RepositoryPageQuery,
     RepositoryPageQueryVariables
