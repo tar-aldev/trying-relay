@@ -26,32 +26,13 @@ const client = new ApolloClient({
         fields: {
           history: relayStylePagination()
         }
+      },
+      Repository: {
+        keyFields: [],
+        fields: {
+          refs: relayStylePagination(["query"])
+        }
       }
-      /* viewer: {
-        fields: {
-          followers: relayStylePagination()
-        }
-      } */
-      /* Query: {
-        fields: {
-          viewer: {
-            merge: true
-
-          }
-        }
-      } */
-      /* FollowerConnection: {
-        fields: {
-          edges: {
-            keyArgs: false,
-            merge(existing = [], incoming) {
-              console.log("MERGE", existing, incoming);
-
-              return [...existing, ...incoming];
-            }
-          }
-        }
-      } */
     }
   }),
   link

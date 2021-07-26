@@ -1,54 +1,26 @@
 import { gql } from "@apollo/client";
-import React, { FC, useCallback } from "react";
-import { useHistory } from "react-router-dom";
-import BranchesSearchableSelect, {
+import { FC, ReactElement } from "react";
+import {
+  BranchesSearchableSelectProps,
   BRANCHES_FRAGMENT
 } from "./BranchesSearchableSelect";
-import { RepositoryPageQuery_repository } from "./__generated__/RepositoryPageQuery";
 
-/* export const REPOSITORY_DETAILS_FRAGMENT = gqfl`
-  fragment RepositoryDetails on Repository {
+export const REPOSITORY_MAIN_INFO_FRAGMENT = gql`
+  fragment RepositoryMainInfoFragment on Repository {
     name
     descriptionHTML
     defaultBranchRef {
       id
       name
     }
-    # the branches repository has
-    refs(first: 100, refPrefix: "refs/heads/") {
-      ...BranchesSearchableSelect_branches
-    }
   }
-`; */
-
-export const REPOSITORY_DETAILS_FRAGMENT = gql`
-  fragment RepositoryDetailsFragment on Repository {
-    name
-    descriptionHTML
-    defaultBranchRef {
-      id
-      name
-    }
-    # the branches repository has
-    refs(first: $count, refPrefix: "refs/heads/") {
-      ...BranchesFragment
-    }
-  }
-  ${BRANCHES_FRAGMENT}
 `;
 
 export interface RepositoryDetailsProps {
-  repository: RepositoryPageQuery_repository;
+  repository: any;
 }
-const RepositoryDetails: FC<RepositoryDetailsProps> = ({ repository }) => {
-  const history = useHistory();
-  const handleBranchSelect = useCallback(
-    (branchId) => {
-      history.push(`${history.location.pathname}/branches/${branchId}`);
-    },
-    [history]
-  );
 
+const RepositoryDetails: FC<RepositoryDetailsProps> = ({ repository }) => {
   return (
     <div>
       <div>
@@ -67,15 +39,27 @@ const RepositoryDetails: FC<RepositoryDetailsProps> = ({ repository }) => {
           </p>
         )}
       </div>
-      {repository.refs && (
-        <BranchesSearchableSelect
-          branchesPagination={repository.refs}
-          defaultBranchName={repository.defaultBranchRef?.name}
-          handleBranchSelect={handleBranchSelect}
-        />
-      )}
+      {/* {repository.refs ? (
+        renderBranchesSearch({
+          branchesPagination: repository.refs,
+          defaultBranchName: repository.defaultBranchRef?.name
+        })
+      ) : (
+        <p>Unable to find branches...</p>
+      )} */}
     </div>
   );
 };
 
 export default RepositoryDetails;
+
+/* 
+(
+        <BranchesSearchableSelect
+          branchesPagination={repository.refs}
+          defaultBranchName={repository.defaultBranchRef?.name}
+          handleBranchSelect={handleBranchSelect}
+        />
+      )
+
+*/

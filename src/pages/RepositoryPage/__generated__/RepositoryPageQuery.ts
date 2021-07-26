@@ -96,4 +96,6 @@ export interface RepositoryPageQueryVariables {
   name: string;
   owner: string;
   count: number;
+  after?: string | null;
+  query: string;
 }
