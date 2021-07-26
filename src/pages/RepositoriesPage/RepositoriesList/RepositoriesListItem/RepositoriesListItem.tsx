@@ -1,28 +1,6 @@
-import { gql } from "@apollo/client";
 import { FC } from "react";
 import { Button, Card, Image } from "react-bootstrap";
-import { RepositoriesPageQuery_search_edges_node_Repository } from "./__generated__/RepositoriesPageQuery";
-
-export const REPOSITORY_FRAGMENT = gql`
-  fragment RepositoryFragment on Repository {
-    id
-    name
-    url
-    collaborators {
-      edges {
-        node {
-          login
-        }
-      }
-    }
-    owner {
-      id
-      login
-      url
-      avatarUrl
-    }
-  }
-`;
+import { RepositoriesPageQuery_search_edges_node_Repository } from "../../__generated__/RepositoriesPageQuery";
 
 export interface RepositoriesListItemProps {
   repository: RepositoriesPageQuery_search_edges_node_Repository;
@@ -33,8 +11,6 @@ const RepositoriesListItem: FC<RepositoriesListItemProps> = ({
   handleShowRepoDetails,
   repository
 }) => {
-  // const repository = useFragment(REPOSITORIES_LIST_ITEM_FRAGMENT, fragmentRef);
-
   const onShowRepoDetails = () => {
     handleShowRepoDetails(repository.name, repository.owner.login);
   };

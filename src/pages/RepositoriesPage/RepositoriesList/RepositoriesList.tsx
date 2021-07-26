@@ -1,16 +1,16 @@
 import { FC, useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import ListLayout from "../../shared/components/ListLayout";
-import { PropsWithFetchMore } from "../../shared/interfaces/PropsWithFetchMore";
+import ListLayout from "../../../shared/components/ListLayout";
+import { PropsWithFetchMore } from "../../../shared/interfaces/PropsWithFetchMore";
 import RepositoryListItem, {
   RepositoriesListItemProps
-} from "./RepositoriesListItem";
+} from "./RepositoriesListItem/RepositoriesListItem";
 import {
   RepositoriesPageQuery,
   RepositoriesPageQueryVariables,
   RepositoriesPageQuery_search,
   RepositoriesPageQuery_search_edges_node_Repository
-} from "./__generated__/RepositoriesPageQuery";
+} from "../__generated__/RepositoriesPageQuery";
 
 export interface RepositoriesListProps
   extends PropsWithFetchMore<

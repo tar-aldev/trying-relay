@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: RepositoryFragment
+// GraphQL fragment: RepositoryListItemFragment
 // ====================================================
 
-export interface RepositoryFragment_collaborators_edges_node {
+export interface RepositoryListItemFragment_collaborators_edges_node {
   __typename: "User";
   /**
    * The username used to login.
@@ -15,20 +15,20 @@ export interface RepositoryFragment_collaborators_edges_node {
   login: string;
 }
 
-export interface RepositoryFragment_collaborators_edges {
+export interface RepositoryListItemFragment_collaborators_edges {
   __typename: "RepositoryCollaboratorEdge";
-  node: RepositoryFragment_collaborators_edges_node;
+  node: RepositoryListItemFragment_collaborators_edges_node;
 }
 
-export interface RepositoryFragment_collaborators {
+export interface RepositoryListItemFragment_collaborators {
   __typename: "RepositoryCollaboratorConnection";
   /**
    * A list of edges.
    */
-  edges: (RepositoryFragment_collaborators_edges | null)[] | null;
+  edges: (RepositoryListItemFragment_collaborators_edges | null)[] | null;
 }
 
-export interface RepositoryFragment_owner {
+export interface RepositoryListItemFragment_owner {
   __typename: "Organization" | "User";
   id: string;
   /**
@@ -45,7 +45,7 @@ export interface RepositoryFragment_owner {
   avatarUrl: any;
 }
 
-export interface RepositoryFragment {
+export interface RepositoryListItemFragment {
   __typename: "Repository";
   id: string;
   /**
@@ -59,9 +59,9 @@ export interface RepositoryFragment {
   /**
    * A list of collaborators associated with the repository.
    */
-  collaborators: RepositoryFragment_collaborators | null;
+  collaborators: RepositoryListItemFragment_collaborators | null;
   /**
    * The User owner of the repository.
    */
-  owner: RepositoryFragment_owner;
+  owner: RepositoryListItemFragment_owner;
 }

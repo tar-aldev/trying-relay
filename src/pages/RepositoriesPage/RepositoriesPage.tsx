@@ -1,46 +1,18 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { ChangeEvent, FC, useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { PAGE_INFO_FRAGMENT } from "../../shared/fragments/pageInfoFragment";
 import { ParamsWithLogin } from "../../shared/interfaces/ParamsWithLogin";
 import { SearchType } from "../../__generated__/globalTypes";
-import RepositoriesList from "./RepositoriesList";
-import { REPOSITORY_FRAGMENT } from "./RepositoriesListItem";
+import RepositoriesList from "./RepositoriesList/RepositoriesList";
+import { REPOSITORIES_PAGE_QUERY } from "./RepositoriesPageQuery";
 import {
   RepositoriesPageQuery,
   RepositoriesPageQueryVariables
 } from "./__generated__/RepositoriesPageQuery";
 
-const REPOSITORIES_PAGE_QUERY = gql`
-  query RepositoriesPageQuery(
-    $cursor: String
-    $count: Int!
-    $queryString: String!
-    $type: SearchType!
-  ) {
-    search(first: $count, after: $cursor, query: $queryString, type: $type) {
-      repositoryCount
-      pageInfo {
-        ...PageInfoFragment
-      }
-      edges {
-        cursor
-        node {
-          ...RepositoryFragment
-        }
-      }
-    }
-  }
-  ${REPOSITORY_FRAGMENT}
-  ${PAGE_INFO_FRAGMENT}
-`;
-
 const RepositoriesPage: FC = () => {
   const [searchStr, setSearchStr] = useState("");
-
-  console.log("searchStr", searchStr);
-
   const { login } = useParams<ParamsWithLogin>();
   const { data, loading, fetchMore } = useQuery<
     RepositoriesPageQuery,
