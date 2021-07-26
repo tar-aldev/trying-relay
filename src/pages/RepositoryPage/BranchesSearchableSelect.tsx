@@ -14,7 +14,6 @@ import { PropsWithFetchMore } from "../../shared/interfaces/PropsWithFetchMore";
 import {
   RepositoryPageQuery,
   RepositoryPageQueryVariables,
-  RepositoryPageQuery_repository,
   RepositoryPageQuery_repository_refs
 } from "./__generated__/RepositoryPageQuery";
 

@@ -2,7 +2,6 @@ import { gql, useQuery } from "@apollo/client";
 import { FC, useCallback, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
-import { PER_PAGE_AMOUNT } from "../../core/constants";
 import { ParamsWithLogin } from "../../shared/interfaces/ParamsWithLogin";
 import BranchesSearchableSelect, {
   BRANCHES_FRAGMENT

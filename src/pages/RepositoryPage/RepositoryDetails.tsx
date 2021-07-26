@@ -1,9 +1,5 @@
 import { gql } from "@apollo/client";
-import { FC, ReactElement } from "react";
-import {
-  BranchesSearchableSelectProps,
-  BRANCHES_FRAGMENT
-} from "./BranchesSearchableSelect";
+import { FC } from "react";
 
 export const REPOSITORY_MAIN_INFO_FRAGMENT = gql`
   fragment RepositoryMainInfoFragment on Repository {
