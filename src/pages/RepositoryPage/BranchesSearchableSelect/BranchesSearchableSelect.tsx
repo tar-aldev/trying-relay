@@ -1,4 +1,3 @@
-import { gql } from "@apollo/client";
 import { Dispatch, FC, useCallback } from "react";
 import {
   Card,
@@ -7,31 +6,14 @@ import {
   InputGroup,
   ListGroup
 } from "react-bootstrap";
-import { PER_PAGE_AMOUNT } from "../../core/constants";
-import ListLayout from "../../shared/components/ListLayout";
-import { PAGE_INFO_FRAGMENT } from "../../shared/fragments/pageInfoFragment";
-import { PropsWithFetchMore } from "../../shared/interfaces/PropsWithFetchMore";
+import { PER_PAGE_AMOUNT } from "../../../core/constants";
+import ListLayout from "../../../shared/components/ListLayout";
+import { PropsWithFetchMore } from "../../../shared/interfaces/PropsWithFetchMore";
 import {
   RepositoryPageQuery,
   RepositoryPageQueryVariables,
   RepositoryPageQuery_repository_refs
-} from "./__generated__/RepositoryPageQuery";
-
-export const BRANCHES_FRAGMENT = gql`
-  fragment BranchesFragment on RefConnection {
-    totalCount
-    pageInfo {
-      ...PageInfoFragment
-    }
-    edges {
-      node {
-        id
-        name
-      }
-    }
-  }
-  ${PAGE_INFO_FRAGMENT}
-`;
+} from "../__generated__/RepositoryPageQuery";
 
 export interface BranchesSearchableSelectProps
   extends PropsWithFetchMore<

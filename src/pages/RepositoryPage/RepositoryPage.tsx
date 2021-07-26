@@ -1,31 +1,15 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { FC, useCallback, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { ParamsWithLogin } from "../../shared/interfaces/ParamsWithLogin";
-import BranchesSearchableSelect, {
-  BRANCHES_FRAGMENT
-} from "./BranchesSearchableSelect";
-import RepositoryDetails, {
-  REPOSITORY_MAIN_INFO_FRAGMENT
-} from "./RepositoryDetails";
+import BranchesSearchableSelect from "./BranchesSearchableSelect/BranchesSearchableSelect";
+import { REPOSITORY_PAGE_QUERY } from "./RepositoryPageQuery";
 import {
   RepositoryPageQuery,
   RepositoryPageQueryVariables
 } from "./__generated__/RepositoryPageQuery";
-
-export const REPOSITORY_PAGE_QUERY = gql`
-  query RepositoryPageQuery($name: String!, $owner: String!, $count: Int!, $after: String, $query: String!) {
-    repository(name: $name, owner: $owner) {
-      ...RepositoryMainInfoFragment
-      refs(first: $count, refPrefix: "refs/heads/", query: $query, after: $after) {
-        ...BranchesFragment
-      }
-    }
-  }
-  ${REPOSITORY_MAIN_INFO_FRAGMENT},
-  ${BRANCHES_FRAGMENT}
-`;
+import RepositoryMainInfo from "./RepositoryMainInfo/RepositoryMainInfo";
 
 const RepositoryPage: FC = () => {
   const history = useHistory();
@@ -74,7 +58,7 @@ const RepositoryPage: FC = () => {
         </div>
 
         {repositoriesData?.repository && (
-          <RepositoryDetails repository={repositoriesData.repository} />
+          <RepositoryMainInfo repository={repositoriesData.repository} />
         )}
       </Container>
       {repositoriesData?.repository?.refs && (
